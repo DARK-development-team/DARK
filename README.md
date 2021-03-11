@@ -1,1 +1,1 @@
-[GUPB](https://github.com/Prpht/GUPB) tournament manager/organizer
+## DARK - [GUPB](https://github.com/Prpht/GUPB) tournament manager/organizer
