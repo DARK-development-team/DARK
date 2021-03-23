@@ -15,5 +15,10 @@ def queue_requirements(request, queueid):
     context = {
             "queue": queue
     }
-    print(queue.title)
     return render(request, 'tournament/queue_details.html', context)
+
+def queues(request):
+    context = {
+        "queues": Queue.objects.all()
+    }
+    return render(request, 'tournament/queues.html', context)
