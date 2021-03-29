@@ -1,24 +1,22 @@
 from django.shortcuts import render
 
-from tournament.models import Queue
+from tournament.models import Tournament
 
 
 def start_page(request):
-    context = {
-        "queues": Queue.objects.all()
-    }
     return render(request, 'tournament/start_page.html')
 
 
-def queue_requirements(request, queueid):
-    queue = Queue.objects.get(pk=queueid)
+def tournaments(request):
     context = {
-            "queue": queue
-    }
-    return render(request, 'tournament/queue_details.html', context)
-
-def queues(request):
-    context = {
-        "queues": Queue.objects.all()
+        "tournaments": Tournament.objects.all()
     }
     return render(request, 'tournament/queues.html', context)
+
+
+def tournament_details(request, tournament_id):
+    tournament = Tournament.objects.get(pk=tournament_id)
+    context = {
+        "tournament": tournament
+    }
+    return render(request, 'tournament/tournament_details.html', context)

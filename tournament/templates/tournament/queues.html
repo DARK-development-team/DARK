@@ -3,11 +3,11 @@
 
 {% block content %}
     <ul class="list-group list-group-flush d-flex w-50 ">
-        {% for queue in queues %}
+        {% for tournament in tournaments %}
             <li class="list-group-item list-group-item-dark ">
-                {{ queue.title }}
-                <a href="{% url  'Queue-Requirements' queue.pk %}" role="button" class="btn btn-outline-dark">
-                    See requirements
+                {{ tournament.name }}
+                <a href="{% url 'Tournament-Details' tournament.pk %}" role="button" class="btn btn-outline-dark">
+                    Navigate
                 </a>
             </li>
         {% endfor %}
