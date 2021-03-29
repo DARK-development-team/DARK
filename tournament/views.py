@@ -11,7 +11,7 @@ def tournaments(request):
     context = {
         "tournaments": Tournament.objects.all()
     }
-    return render(request, 'tournament/queues.html', context)
+    return render(request, 'tournament/tournaments.html', context)
 
 
 def tournament_details(request, tournament_id):
