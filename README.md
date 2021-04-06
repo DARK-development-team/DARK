@@ -6,7 +6,7 @@ Project created for the course Software Engineering at AGH University of Science
 
 ## Team  
 
-The following project is developed by:
+The following project is being developed by:
 
 - [Miłosz Galas](https://github.com/miloszgalas)
 - [Michał Kotula](https://github.com/TheTryton)
@@ -32,7 +32,7 @@ _Pull Request:_ [JIRA task no]_[short desciprtion/name]
 _Example:_ DARK23_dodanie_gui  
 
 
-## Diagrams & Schemes
+## Diagrams & Schemas
 ###### General idea of program operation
 ![Mindmap](Images/Diagrams/mindmap.jpg?raw=true "Mindmap")
 ***
