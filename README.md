@@ -19,25 +19,25 @@ The following project is developed by:
 
 ## Branches & Pull Requests 
 If you're about to create a new branch/pull request be sure to stick to the following naming rules:
-- **Features**
-_Branch:_ feature/[JIRA task no]
-_Example:_ feature/DARK23
+- **Features**  
+_Branch:_ feature/[JIRA task no]  
+_Example:_ feature/DARK23  
 
-- **Fixes**
-_Branch:_ fix/[JIRA task no]
-_Example:_ fix/DARK23
+- **Fixes**  
+_Branch:_ fix/[JIRA task no]  
+_Example:_ fix/DARK23  
 
-- **PRs**
-_Pull Request:_ [JIRA task no]_[short desciprtion/name]
-_Example:_ DARK23_dodanie_gui
+- **PRs**  
+_Pull Request:_ [JIRA task no]_[short desciprtion/name]  
+_Example:_ DARK23_dodanie_gui  
 
 
 ## Diagrams & Schemes
 ###### General idea of program operation
-![Mindmap](Images\Diagrams\mindmap.jpg "Mindmap")
+![Mindmap](Images/Diagrams/mindmap.jpg?raw=true "Mindmap")
 ***
 ###### Database schema
-![Databsase](Images\Diagrams\botsQueueDb.png "Database")
+![Databsase](Images/Diagrams/botsQueueDb.png?raw=true "Database")
 ***
 ###### Home page mockup
-![Compete](Images\Mocks\Compete.png "Database")
+![Compete](Images/Mocks/Compete.png?raw=true "Database")
