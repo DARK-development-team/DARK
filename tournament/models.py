@@ -1,9 +1,12 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
-class Queue(models.Model):
-    title = models.CharField(max_length=20)
-    requirements = models.CharField(max_length=500)
+class Tournament(models.Model):
+    name = models.CharField(max_length=30, blank=False)
+    creator = models.ForeignKey(User, on_delete=models.CASCADE)
+    start_date = models.DateTimeField()
+    end_date = models.DateTimeField()
 
     def __str__(self):
-        return self.title
+        return self.name
