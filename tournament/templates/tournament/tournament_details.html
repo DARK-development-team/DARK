@@ -8,4 +8,16 @@
         <p>Start Date: {{ tournament.start_date }}</p>
         <p>End Date: {{ tournament.end_date }}</p>
     </div>
+
+    <ul class="list-group list-group-flush d-flex w-50 ">
+        {% for queue in queues %}
+            <li class="list-group-item list-group-item-dark ">
+                {{ queue.name }}
+                <a href="{% url 'Queue-Details' tournament.pk queue.pk %}" role="button" class="btn btn-outline-dark">
+                    Navigate
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+
 {% endblock %}
