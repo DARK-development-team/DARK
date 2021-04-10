@@ -9,11 +9,15 @@
         <p>End Date: {{ tournament.end_date }}</p>
     </div>
 
+    {% if user.is_authenticated and  creator %}
+            <a href="{%  url 'gupb_queue:Queue-Add' tournament.pk %}" role="button" class="btn btn-outline-primary">Add Queue</a>
+    {% endif %}
+
     <ul class="list-group list-group-flush d-flex w-50 ">
         {% for queue in queues %}
             <li class="list-group-item list-group-item-dark ">
                 {{ queue.name }}
-                <a href="{% url 'Queue-Details' tournament.pk queue.pk %}" role="button" class="btn btn-outline-dark">
+                <a href="{% url 'gupb_queue:Queue-Details' tournament.pk queue.pk %}" role="button" class="btn btn-outline-dark">
                     Navigate
                 </a>
             </li>

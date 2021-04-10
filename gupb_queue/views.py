@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
+from gupb_queue.forms import QueueForm
 from gupb_queue.models import Queue
+from tournament.models import Tournament
 
 
 def queue_details(request, tournament_id, queue_id):
@@ -9,3 +11,23 @@ def queue_details(request, tournament_id, queue_id):
         "queue": queue
     }
     return render(request, 'gupb_queue/queue_details.html', context)
+
+
+def queue_add(request, tournament_id):
+    if request.method == 'POST':
+        form = QueueForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data.get('name')
+            start_date = form.cleaned_data.get('start_date')
+            end_date = form.cleaned_data.get('end_date')
+            tournament = Tournament.objects.get(pk=tournament_id)
+
+            queue = Queue(name=name, tournament=tournament, start_date=start_date, end_date=end_date)
+            queue.save()
+
+            return redirect('Tournament-Details', tournament_id)
+
+    else:
+        form = QueueForm()
+
+    return render(request, 'gupb_queue/queue_form.html', {'form': form})

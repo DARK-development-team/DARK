@@ -19,9 +19,12 @@ def tournaments(request):
 def tournament_details(request, tournament_id):
     tournament = Tournament.objects.get(pk=tournament_id)
     queues = Queue.objects.filter(tournament=tournament_id)
+    creator = True if tournament.creator == request.user else False
+
     context = {
         "tournament": tournament,
-        "queues": queues
+        "queues": queues,
+        "creator": creator
     }
     return render(request, 'tournament/tournament_details.html', context)
 
