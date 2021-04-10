@@ -3,11 +3,6 @@ from django.shortcuts import render, redirect
 from tournament.forms import TournamentForm
 from tournament.models import Tournament
 
-
-def start_page(request):
-    return render(request, 'tournament/start_page.html')
-
-
 def tournaments(request):
     context = {
         "tournaments": Tournament.objects.all()
@@ -15,8 +10,8 @@ def tournaments(request):
     return render(request, 'tournament/tournaments.html', context)
 
 
-def tournament_details(request, tournament_id):
-    tournament = Tournament.objects.get(pk=tournament_id)
+def tournament_details(request, tournamentid):
+    tournament = Tournament.objects.get(pk=tournamentid)
     context = {
         "tournament": tournament
     }

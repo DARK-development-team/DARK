@@ -15,9 +15,9 @@ def register(request):
             login(request, user)
 
             messages.success(request, f'Account created for {username}!')
-            return redirect('Start-Page')
+            return redirect('Start Page')
 
     else:
         form = UserRegistrationForm()
 
-    return render(request, 'users/registration.html', {'form': form})
+    return render(request, 'users/register.html', {'form': form})
