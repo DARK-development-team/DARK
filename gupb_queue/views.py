@@ -25,7 +25,7 @@ def queue_add(request, tournament_id):
             queue = Queue(name=name, tournament=tournament, start_date=start_date, end_date=end_date)
             queue.save()
 
-            return redirect('Tournament-Details', tournament_id)
+            return redirect('Tournament Details', tournament_id)
 
     else:
         form = QueueForm()

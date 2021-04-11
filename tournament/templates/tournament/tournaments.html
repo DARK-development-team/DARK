@@ -2,9 +2,13 @@
 
 {% block content %}
 
-    <div>
+    <div class="text-center">
+        <h1 style="color: Blue">Tournaments</h1>
+
         {% if user.is_authenticated %}
-            <a href="{%  url 'Tournament Add' %}" role="button" class="btn btn-outline-primary">Add Tournament</a>
+            <button type="button" class="btn btn-primary btn-lg float-begin" onclick="location.href ='{% url 'Tournament Add' %}'">
+                Add Tournament
+            </button>
         {% endif %}
     </div>
 

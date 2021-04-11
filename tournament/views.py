@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 
 from gupb_queue.models import Queue
+from team.models import Team
 from tournament.forms import TournamentForm
 from tournament.models import Tournament
 
@@ -27,6 +28,7 @@ def tournament_details(request, tournamentid):
     context = {
         "tournament": tournament,
         "queues": queues,
+        "contestants": Team.objects.filter(tournament_ID_id=tournamentid),
         "creator": creator
     }
     return render(request, 'tournament/tournament_details.html', context)
