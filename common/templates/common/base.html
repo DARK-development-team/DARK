@@ -48,9 +48,6 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                {#                <li class="nav-item active">#}
-                {#                    <a class="nav-link" href="{% url 'Queue-Requirements' 1 %}">Sample queue details</a>#}
-                {#                </li>#}
                 <li class="nav-item active">
                     <a class="nav-link" href="{% url 'Tournaments' %}">Tournaments</a>
                 </li>
@@ -66,7 +63,7 @@
                     </li>
                 {% else %}
                     <li class="nav-item active">
-                        <a class="nav-link" href="{% url 'Show User Teams' user.id %}">Your Teams</a>
+                        <a class="nav-link" href="{% url 'Show User Teams' user.username %}">Your Teams</a>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="{% url 'Create Team' %}">Create Team</a>

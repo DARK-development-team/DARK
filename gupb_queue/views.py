@@ -5,7 +5,7 @@ from gupb_queue.models import Queue
 from tournament.models import Tournament
 
 
-def queue_details(request, tournament_id, queue_id):
+def show_queue_terms_view(request, queue_id):
     queue = Queue.objects.get(pk=queue_id)
     context = {
         "queue": queue
@@ -13,7 +13,7 @@ def queue_details(request, tournament_id, queue_id):
     return render(request, 'gupb_queue/queue_details.html', context)
 
 
-def queue_add(request, tournament_id):
+def add_queue_view(request, tournament_id):
     if request.method == 'POST':
         form = QueueForm(request.POST)
         if form.is_valid():
