@@ -2,6 +2,7 @@ from django.db import models as dmodels
 from tournament.models import Tournament
 from users.models import User
 
+
 class Team(dmodels.Model):
     tournament_ID = dmodels.ForeignKey(Tournament, on_delete=dmodels.CASCADE)
     name = dmodels.CharField(max_length=30, unique=True)
@@ -11,6 +12,7 @@ class Team(dmodels.Model):
 
     class Meta:
         ordering = ['tournament_ID', 'id']
+
 
 class TeamRole(dmodels.Model):
     team_ID = dmodels.ForeignKey(Team, on_delete=dmodels.CASCADE)
@@ -23,6 +25,7 @@ class TeamRole(dmodels.Model):
 
     class Meta:
         unique_together = ("team_ID", "name")
+
 
 class TeamMember(dmodels.Model):
     team_ID = dmodels.ForeignKey(Team, on_delete=dmodels.CASCADE)

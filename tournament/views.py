@@ -4,17 +4,18 @@ from gupb_queue.models import Queue
 from tournament.forms import TournamentForm
 from tournament.models import Tournament
 
-from datetime import datetime
+from django.utils import timezone
 
 
 def tournaments(request):
-    now = datetime.now()
+    now = timezone.now()
     context = {
         "created_by_you": Tournament.objects.filter(creator=request.user),
         "your_upcoming": Tournament.objects.filter(team__teammember__user_ID=request.user).filter(start_date__gt=now),
         "active": Tournament.objects.filter(team__teammember__user_ID=request.user).filter(start_date__lt=now).filter(end_date__gt=now),
         "archived": Tournament.objects.filter(team__teammember__user_ID=request.user).filter(end_date__lt=now),
     }
+
     return render(request, 'tournament/tournaments.html', context)
 
 
