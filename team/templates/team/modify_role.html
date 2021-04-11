@@ -1,6 +1,7 @@
-{% extends "tournament/base.html" %}
+{% extends "common/base.html" %}
+
 {% block content %}
-    <h2>Sign up</h2>
+    <h2>Modify team role</h2>
     <div class="container">
         <form method="post">
             {% csrf_token %}
@@ -16,7 +17,7 @@
                     {% endfor %}
                 </p>
             {% endfor %}
-            <button class="btn btn-outline-info" type="submit">Sign up</button>
+            <button class="btn btn-outline-info" type="submit">Modify</button>
         </form>
     </div>
 {% endblock %}

@@ -5,10 +5,6 @@ from tournament.forms import TournamentForm
 from tournament.models import Tournament
 
 
-def start_page(request):
-    return render(request, 'tournament/start_page.html')
-
-
 def tournaments(request):
     context = {
         "tournaments": Tournament.objects.all()
@@ -16,9 +12,9 @@ def tournaments(request):
     return render(request, 'tournament/tournaments.html', context)
 
 
-def tournament_details(request, tournament_id):
-    tournament = Tournament.objects.get(pk=tournament_id)
-    queues = Queue.objects.filter(tournament=tournament_id)
+def tournament_details(request, tournamentid):
+    tournament = Tournament.objects.get(pk=tournamentid)
+    queues = Queue.objects.filter(tournament=tournamentid)
     creator = True if tournament.creator == request.user else False
 
     context = {
@@ -33,7 +29,6 @@ def tournament_add(request):
     if request.method == 'POST':
         form = TournamentForm(request.POST)
         if form.is_valid():
-
             name = form.cleaned_data.get('name')
             start_date = form.cleaned_data.get('start_date')
             end_date = form.cleaned_data.get('end_date')
