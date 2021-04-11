@@ -1,20 +1,103 @@
 {% extends "common/base.html" %}
 
 {% block content %}
+
     <div>
         {% if user.is_authenticated %}
             <a href="{%  url 'Tournament Add' %}" role="button" class="btn btn-outline-primary">Add Tournament</a>
         {% endif %}
     </div>
 
-    <ul class="list-group list-group-flush d-flex w-50 ">
-        {% for tournament in tournaments %}
-            <li class="list-group-item list-group-item-dark ">
-                {{ tournament.name }}
-                <a href="{% url 'Tournament Details' tournament.pk %}" role="button" class="btn btn-outline-dark">
-                    Navigate
-                </a>
-            </li>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Created By You</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tournament in created_by_you %}
+            <tr>
+                <td>{{ tournament.name }}</td>
+                <td>{{ tournament.start_date }} - {{ tournament.end_date }}</td>
+                <td>
+                    <button type="button" class="btn btn-primary btn-lg float-begin" onclick="location.href ='{% url 'Tournament Details' tournament.id %}'">
+                        DETAILS
+                    </button>
+                </td>
+            </tr>
         {% endfor %}
-    </ul>
+        </tbody>
+    </table>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Your Upcoming</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tournament in your_upcoming %}
+            <tr>
+                <td>{{ tournament.name }}</td>
+                <td>{{ tournament.start_date }} - {{ tournament.end_date }}</td>
+                <td>
+                    <button type="button" class="btn btn-primary btn-lg float-begin" onclick="location.href ='{% url 'Tournament Details' tournament.id %}'">
+                        DETAILS
+                    </button>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Active</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tournament in active %}
+            <tr>
+                <td>{{ tournament.name }}</td>
+                <td>{{ tournament.start_date }} - {{ tournament.end_date }}</td>
+                <td>
+                    <button type="button" class="btn btn-primary btn-lg float-begin" onclick="location.href ='{% url 'Tournament Details' tournament.id %}'">
+                        DETAILS
+                    </button>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Archived</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tournament in archived %}
+            <tr>
+                <td>{{ tournament.name }}</td>
+                <td>{{ tournament.start_date }} - {{ tournament.end_date }}</td>
+                <td>
+                    <button type="button" class="btn btn-primary btn-lg float-begin" onclick="location.href ='{% url 'Tournament Details' tournament.id %}'">
+                        DETAILS
+                    </button>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
 {% endblock %}
