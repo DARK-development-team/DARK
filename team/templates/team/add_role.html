@@ -1,12 +1,12 @@
 {% extends "common/base.html" %}
 
 {% block content %}
-    <h2>Add Tournament</h2>
+    <h2>Add team role</h2>
     <div class="container">
         <form method="post">
             {% csrf_token %}
             {% for field in form %}
-                <div>
+                <p>
                     {{ field.label_tag }}<br>
                     {{ field }}
                     {% if field.help_text %}
@@ -15,9 +15,9 @@
                     {% for error in field.errors %}
                         <p style="color: red">{{ error }}</p>
                     {% endfor %}
-                </div>
+                </p>
             {% endfor %}
-            <button class="btn btn-outline-info" type="submit">Add Tournament</button>
+            <button class="btn btn-outline-info" type="submit">Add</button>
         </form>
     </div>
 {% endblock %}

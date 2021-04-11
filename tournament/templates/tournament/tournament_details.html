@@ -1,5 +1,4 @@
-{% extends "tournament/base.html" %}
-
+{% extends "common/base.html" %}
 
 {% block content %}
     <div class="m-5">
@@ -7,5 +6,8 @@
         <p>Creator: {{ tournament.creator }}</p>
         <p>Start Date: {{ tournament.start_date }}</p>
         <p>End Date: {{ tournament.end_date }}</p>
+        <button type="button" class="btn btn-primary btn-lg float-end" onclick="location.href ='{% url 'Show All Tournament Teams' tournament.id %}'">
+            Show Teams
+        </button>
     </div>
 {% endblock %}
