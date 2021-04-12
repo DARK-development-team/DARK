@@ -4,9 +4,15 @@ from gupb_queue.forms import QueueForm
 from gupb_queue.models import Queue
 from tournament.models import Tournament
 
+from .queue_utils import execute_queue
+
 
 def show_queue_terms_view(request, queue_id):
+    if request.method == 'POST':
+        execute_queue()
+
     queue = Queue.objects.get(pk=queue_id)
+
     context = {
         "queue": queue
     }

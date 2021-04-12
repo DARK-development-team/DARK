@@ -8,4 +8,9 @@
         <p>Start Date: {{ queue.start_date }}</p>
         <p>End Date: {{ queue.end_date }}</p>
     </div>
+
+    <form method="post">
+        {% csrf_token %}
+        <input type="submit" value="Run queue">
+    </form>
 {% endblock %}
