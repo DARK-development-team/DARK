@@ -33,7 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'common.apps.CommonConfig',
     'tournament.apps.TournamentConfig',
-    'queue.apps.GupbQueueConfig',
+    'gupb_queue.apps.GupbQueueConfig',
     'users.apps.UsersConfig',
     'teams.apps.TeamsConfig',
     'team.apps.TeamConfig',

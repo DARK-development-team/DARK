@@ -20,7 +20,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('common.urls')),
     path('tournament/', include('tournament.urls')),
-    path('queue/', include('queue.urls')),
+    path('queue/', include('gupb_queue.urls')),
     path('team/', include('team.urls')),
     path('teams/', include('teams.urls')),
     path('user/', include('users.urls')),

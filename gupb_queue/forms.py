@@ -1,6 +1,6 @@
 from django import forms
 
-from queue.models import Queue
+from gupb_queue.models import Queue
 
 
 class QueueForm(forms.ModelForm):

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 
-from queue.forms import QueueForm
-from queue.models import Queue
+from gupb_queue.forms import QueueForm
+from gupb_queue.models import Queue
 from tournament.models import Tournament
 
 
