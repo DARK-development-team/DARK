@@ -4,17 +4,18 @@ from gupb_queue.forms import QueueForm
 from gupb_queue.models import Queue
 from tournament.models import Tournament
 
-from .queue_utils import execute_queue
+from . import queue_utils
 
 
 def show_queue_terms_view(request, queue_id):
     if request.method == 'POST':
-        execute_queue()
+        queue_utils.execute_queue()
 
     queue = Queue.objects.get(pk=queue_id)
 
     context = {
-        "queue": queue
+        "queue": queue,
+        "results": queue_utils.get_queue_results(),
     }
     return render(request, 'gupb_queue/queue_details.html', context)
 

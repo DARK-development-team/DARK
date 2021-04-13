@@ -13,4 +13,14 @@
         {% csrf_token %}
         <input type="submit" value="Run queue">
     </form>
+
+    {% if results %}
+        <h3>
+            Queue results:
+        </h3>
+        {% for score in results %}
+                <p> {{ score }} </p>
+            {% endfor %}
+    {% endif %}
+
 {% endblock %}
