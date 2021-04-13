@@ -14,57 +14,11 @@
 
     <table class="table">
         <thead>
-            <tr>
-                <th scope="col">Created By You</th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for tournament in created_by_you %}
-            <tr>
-                <td>{{ tournament.name }}</td>
-                <td>{{ tournament.start_date }} - {{ tournament.end_date }}</td>
-                <td>
-                    <button type="button" class="btn btn-primary btn-lg float-begin" onclick="location.href ='{% url 'Tournament Details' tournament.id %}'">
-                        DETAILS
-                    </button>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Your Upcoming</th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for tournament in your_upcoming %}
-            <tr>
-                <td>{{ tournament.name }}</td>
-                <td>{{ tournament.start_date }} - {{ tournament.end_date }}</td>
-                <td>
-                    <button type="button" class="btn btn-primary btn-lg float-begin" onclick="location.href ='{% url 'Tournament Details' tournament.id %}'">
-                        DETAILS
-                    </button>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Active</th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-            </tr>
+        <tr>
+            <th scope="col">Active</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
         </thead>
         <tbody>
         {% for tournament in active %}
@@ -83,14 +37,37 @@
 
     <table class="table">
         <thead>
+        <tr>
+            <th scope="col">Upcoming</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for tournament in upcoming %}
             <tr>
-                <th scope="col">Archived</th>
+                <td>{{ tournament.name }}</td>
+                <td>{{ tournament.start_date }} - {{ tournament.end_date }}</td>
+                <td>
+                    <button type="button" class="btn btn-primary btn-lg float-begin" onclick="location.href ='{% url 'Tournament Details' tournament.id %}'">
+                        DETAILS
+                    </button>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Created By You</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
-        {% for tournament in archived %}
+        {% for tournament in created_by_you %}
             <tr>
                 <td>{{ tournament.name }}</td>
                 <td>{{ tournament.start_date }} - {{ tournament.end_date }}</td>
