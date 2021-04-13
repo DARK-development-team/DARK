@@ -3,7 +3,6 @@ from django.contrib import messages
 from team.forms import *
 
 
-
 def create_team_view(request):
     if request.method == 'POST':
         form = TeamCreationForm(request.POST)
@@ -26,6 +25,7 @@ def create_team_view(request):
 
     return render(request, 'team/create.html', {'form': form})
 
+
 def show_team_info_view(request, teamid):
     current_user = request.user
     if current_user.is_authenticated:
@@ -41,7 +41,6 @@ def show_team_info_view(request, teamid):
         can_modify_members = False
         can_remove = False
 
-
     team = Team.objects.get(id=teamid)
     members = TeamMember.objects.filter(team_ID=team)
     context = {
@@ -51,6 +50,7 @@ def show_team_info_view(request, teamid):
         "can_remove": can_remove,
     }
     return render(request, 'team/info.html', context)
+
 
 def remove_team_view(request, teamid):
     current_user = request.user
@@ -73,6 +73,7 @@ def remove_team_view(request, teamid):
         return render(request, 'team/remove.html', {'team': team})
     else:
         return redirect('Show Team Info', teamid=teamid)
+
 
 def change_team_name_view(request, teamid):
     current_user = request.user
@@ -103,6 +104,7 @@ def change_team_name_view(request, teamid):
     else:
         return redirect('Show Team Info', teamid=teamid)
 
+
 def manage_team_roles_view(request, teamid):
     current_user = request.user
     if current_user.is_authenticated:
@@ -123,6 +125,7 @@ def manage_team_roles_view(request, teamid):
         return render(request, 'team/manage_roles.html', context)
     else:
         return redirect('Show Team Info', teamid=teamid)
+
 
 def add_team_role_view(request, teamid):
     current_user = request.user
@@ -155,6 +158,7 @@ def add_team_role_view(request, teamid):
 
     return render(request, 'team/add_role.html', {'form': form})
 
+
 def modify_role_view(request, teamid, roleid):
     current_user = request.user
     if current_user.is_authenticated:
@@ -183,6 +187,7 @@ def modify_role_view(request, teamid, roleid):
 
     return render(request, 'team/modify_role.html', {'form': form})
 
+
 def remove_role_view(request, teamid, roleid):
     current_user = request.user
     if current_user.is_authenticated:
@@ -204,6 +209,7 @@ def remove_role_view(request, teamid, roleid):
         return render(request, 'team/remove_role.html', {'role': role})
     else:
         return redirect('Manage Team Roles', teamid=teamid)
+
 
 def add_team_member_view(request, teamid):
     current_user = request.user
@@ -236,6 +242,7 @@ def add_team_member_view(request, teamid):
     else:
         return redirect('Show Team Info', teamid=teamid)
 
+
 def remove_team_member_view(request, teamid, teammemberid):
     current_user = request.user
     if current_user.is_authenticated:
@@ -258,8 +265,10 @@ def remove_team_member_view(request, teamid, teammemberid):
     else:
         return redirect('Show Team Info', teamid=teamid)
 
+
 def show_team_member_info_view(request, teamid, teammemberid):
     return redirect("Start Page")
+
 
 def change_team_member_role_view(request, teamid, teammemberid):
     current_user = request.user
