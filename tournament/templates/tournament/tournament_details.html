@@ -7,7 +7,7 @@
         <h4>{{ tournament.start_date }} - {{ tournament.end_date }}</h4>
 
         {% if user.is_authenticated %}
-            <button type="button" class="btn btn-primary btn-lg float-begin" onclick="location.href ='{% url 'gupb_queue:Add Queue' tournament.id %}'">
+            <button type="button" class="btn btn-primary btn-lg float-begin" onclick="location.href ='{% url 'Add Queue' tournament.id %}'">
                 Add Queue
             </button>
         {% endif %}
@@ -28,7 +28,7 @@
                 <td>{{ queue.start_date }} - {{ queue.end_date }}</td>
                 <td>
                     <button type="button" class="btn btn-primary btn-lg float-begin"
-                            onclick="location.href ='{% url 'gupb_queue:Show Queue Terms' queue.id %}'">
+                            onclick="location.href ='{% url 'queue:Show Queue Terms' queue.id %}'">
                         TERMS
                     </button>
                 </td>

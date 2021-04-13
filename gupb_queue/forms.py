@@ -1,7 +1,13 @@
 from django import forms
 
+from gupb_queue.models import Queue
 
-class QueueForm(forms.Form):
-    name = forms.CharField(max_length=30, help_text="Required.")
-    start_date = forms.DateTimeField(help_text="Required. Format: yyyy-MM-dd hh:mm:ss")
-    end_date = forms.DateTimeField(help_text="Required. Format: yyyy-MM-dd hh:mm:ss")
+
+class QueueForm(forms.ModelForm):
+    class Meta:
+        model = Queue
+        fields = ['name', 'start_date', 'end_date']
+        widgets = {
+            'start_date': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+            'end_date': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+        }
