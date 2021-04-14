@@ -16,23 +16,3 @@ class Bot(dmodels.Model):
     class Meta:
         ordering = ['team', 'round']
         unique_together = ("team", "round")
-
-
-'''
-    def extract_name_from_repo_path(self, repo_path : str):
-        full_path = git.Repo(self.bot_url).remotes.origin.url
-        repo_name = full_path.split('.git')[0].split('/')[-1]
-        return repo_name
-        
-    def sync(self):
-        git.Git(f'{Bot.download_directory}/'
-                f'{self.team.name}/'
-                f'{self.round.name}/'
-                f'{self.extract_name_from_repo_path(self.bot_url)}')\
-            .clone(self.bot_url)
-
-    def run_on(self, round: Round):
-        self.sync()
-        pass
-'''
-

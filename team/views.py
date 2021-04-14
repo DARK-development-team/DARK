@@ -26,11 +26,11 @@ def create_team_view(request):
     return render(request, 'team/create.html', {'form': form})
 
 
-def show_team_info_view(request, teamid):
+def show_team_info_view(request, team_id):
     current_user = request.user
     if current_user.is_authenticated:
         try:
-            member = TeamMember.objects.get(team=teamid, user=current_user.id)
+            member = TeamMember.objects.get(team=team_id, user=current_user.id)
             can_modify_members = member.role.can_modify_members
             can_remove = member.role.can_remove
 
@@ -41,7 +41,7 @@ def show_team_info_view(request, teamid):
         can_modify_members = False
         can_remove = False
 
-    team = Team.objects.get(id=teamid)
+    team = Team.objects.get(id=team_id)
     members = TeamMember.objects.filter(team=team)
     context = {
         "team": team,

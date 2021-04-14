@@ -3,20 +3,11 @@ from django.contrib import messages
 from bots.forms import *
 from team.models import *
 
+
 def show_team_bots_view(request, teamid):
     current_user = request.user
     if current_user.is_authenticated:
-        try:
-            member = TeamMember.objects.get(team=teamid, user=current_user.id)
-            can_modify_members = member.role.can_modify_members
-            can_remove = member.role.can_remove
-
-        except (TeamMember.DoesNotExist, TeamRole.DoesNotExist):
-            can_modify_members = False
-            can_remove = False
-    else:
-        can_modify_members = False
-        can_remove = False
+        member = TeamMember.objects.get(team=teamid, user=current_user.id)
 
     team = Team.objects.get(id=teamid)
     rounds = Round.objects.filter(tournament=team.tournament)
@@ -32,6 +23,7 @@ def show_team_bots_view(request, teamid):
         "round_bot_pairs": round_bot_pairs
     }
     return render(request, 'bots/all_team.html', context)
+
 
 def manage_team_round_bot_view(request, teamid, botid):
     current_user = request.user
