@@ -1,7 +1,7 @@
 from django.contrib import admin
 
-from gupb_queue.models import Queue
+from round.models import Round
 
-admin.site.register(Queue)
+admin.site.register(Round)
 
 # Register your models here.

@@ -5,7 +5,7 @@ from team.models import *
 class TeamCreationForm(ModelForm):
     class Meta:
         model = Team
-        fields = ['name', 'tournament_ID']
+        fields = ['name', 'tournament']
 
 
 class ChangeTeamNameForm(ModelForm):
@@ -41,13 +41,13 @@ class ModifyTeamRoleForm(ModelForm):
 class AddTeamMemberForm(ModelForm):
     class Meta:
         model = TeamMember
-        fields = ['user_ID', 'role_ID']
+        fields = ['user', 'role']
 
 
 class ChangeRoleTeamMemberForm(ModelForm):
     class Meta:
         model = TeamMember
-        fields = ['role_ID']
+        fields = ['role']
         labels = {
-            "role_ID": "New role"
+            "role": "New role"
         }

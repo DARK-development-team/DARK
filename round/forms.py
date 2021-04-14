@@ -1,11 +1,11 @@
 from django import forms
 
-from gupb_queue.models import Queue
+from round.models import Round
 
 
-class QueueForm(forms.ModelForm):
+class RoundForm(forms.ModelForm):
     class Meta:
-        model = Queue
+        model = Round
         fields = ['name', 'start_date', 'end_date']
         widgets = {
             'start_date': forms.DateTimeInput(attrs={'type': 'datetime-local'}),

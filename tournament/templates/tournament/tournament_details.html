@@ -7,8 +7,8 @@
         <h4>{{ tournament.start_date }} - {{ tournament.end_date }}</h4>
 
         {% if user.is_authenticated %}
-            <button type="button" class="btn btn-primary btn-lg float-begin" onclick="location.href ='{% url 'Add Queue' tournament.id %}'">
-                Add Queue
+            <button type="button" class="btn btn-primary btn-lg float-begin" onclick="location.href ='{% url 'Add Round' tournament.id %}'">
+                Add Round
             </button>
         {% endif %}
     </div>
@@ -16,19 +16,19 @@
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">Queues</th>
+                <th scope="col">Rounds</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
-        {% for queue in queues %}
+        {% for round in rounds %}
             <tr>
-                <td>{{ queue.name }}</td>
-                <td>{{ queue.start_date }} - {{ queue.end_date }}</td>
+                <td>{{ round.name }}</td>
+                <td>{{ round.start_date }} - {{ round.end_date }}</td>
                 <td>
                     <button type="button" class="btn btn-primary btn-lg float-begin"
-                            onclick="location.href ='{% url 'queue:Show Queue Terms' queue.id %}'">
+                            onclick="location.href ='{% url 'Show Round Terms' tournament.id round.id %}'">
                         TERMS
                     </button>
                 </td>

@@ -15,12 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from round.urls import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('common.urls')),
     path('tournament/', include('tournament.urls')),
-    path('queue/', include('gupb_queue.urls')),
     path('team/', include('team.urls')),
     path('teams/', include('teams.urls')),
     path('user/', include('users.urls')),

@@ -1,7 +1,7 @@
 {% extends "common/base.html" %}
 
 {% block content %}
-    <h2>Add Queue</h2>
+    <h2>Add Round</h2>
     <div class="container">
         <form method="post">
             {% csrf_token %}
@@ -18,7 +18,7 @@
                 </div>
             {% endfor %}
             <p>DateTime Format: yyyy-MM-dd hh:mm:ss</p>
-            <button class="btn btn-outline-info" type="submit">Add Queue</button>
+            <button class="btn btn-outline-info" type="submit">Add Round</button>
         </form>
     </div>
 {% endblock %}
