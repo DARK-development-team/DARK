@@ -1,6 +1,5 @@
 import os
 import sys
-from celery import shared_task
 
 
 def execute_round():
