@@ -1,0 +1,43 @@
+{% extends "dark/base.html" %}
+
+{% block content %}
+    <div class="text-center">
+        <h1 style="color: green">Team {{ team.name }}</h1>
+        <h2>Manage Roles</h2>
+    </div>
+
+    <h3>Roles:</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Role</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for role in roles %}
+            <tr>
+                <th scope="row">1</th>
+                <td>{{ role.name }}</td>
+                {% if role.name != "Creator" %}
+                <td>
+                    <button type="button" class="btn btn-primary btn-lg float-begin" onclick="location.href ='{% url 'tournament:team:role:modify' team.tournament.id team.id role.id %}'">
+                        Edit
+                    </button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-primary btn-lg float-begin" onclick="location.href ='{% url 'tournament:team:role:remove' team.tournament.id team.id role.id %}'">
+                        Remove
+                    </button>
+                </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <button type="button" class="btn btn-primary btn-lg float-begin" onclick="location.href ='{% url 'tournament:team:role:add' team.tournament.id team.id %}'">
+        Add Role
+    </button>
+{% endblock %}

@@ -1,0 +1,18 @@
+[run]
+omit =
+    venv/*
+    manage.py
+
+[report]
+fail_under = 95
+omit =
+    venv/*
+    *apps.py
+    manage.py
+skip_empty = True
+skip_covered = True
+
+[html]
+skip_empty = True
+skip_covered = True
+directory = generated/coverage
