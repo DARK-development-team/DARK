@@ -1,5 +1,7 @@
 name: Django CI
 
+[![Django CI](https://github.com/TheTryton/DARK/actions/workflows/django.yml/badge.svg?branch=develop)](https://github.com/TheTryton/DARK/actions/workflows/django.yml)
+
 on:
   push:
     branches: [ main, develop, feature/* ]
