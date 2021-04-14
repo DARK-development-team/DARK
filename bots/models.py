@@ -35,4 +35,3 @@ class Bot(dmodels.Model):
         self.sync()
         pass
 '''
-
