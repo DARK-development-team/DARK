@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from team.views import *
 
 urlpatterns = [
@@ -14,4 +14,5 @@ urlpatterns = [
     path('<int:teamid>/<int:teammemberid>/remove_member', remove_team_member_view, name="Remove Team Member"),
     path('<int:teamid>/<int:teammemberid>', show_team_member_info_view, name="Show Team Member Info"),
     path('<int:teamid>/<int:teammemberid>/change_role', change_team_member_role_view, name="Change Team Member Role"),
+    path('<int:teamid>/bots/',  include('bots.urls')),
 ]

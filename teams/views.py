@@ -10,11 +10,11 @@ def show_all_teams_view(request):
     return render(request, 'teams/show_all.html', context)
 
 
-def show_user_teams_view(request, username):
+def show_user_teams_view(request, userid):
     current_user = request.user
     if current_user.is_authenticated:
         context = {
-            "teams": Team.objects.filter(teammember__user_ID__username=username),
+            "teams": Team.objects.filter(teammember__user_id=userid),
         }
         return render(request, 'teams/show_user_all.html', context)
     else:

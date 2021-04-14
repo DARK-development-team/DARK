@@ -17,7 +17,7 @@
             <tr>
                 <th scope="row">1</th>
                 <td><a href="{% url 'Show Team Info' team.id%}">{{ team.name }} </a></td>
-                <td>{{ team.tournament_ID.name }}</td>
+                <td>{{ team.tournament.name }}</td>
             </tr>
         {% endfor %}
         </tbody>

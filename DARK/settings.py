@@ -33,10 +33,11 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'common.apps.CommonConfig',
     'tournament.apps.TournamentConfig',
-    'gupb_queue.apps.GupbQueueConfig',
+    'round.apps.RoundConfig',
     'users.apps.UsersConfig',
     'teams.apps.TeamsConfig',
     'team.apps.TeamConfig',
+    'bots.apps.BotsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

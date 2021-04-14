@@ -3,20 +3,20 @@
 
 {% block content %}
     <div class="m-5">
-        <p>Name: {{ queue.name }}</p>
-        <p>Tournament: {{ queue.tournament }}</p>
-        <p>Start Date: {{ queue.start_date }}</p>
-        <p>End Date: {{ queue.end_date }}</p>
+        <p>Name: {{ round.name }}</p>
+        <p>Tournament: {{ round.tournament }}</p>
+        <p>Start Date: {{ round.start_date }}</p>
+        <p>End Date: {{ round.end_date }}</p>
     </div>
 
     <form method="post">
         {% csrf_token %}
-        <input type="submit" value="Run queue">
+        <input type="submit" value="Run round">
     </form>
 
     {% if results %}
         <h3>
-            Queue results:
+            Round results:
         </h3>
         {% for score in results %}
                 <p> {{ score }} </p>

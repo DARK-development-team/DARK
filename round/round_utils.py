@@ -3,23 +3,23 @@ import sys
 from celery import shared_task
 
 
-def execute_queue():
+def execute_round():
     # save current working directory
-    curent_dir = os.getcwd()
+    current_dir = os.getcwd()
 
     # set directory for queue logs
-    log_directory = 'queue_results'
+    log_directory = 'round_results'
 
     # change directory to gupb and execute queue
     os.chdir('GUPB')
     os.system('python -m gupb -l {}'.format(log_directory))
 
     # restore previous directory
-    os.chdir(curent_dir)
+    os.chdir(current_dir)
 
 
-def get_queue_results():
-    log_directory = 'GUPB/queue_results'
+def get_round_results():
+    log_directory = 'GUPB/round_results'
     result_files = os.listdir(log_directory)
 
     if not result_files:

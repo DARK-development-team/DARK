@@ -2,7 +2,12 @@
 
 {% block content %}
     <div class="text-center">
-        <h1 style="color: red">Are you sure about removing member <p style="color: green">{{ member.user }}</p></h1>
+        <h1 style="color: red">
+            Are you sure about removing bot for round
+            <p style="color: green">{{ bot.round.name }}</p>
+            <p>in tournament</p>
+            <p style="color: green">{{ bot.round.tournament.name }}</p>
+        </h1>
     <div class="container">
         <form method="post">
             {% csrf_token %}

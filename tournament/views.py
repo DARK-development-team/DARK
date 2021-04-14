@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 
-from gupb_queue.models import Queue
+from round.models import Round
 from team.models import Team
 from tournament.forms import TournamentForm
 from tournament.models import Tournament
@@ -13,9 +13,9 @@ def tournaments(request):
 
     if request.user.is_authenticated:
         context = {
-            "active": Tournament.objects.filter(team__teammember__user_ID=request.user).filter(
+            "active": Tournament.objects.filter(team__teammember__user_id=request.user).filter(
                 start_date__lt=now).filter(end_date__gt=now),
-            "upcoming": Tournament.objects.filter(team__teammember__user_ID=request.user).filter(
+            "upcoming": Tournament.objects.filter(team__teammember__user_id=request.user).filter(
                 start_date__gt=now),
             "created_by_you": Tournament.objects.filter(creator=request.user),
         }
@@ -31,13 +31,13 @@ def tournaments(request):
 
 def tournament_details(request, tournamentid):
     tournament = Tournament.objects.get(pk=tournamentid)
-    queues = Queue.objects.filter(tournament=tournamentid)
+    rounds = Round.objects.filter(tournament=tournamentid)
     creator = True if tournament.creator == request.user else False
 
     context = {
         "tournament": tournament,
-        "queues": queues,
-        "contestants": Team.objects.filter(tournament_ID_id=tournamentid),
+        "rounds": rounds,
+        "contestants": Team.objects.filter(tournament=tournamentid),
         "creator": creator
     }
     return render(request, 'tournament/tournament_details.html', context)

@@ -5,8 +5,8 @@
         <h1 style="color: green">Team {{ team.name }}</h1>
         <h3>participates in</h3>
         <h2>
-            <a href="{% url 'Tournament Details' team.tournament_ID.id %}">
-                {{ team.tournament_ID.name }}
+            <a href="{% url 'Tournament Details' team.tournament.id %}">
+                {{ team.tournament.name }}
             </a>
         </h2>
     </div>
@@ -27,14 +27,14 @@
         {% for m in members %}
             <tr>
                 <th scope="row">1</th>
-                <td><a href="{% url 'Show Team Member Info' team.id m.user_ID.id %}">{{ m.user_ID.username }} </a></td>
-                <td>{{ m.role_ID.name }}</td>
-                {% if can_modify_members and m.role_ID.name != "Creator" %}
+                <td><a href="{% url 'Show Team Member Info' team.id m.user.id %}">{{ m.user.username }} </a></td>
+                <td>{{ m.role.name }}</td>
+                {% if can_modify_members and m.role.name != "Creator" %}
                 <td>
-                    <button type="button" class="btn btn-primary btn-lg float-begin" onclick="location.href ='{% url 'Change Team Member Role' team.id m.user_ID.id %}'">
+                    <button type="button" class="btn btn-primary btn-lg float-begin" onclick="location.href ='{% url 'Change Team Member Role' team.id m.user.id %}'">
                         Change Role
                     </button>
-                    <button type="button" class="btn btn-primary btn-lg float-begin" onclick="location.href ='{% url 'Remove Team Member' team.id m.user_ID.id %}'">
+                    <button type="button" class="btn btn-primary btn-lg float-begin" onclick="location.href ='{% url 'Remove Team Member' team.id m.user.id %}'">
                         Remove
                     </button>
                 </td>
@@ -62,5 +62,10 @@
             Remove Team
         </button>
     {% endif %}
+    </div>
+    <div>
+        <button type="button" class="btn btn-danger btn-lg float-end" onclick="location.href ='{% url 'Show Team Bots' team.id %}'">
+            Show Bots
+        </button>
     </div>
 {% endblock %}
