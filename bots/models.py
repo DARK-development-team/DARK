@@ -1,7 +1,6 @@
 from django.db import models as dmodels
 from team.models import Team
 from round.models import Round
-import git
 
 
 class Bot(dmodels.Model):
@@ -18,11 +17,13 @@ class Bot(dmodels.Model):
         ordering = ['team', 'round']
         unique_together = ("team", "round")
 
+
+'''
     def extract_name_from_repo_path(self, repo_path : str):
         full_path = git.Repo(self.bot_url).remotes.origin.url
         repo_name = full_path.split('.git')[0].split('/')[-1]
         return repo_name
-
+        
     def sync(self):
         git.Git(f'{Bot.download_directory}/'
                 f'{self.team.name}/'
@@ -33,3 +34,5 @@ class Bot(dmodels.Model):
     def run_on(self, round: Round):
         self.sync()
         pass
+'''
+
