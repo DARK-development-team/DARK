@@ -1,6 +1,5 @@
 # DARK - [GUPB](https://github.com/Prpht/GUPB) tournament manager/organizer
 
-[![.github/workflows/django.yml](https://github.com/TheTryton/DARK/actions/workflows/django.yml/badge.svg?branch=develop)]
 
 Project created for the course Software Engineering at AGH University of Science and Technology in Cracow. The project is a platform for hosting tournaments where AI Bots compete with each other in various games. 
 
