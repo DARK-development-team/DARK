@@ -8,4 +8,19 @@
         <p>Start Date: {{ queue.start_date }}</p>
         <p>End Date: {{ queue.end_date }}</p>
     </div>
+
+    <form method="post">
+        {% csrf_token %}
+        <input type="submit" value="Run queue">
+    </form>
+
+    {% if results %}
+        <h3>
+            Queue results:
+        </h3>
+        {% for score in results %}
+                <p> {{ score }} </p>
+            {% endfor %}
+    {% endif %}
+
 {% endblock %}
