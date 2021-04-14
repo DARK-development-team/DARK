@@ -1,0 +1,24 @@
+{% extends "dark/base.html" %}
+
+{% block section_subtitle %}
+    Teams
+{% endblock %}
+{% block section_title %}
+    Your teams
+{% endblock %}
+
+{% block content %}
+    <div class="row justify-content-around mx-sm-5 mb-sm-2 pb-2 font-weight-bold">
+        <div class="col-1">#</div>
+        <div class="col-4">Name</div>
+        <div class="col-4">Tournament</div>
+    </div>
+    <div class="row mx-sm-5 mb-sm-2 border border-secondary"></div>
+    {% for team in teams %}
+        <div class="row justify-content-around swatch-200 mx-sm-5 my-sm-2 py-3 rounded shadow">
+            <div class="col-1">{{ forloop.counter }}</div>
+            <div class="col-4"><a href="{% url 'tournament:team:info' team.tournament.id team.id%}" class="text-info">{{ team.name }} </a></div>
+            <div class="col-4">{{ team.tournament.name }}</div>
+        </div>
+    {% endfor %}
+{% endblock %}

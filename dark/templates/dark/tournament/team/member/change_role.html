@@ -1,12 +1,12 @@
 {% extends "dark/base.html" %}
 
 {% block content %}
-    <h2>Add Round</h2>
+    <h2>Change {{ member.user }} role:</h2>
     <div class="container">
         <form method="post">
             {% csrf_token %}
             {% for field in form %}
-                <div>
+                <p>
                     {{ field.label_tag }}<br>
                     {{ field }}
                     {% if field.help_text %}
@@ -15,10 +15,9 @@
                     {% for error in field.errors %}
                         <p style="color: red">{{ error }}</p>
                     {% endfor %}
-                </div>
+                </p>
             {% endfor %}
-            <p>DateTime Format: yyyy-MM-dd hh:mm:ss</p>
-            <button class="btn btn-outline-info" type="submit">Add Round</button>
+            <button class="btn btn-outline-info" type="submit">Change</button>
         </form>
     </div>
 {% endblock %}
