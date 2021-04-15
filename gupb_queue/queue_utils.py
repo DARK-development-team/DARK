@@ -3,23 +3,26 @@ import sys
 from celery import shared_task
 
 
-def execute_queue():
+def execute_queue(name, queue_id):
     # save current working directory
-    curent_dir = os.getcwd()
-
+    current_dir = os.getcwd()
     # set directory for queue logs
-    log_directory = 'queue_results'
+    log_directory = f'queue_results_{queue_id}'
 
     # change directory to gupb and execute queue
-    os.chdir('GUPB')
-    os.system('python -m gupb -l {}'.format(log_directory))
+    os.chdir(name)
+    os.system(f'python3 -m {name.lower()} -l {log_directory}')
 
     # restore previous directory
-    os.chdir(curent_dir)
+    os.chdir(current_dir)
 
 
-def get_queue_results():
-    log_directory = 'GUPB/queue_results'
+def get_queue_results(queue_id):
+    log_directory = f'GUPB/queue_results{queue_id}'
+
+    if not os.path.exists(log_directory):
+        return None
+
     result_files = os.listdir(log_directory)
 
     if not result_files:

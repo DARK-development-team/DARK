@@ -37,6 +37,13 @@
                     <a class="nav-link" href="{% url 'Show All Teams' %}">Teams</a>
                 </li>
             </ul>
+        {% if user.is_superuser %}
+            <ul class="navbar-nav w-100 justify-content-center">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'platforms:Add Platform' %}">Add Platform</a>
+                </li>
+            </ul>
+        {% endif %}
             <ul class="nav navbar-nav ms-auto w-100 justify-content-end"> {# Log/Register #}
                 {% if not user.is_authenticated %}
                     <li class="nav-item active">

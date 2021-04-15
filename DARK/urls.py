@@ -24,4 +24,5 @@ urlpatterns = [
     path('team/', include('team.urls')),
     path('teams/', include('teams.urls')),
     path('user/', include('users.urls')),
+    path('platform/', include('platforms.urls')),
 ]
