@@ -16,10 +16,12 @@
             display: inline-block;
             vertical-align: middle;
         }
+
+        html, body {height: 100%;}
     </style>
     <title>DARK: tournament manager and organizer</title>
 </head>
-<body>
+<body class="swatch-200">
 
 <nav class="navbar navbar-dark navbar-expand-md bg-dark justify-content-center">
     <div class="container">
@@ -31,10 +33,10 @@
         <div class="navbar-collapse collapse w-100" id="collapsingNavbar3"> {# Main pages #}
             <ul class="navbar-nav w-100 justify-content-center">
                 <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'Tournaments' %}">Tournaments</a>
+                    <a class="nav-link" href="{% url 'Tournaments' %}">TOURNAMENTS</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'Show All Teams' %}">Teams</a>
+                    <a class="nav-link" href="{% url 'Show All Teams' %}">TEAMS</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav ms-auto w-100 justify-content-end"> {# Log/Register #}
@@ -70,7 +72,14 @@
     </div>
 </nav>
 
-<div>
+<div class="container-fluid bg-white justify-content-center" style="height: 7%">
+    <div class="container">
+        {% block header %}
+        {% endblock %}
+    </div>
+</div>
+
+<div class="container bg-white justify-content-center rounded mt-5 p-3 h-75 text-center">
     {% block content %}
     {% endblock %}
 </div>
