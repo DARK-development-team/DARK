@@ -73,9 +73,15 @@
 </nav>
 
 <div class="container-fluid bg-white justify-content-center" style="height: 7%">
-    <div class="container">
-        {% block header %}
-        {% endblock %}
+    <div class="container h-100">
+        <div class="row h-50 pt-2 font-weight-normal text-muted">
+            {% block section_subtitle %}
+            {% endblock %}
+        </div>
+        <div class="row font-weight-bold h-25 h5">
+            {% block section_title %}
+            {% endblock %}
+        </div>
     </div>
 </div>
 
