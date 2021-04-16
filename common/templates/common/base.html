@@ -25,44 +25,44 @@
 
 <nav class="navbar navbar-dark navbar-expand-md bg-dark justify-content-center">
     <div class="container">
-        <a href="/" class="navbar-brand d-flex w-50 me-auto">DARK</a>
+        <a href="/" class="navbar-brand d-flex w-50 me-auto text-secondary font-weight-bold">DARK</a>
         <button class="navbar-toggler flex-grow-sm-1 flex-grow-0 me-2" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbar5">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="navbar-collapse collapse w-100" id="collapsingNavbar3"> {# Main pages #}
             <ul class="navbar-nav w-100 justify-content-center">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'Tournaments' %}">TOURNAMENTS</a>
+                <li class="nav-item">
+                    <a class="nav-link text-secondary font-weight-bold" href="{% url 'Tournaments' %}">TOURNAMENTS</a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'Show All Teams' %}">TEAMS</a>
+                <li class="nav-item">
+                    <a class="nav-link text-secondary font-weight-bold" href="{% url 'Show All Teams' %}">TEAMS</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav ms-auto w-100 justify-content-end"> {# Log/Register #}
                 {% if not user.is_authenticated %}
                     <li class="nav-item active">
-                        <a class="nav-link" href="{% url 'Register' %}">Register</a>
+                        <a class="nav-link text-secondary " href="{% url 'Register' %}">Sign up</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="{% url 'Login' %}">Login</a>
+                        <a class="nav-link text-secondary font-weight-bold" href="{% url 'Login' %}">Sign in</a>
                     </li>
                 {% else %} {# Profile dropdown #}
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown"
+                        <a class="nav-link dropdown-toggle text-secondary font-weight-bold" href="#" id="navbarScrollingDropdown"
                            role="button" data-bs-toggle="dropdown" aria-expanded="false"> Profile </a>
                         <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarScrollingDropdown">
                             <li class="nav-item active">
-                                <a class="dropdown-item" href="{% url 'Show User Teams' user.id %}">Your Teams</a>
+                                <a class="dropdown-item text-dark" href="{% url 'Show User Teams' user.id %}">Your Teams</a>
                             </li>
                             <li class="nav-item active">
-                                <a class="dropdown-item" href="{% url 'Create Team' %}">Create Team</a>
+                                <a class="dropdown-item text-dark" href="{% url 'Create Team' %}">Create Team</a>
                             </li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
                             <li class="nav-item active">
-                                <a class="dropdown-item" href="{% url 'Logout' %}">Logout</a>
+                                <a class="dropdown-item text-dark" href="{% url 'Logout' %}">Logout</a>
                             </li>
                         </ul>
                     </li>
