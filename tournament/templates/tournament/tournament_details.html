@@ -1,0 +1,63 @@
+{% extends "common/base.html" %}
+
+{% block content %}
+
+    <div class="text-center">
+        <h1 style="color: Blue">{{ tournament.name }}</h1>
+        <h4>{{ tournament.start_date }} - {{ tournament.end_date }}</h4>
+
+        {% if user.is_authenticated %}
+            <button type="button" class="btn btn-primary btn-lg float-begin" onclick="location.href ='{% url 'Add Queue' tournament.id %}'">
+                Add Queue
+            </button>
+        {% endif %}
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Queues</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for queue in queues %}
+            <tr>
+                <td>{{ queue.name }}</td>
+                <td>{{ queue.start_date }} - {{ queue.end_date }}</td>
+                <td>
+                    <button type="button" class="btn btn-primary btn-lg float-begin"
+                            onclick="location.href ='{% url 'queue:Show Queue Terms' queue.id %}'">
+                        TERMS
+                    </button>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Contestants</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for team in contestants %}
+            <tr>
+                <td>{{ team.name }}</td>
+                <td>
+                    <button type="button" class="btn btn-primary btn-lg float-begin"
+                            onclick="location.href ='{% url 'Show Team Info' team.id %}'">
+                        DETAILS
+                    </button>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

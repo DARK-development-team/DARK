@@ -31,13 +31,19 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'common.apps.CommonConfig',
     'tournament.apps.TournamentConfig',
+    'gupb_queue.apps.GupbQueueConfig',
+    'users.apps.UsersConfig',
+    'teams.apps.TeamsConfig',
+    'team.apps.TeamConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -110,6 +116,7 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
+
 USE_L10N = True
 
 USE_TZ = True
@@ -119,3 +126,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_FINDERS = ['django.contrib.staticfiles.finders.AppDirectoriesFinder',]

@@ -1,5 +1,5 @@
 """
-ASGI config for DARK project.
+ASGI config for common project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 

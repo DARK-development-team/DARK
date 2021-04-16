@@ -1,4 +1,4 @@
-"""DARK URL Configuration
+"""common URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.1/topics/http/urls/
@@ -18,5 +18,10 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('tournament.urls'))
+    path('', include('common.urls')),
+    path('tournament/', include('tournament.urls')),
+    path('queue/', include('gupb_queue.urls')),
+    path('team/', include('team.urls')),
+    path('teams/', include('teams.urls')),
+    path('user/', include('users.urls')),
 ]
