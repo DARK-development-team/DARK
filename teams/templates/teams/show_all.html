@@ -8,22 +8,17 @@
 {% endblock %}
 
 {% block content %}
-    <table class="table">
-        <thead class="thead-default">
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col" class="text-center">Name</th>
-                <th scope="col" class="text-center">Tournament</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for team in teams %}
-            <tr>
-                <th scope="row">{{ forloop.counter }}</th>
-                <td><a href="{% url 'Show Team Info' team.id%}" class="text-info">{{ team.name }} </a></td>
-                <td>{{ team.tournament_ID.name }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="row justify-content-around mx-sm-5 mb-sm-2 pb-2 font-weight-bold">
+        <div class="col-1">#</div>
+        <div class="col-4">Name</div>
+        <div class="col-4">Tournament</div>
+    </div>
+    <div class="row mx-sm-5 mb-sm-2 border border-secondary"></div>
+    {% for team in teams %}
+        <div class="row justify-content-around swatch-200 mx-sm-5 my-sm-2 py-3 rounded shadow">
+            <div class="col-1">{{ forloop.counter }}</div>
+            <div class="col-4"><a href="{% url 'Show Team Info' team.id%}" class="text-info">{{ team.name }} </a></div>
+            <div class="col-4">{{ team.tournament_ID.name }}</div>
+        </div>
+    {% endfor %}
 {% endblock %}
