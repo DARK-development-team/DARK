@@ -19,7 +19,12 @@ def execute_round():
 
 def get_round_results():
     log_directory = 'GUPB/round_results'
-    result_files = os.listdir(log_directory)
+    try:
+        result_files = os.listdir(log_directory)
+    except FileNotFoundError:
+        cwd = os.getcwd()
+        files = os.listdir()
+        raise FileNotFoundError(f'Current directory is {cwd} with files \n {files}')
 
     if not result_files:
         return None
