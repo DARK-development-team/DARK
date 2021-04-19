@@ -10,8 +10,8 @@
 {% endblock %}
 
 {% block content %}
-    <div class="h-100 align-items-center">
-        <div class="row h-50 justify-content-md-center">
+    <div class="align-items-center">
+        <div class="row my-5 py-5 justify-content-md-center">
             <div class="col my-auto">
               <blockquote class="blockquote">
               <h1 class="mb-1">Happiness is seeing your AI play games.</h1>
@@ -20,7 +20,7 @@
               </blockquote>
             </div>
         </div>
-        <div class="row justify-content-around">
+        <div class="row mt-5 pt-2 justify-content-around">
             <div class = "col-sm-1 col-md-1 col-lg-1">
                 <img src="{% static 'online-game.png' %}" class="img-fluid">
             </div>
@@ -31,7 +31,7 @@
                 <img src="{% static 'vs.png' %}" class="img-fluid">
             </div>
         </div>
-        <div class="row justify-content-around">
+        <div class="row mb-5 pb-2 justify-content-around">
             <div class = "col-sm-2 col-md-2 col-lg-2 font-weight-bold">
                 Host your games!
             </div>
@@ -42,7 +42,7 @@
                 Compete with other teams!
             </div>
         </div>
-        <div class="row justify-content-md-center mt-5">
+        <div class="row pt-5 justify-content-md-center mt-5">
             <div class="col">
                 {% if user.is_authenticated %}
                     <h5>Nice to see you again {{ user.username }}!</h5>
