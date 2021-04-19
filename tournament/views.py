@@ -13,16 +13,16 @@ def tournaments(request):
 
     if request.user.is_authenticated:
         context = {
-            "active": Tournament.objects.filter(team__teammember__user_ID=request.user).filter(
-                start_date__lt=now).filter(end_date__gt=now),
-            "upcoming": Tournament.objects.filter(team__teammember__user_ID=request.user).filter(
-                start_date__gt=now),
+            "in_progress": Tournament.objects.filter(start_date__lt=now).filter(end_date__gt=now),
+            "upcoming": Tournament.objects.filter(start_date__gt=now),
+            "your_upcoming": Tournament.objects.filter(team__teammember__user_ID=request.user).filter(start_date__gt=now),
             "created_by_you": Tournament.objects.filter(creator=request.user),
         }
     else:
         context = {
-            "active": Tournament.objects.filter(start_date__lt=now).filter(end_date__gt=now),
+            "in_progress": Tournament.objects.filter(start_date__lt=now).filter(end_date__gt=now),
             "upcoming": Tournament.objects.filter(start_date__gt=now),
+            "your_upcoming": None,
             "created_by_you": None,
         }
 

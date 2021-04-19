@@ -1,84 +1,100 @@
 {% extends "common/base.html" %}
 
+{% block section_subtitle %}
+    Tournaments
+{% endblock %}
+{% block section_title %}
+    All tournaments
+{% endblock %}
+
+
 {% block content %}
 
     <div class="text-center">
-        <h1 style="color: Blue">Tournaments</h1>
-
         {% if user.is_authenticated %}
-            <button type="button" class="btn btn-primary btn-lg float-begin" onclick="location.href ='{% url 'Tournament Add' %}'">
+            <button type="button" class="btn btn-secondary btn-md float-begin mb-4"
+                    onclick="location.href ='{% url 'Tournament Add' %}'">
                 Add Tournament
             </button>
         {% endif %}
     </div>
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">Active</th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for tournament in active %}
-            <tr>
-                <td>{{ tournament.name }}</td>
-                <td>{{ tournament.start_date }} - {{ tournament.end_date }}</td>
-                <td>
-                    <button type="button" class="btn btn-primary btn-lg float-begin" onclick="location.href ='{% url 'Tournament Details' tournament.id %}'">
-                        DETAILS
-                    </button>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="row justify-content-around mx-sm-5 mt-sm-2 pb-2 font-weight-bold">
+        <div class="col-4 text-left">In Progress</div>
+        <div class="col-4"></div>
+        <div class="col-4"></div>
+    </div>
+    <div class="row mx-sm-5 mb-sm-2 border border-secondary"></div>
+    {% for tournament in in_progress %}
+        <div class="row justify-content-around swatch-200 mx-sm-5 my-sm-2 py-3 rounded shadow">
+            <div class="col-2">{{ tournament.name }}</div>
+            <div class="col-6">{{ tournament.start_date }} - {{ tournament.end_date }}</div>
+            <div class="col-2">
+                <button type="button" class="btn btn-primary btn-sm float-begin"
+                        onclick="location.href ='{% url 'Tournament Details' tournament.id %}'">
+                    DETAILS
+                </button>
+            </div>
+        </div>
+    {% endfor %}
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">Upcoming</th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for tournament in upcoming %}
-            <tr>
-                <td>{{ tournament.name }}</td>
-                <td>{{ tournament.start_date }} - {{ tournament.end_date }}</td>
-                <td>
-                    <button type="button" class="btn btn-primary btn-lg float-begin" onclick="location.href ='{% url 'Tournament Details' tournament.id %}'">
-                        DETAILS
-                    </button>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="row justify-content-around mx-sm-5 mt-sm-2 pb-2 font-weight-bold">
+        <div class="col-4 text-left">Upcoming</div>
+        <div class="col-4"></div>
+        <div class="col-4"></div>
+    </div>
+    <div class="row mx-sm-5 mb-sm-2 border border-secondary"></div>
+    {% for tournament in upcoming %}
+        <div class="row justify-content-around swatch-200 mx-sm-5 my-sm-2 py-3 rounded shadow">
+            <div class="col-2">{{ tournament.name }}</div>
+            <div class="col-6">{{ tournament.start_date }} - {{ tournament.end_date }}</div>
+            <div class="col-2">
+                <button type="button" class="btn btn-primary btn-sm float-begin"
+                        onclick="location.href ='{% url 'Tournament Details' tournament.id %}'">
+                    DETAILS
+                </button>
+            </div>
+        </div>
+    {% endfor %}
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Created By You</th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-            </tr>
-        </thead>
-        <tbody>
+    {% if user.is_authenticated %}
+{#        <div class="row justify-content-around mx-sm-5 mt-sm-2 pb-2 font-weight-bold">#}
+{#            <div class="col-4 text-left">Joined</div>#}
+{#            <div class="col-4"></div>#}
+{#            <div class="col-4"></div>#}
+{#        </div>#}
+{#        <div class="row mx-sm-5 mb-sm-2 border border-secondary"></div>#}
+{#        {% for tournament in your_upcoming %}#}
+{#            <div class="row justify-content-around swatch-200 mx-sm-5 my-sm-2 py-3 rounded shadow">#}
+{#                <div class="col-2">{{ tournament.name }}</div>#}
+{#                <div class="col-6">{{ tournament.start_date }} - {{ tournament.end_date }}</div>#}
+{#                <div class="col-2">#}
+{#                    <button type="button" class="btn btn-primary btn-sm float-begin"#}
+{#                            onclick="location.href ='{% url 'Tournament Details' tournament.id %}'">#}
+{#                        DETAILS#}
+{#                    </button>#}
+{#                </div>#}
+{#            </div>#}
+{#        {% endfor %}#}
+
+        <div class="row justify-content-around mx-sm-5 mt-sm-2 pb-2 font-weight-bold">
+            <div class="col-4 text-left">Created By You</div>
+            <div class="col-4"></div>
+            <div class="col-4"></div>
+        </div>
+        <div class="row mx-sm-5 mb-sm-2 border border-secondary"></div>
         {% for tournament in created_by_you %}
-            <tr>
-                <td>{{ tournament.name }}</td>
-                <td>{{ tournament.start_date }} - {{ tournament.end_date }}</td>
-                <td>
-                    <button type="button" class="btn btn-primary btn-lg float-begin" onclick="location.href ='{% url 'Tournament Details' tournament.id %}'">
+            <div class="row justify-content-around swatch-200 mx-sm-5 my-sm-2 py-3 rounded shadow">
+                <div class="col-2">{{ tournament.name }}</div>
+                <div class="col-6">{{ tournament.start_date }} - {{ tournament.end_date }}</div>
+                <div class="col-2">
+                    <button type="button" class="btn btn-primary btn-sm float-begin"
+                            onclick="location.href ='{% url 'Tournament Details' tournament.id %}'">
                         DETAILS
                     </button>
-                </td>
-            </tr>
+                </div>
+            </div>
         {% endfor %}
-        </tbody>
-    </table>
+    {% endif %}
 
 {% endblock %}
