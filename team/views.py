@@ -11,12 +11,12 @@ def create_team_view(request):
             team = form.save()
 
             # ensure that admin and default role is also present in db
-            TeamRole.objects.create(team_ID=team, name="Moderator", can_modify_members=True)
-            TeamRole.objects.create(team_ID=team, name="Member")
-            creator_role = TeamRole.objects.create(team_ID=team, name="Creator",
+            TeamRole.objects.create(team=team, name="Moderator", can_modify_members=True)
+            TeamRole.objects.create(team=team, name="Member")
+            creator_role = TeamRole.objects.create(team=team, name="Creator",
                                                    can_modify_members=True, can_remove=True)
 
-            TeamMember.objects.create(team_ID=team, user_ID=current_user, role_ID=creator_role)
+            TeamMember.objects.create(team=team, user=current_user, role=creator_role)
 
             messages.success(request, f'Team created!')
             return redirect('Show Team Info', teamid=team.id)
@@ -26,13 +26,13 @@ def create_team_view(request):
     return render(request, 'team/create.html', {'form': form})
 
 
-def show_team_info_view(request, teamid):
+def show_team_info_view(request, team_id):
     current_user = request.user
     if current_user.is_authenticated:
         try:
-            member = TeamMember.objects.get(team_ID=teamid, user_ID=current_user.id)
-            can_modify_members = member.role_ID.can_modify_members
-            can_remove = member.role_ID.can_remove
+            member = TeamMember.objects.get(team=team_id, user=current_user.id)
+            can_modify_members = member.role.can_modify_members
+            can_remove = member.role.can_remove
 
         except (TeamMember.DoesNotExist, TeamRole.DoesNotExist):
             can_modify_members = False
@@ -41,8 +41,8 @@ def show_team_info_view(request, teamid):
         can_modify_members = False
         can_remove = False
 
-    team = Team.objects.get(id=teamid)
-    members = TeamMember.objects.filter(team_ID=team)
+    team = Team.objects.get(id=team_id)
+    members = TeamMember.objects.filter(team=team)
     context = {
         "team": team,
         "members": members,
@@ -56,8 +56,8 @@ def remove_team_view(request, teamid):
     current_user = request.user
     if current_user.is_authenticated:
         try:
-            member = TeamMember.objects.get(team_ID=teamid, user_ID=current_user.id)
-            role = TeamRole.objects.get(id=member.role_ID.id)
+            member = TeamMember.objects.get(team=teamid, user=current_user.id)
+            role = TeamRole.objects.get(id=member.role.id)
             can_remove = role.can_remove
         except (TeamMember.DoesNotExist, TeamRole.DoesNotExist):
             can_remove = False
@@ -79,8 +79,8 @@ def change_team_name_view(request, teamid):
     current_user = request.user
     if current_user.is_authenticated:
         try:
-            member = TeamMember.objects.get(team_ID=teamid, user_ID=current_user.id)
-            role = TeamRole.objects.get(id=member.role_ID.id)
+            member = TeamMember.objects.get(team=teamid, user=current_user.id)
+            role = TeamRole.objects.get(id=member.role.id)
             can_remove = role.can_remove
         except (TeamMember.DoesNotExist, TeamRole.DoesNotExist):
             can_remove = False
@@ -109,8 +109,8 @@ def manage_team_roles_view(request, teamid):
     current_user = request.user
     if current_user.is_authenticated:
         try:
-            member = TeamMember.objects.get(team_ID=teamid, user_ID=current_user.id)
-            role = TeamRole.objects.get(id=member.role_ID.id)
+            member = TeamMember.objects.get(team=teamid, user=current_user.id)
+            role = TeamRole.objects.get(id=member.role.id)
             can_remove = role.can_remove
         except (TeamMember.DoesNotExist, TeamRole.DoesNotExist):
             can_remove = False
@@ -120,7 +120,7 @@ def manage_team_roles_view(request, teamid):
     if can_remove:
         context = {
             "team": Team.objects.get(id=teamid),
-            "roles": TeamRole.objects.filter(team_ID_id=teamid)
+            "roles": TeamRole.objects.filter(team_id=teamid)
         }
         return render(request, 'team/manage_roles.html', context)
     else:
@@ -131,8 +131,8 @@ def add_team_role_view(request, teamid):
     current_user = request.user
     if current_user.is_authenticated:
         try:
-            member = TeamMember.objects.get(team_ID=teamid, user_ID=current_user.id)
-            role = TeamRole.objects.get(id=member.role_ID.id)
+            member = TeamMember.objects.get(team=teamid, user=current_user.id)
+            role = TeamRole.objects.get(id=member.role.id)
             can_remove = role.can_remove
         except (TeamMember.DoesNotExist, TeamRole.DoesNotExist):
             can_remove = False
@@ -146,7 +146,7 @@ def add_team_role_view(request, teamid):
                 name = form.cleaned_data.get('name')
                 can_modify_members = form.cleaned_data.get('can_modify_members')
                 can_remove = form.cleaned_data.get('can_remove')
-                TeamRole.objects.create(team_ID_id=teamid, name=name,
+                TeamRole.objects.create(team_id=teamid, name=name,
                                         can_modify_members=can_modify_members, can_remove=can_remove);
                 messages.success(request, f'Role created!')
                 return redirect('Manage Team Roles', teamid=teamid)
@@ -163,8 +163,8 @@ def modify_role_view(request, teamid, roleid):
     current_user = request.user
     if current_user.is_authenticated:
         try:
-            member = TeamMember.objects.get(team_ID=teamid, user_ID=current_user.id)
-            role = TeamRole.objects.get(id=member.role_ID.id)
+            member = TeamMember.objects.get(team=teamid, user=current_user.id)
+            role = TeamRole.objects.get(id=member.role.id)
             can_remove = role.can_remove
         except (TeamMember.DoesNotExist, TeamRole.DoesNotExist):
             can_remove = False
@@ -192,8 +192,8 @@ def remove_role_view(request, teamid, roleid):
     current_user = request.user
     if current_user.is_authenticated:
         try:
-            member = TeamMember.objects.get(team_ID=teamid, user_ID=current_user.id)
-            role = TeamRole.objects.get(id=member.role_ID.id)
+            member = TeamMember.objects.get(team=teamid, user=current_user.id)
+            role = TeamRole.objects.get(id=member.role.id)
             can_remove = role.can_remove
         except (TeamMember.DoesNotExist, TeamRole.DoesNotExist):
             can_remove = False
@@ -215,8 +215,8 @@ def add_team_member_view(request, teamid):
     current_user = request.user
     if current_user.is_authenticated:
         try:
-            member = TeamMember.objects.get(team_ID=teamid, user_ID=current_user.id)
-            role = TeamRole.objects.get(id=member.role_ID.id)
+            member = TeamMember.objects.get(team=teamid, user=current_user.id)
+            role = TeamRole.objects.get(id=member.role.id)
             can_modify_members = role.can_modify_members
         except (TeamMember.DoesNotExist, TeamRole.DoesNotExist):
             can_modify_members = False
@@ -226,17 +226,17 @@ def add_team_member_view(request, teamid):
     if can_modify_members:
         if request.method == 'POST':
             form = AddTeamMemberForm(request.POST)
-            form.fields['role_ID'].queryset = TeamRole.objects.filter(team_ID_id=teamid)
+            form.fields['role'].queryset = TeamRole.objects.filter(team_id=teamid)
             if form.is_valid():
                 team = Team.objects.get(id=teamid)
-                user = form.cleaned_data.get('user_ID')
-                role = form.cleaned_data.get('role_ID')
-                TeamMember.objects.create(team_ID=team, user_ID=user, role_ID=role)
+                user = form.cleaned_data.get('user')
+                role = form.cleaned_data.get('role')
+                TeamMember.objects.create(team=team, user=user, role=role)
                 messages.success(request, f'Member added!')
                 return redirect('Show Team Info', teamid=teamid)
         else:
             form = AddTeamMemberForm()
-            form.fields['role_ID'].queryset = TeamRole.objects.filter(team_ID_id=teamid)
+            form.fields['role'].queryset = TeamRole.objects.filter(team_id=teamid)
 
         return render(request, 'team/add_member.html', {'form': form})
     else:
@@ -247,8 +247,8 @@ def remove_team_member_view(request, teamid, teammemberid):
     current_user = request.user
     if current_user.is_authenticated:
         try:
-            member = TeamMember.objects.get(team_ID=teamid, user_ID=current_user.id)
-            role = TeamRole.objects.get(id=member.role_ID.id)
+            member = TeamMember.objects.get(team=teamid, user=current_user.id)
+            role = TeamRole.objects.get(id=member.role.id)
             can_modify_members = role.can_modify_members
         except (TeamMember.DoesNotExist, TeamRole.DoesNotExist):
             can_modify_members = False
@@ -256,7 +256,7 @@ def remove_team_member_view(request, teamid, teammemberid):
         can_modify_members = False
 
     if can_modify_members:
-        member = TeamMember.objects.get(user_ID_id=teammemberid, team_ID_id=teamid)
+        member = TeamMember.objects.get(user_id=teammemberid, team_id=teamid)
         if request.method == 'POST':
             member.delete()
             return redirect('Show Team Info', teamid=teamid)
@@ -274,8 +274,8 @@ def change_team_member_role_view(request, teamid, teammemberid):
     current_user = request.user
     if current_user.is_authenticated:
         try:
-            member = TeamMember.objects.get(team_ID=teamid, user_ID=current_user.id)
-            role = TeamRole.objects.get(id=member.role_ID.id)
+            member = TeamMember.objects.get(team=teamid, user=current_user.id)
+            role = TeamRole.objects.get(id=member.role.id)
             can_modify_members = role.can_modify_members
         except (TeamMember.DoesNotExist, TeamRole.DoesNotExist):
             can_modify_members = False
@@ -283,17 +283,17 @@ def change_team_member_role_view(request, teamid, teammemberid):
         can_modify_members = False
 
     if can_modify_members:
-        member = TeamMember.objects.get(team_ID=teamid, user_ID=teammemberid)
+        member = TeamMember.objects.get(team=teamid, user=teammemberid)
         if request.method == 'POST':
             form = ChangeRoleTeamMemberForm(request.POST, instance=member)
-            form.fields['role_ID'].queryset = TeamRole.objects.filter(team_ID_id=teamid)
+            form.fields['role'].queryset = TeamRole.objects.filter(team_id=teamid)
             if form.is_valid():
                 form.save()
                 messages.success(request, f'Member modified!')
                 return redirect('Show Team Info', teamid=teamid)
         else:
             form = ChangeRoleTeamMemberForm(instance=member)
-            form.fields['role_ID'].queryset = TeamRole.objects.filter(team_ID_id=teamid)
+            form.fields['role'].queryset = TeamRole.objects.filter(team_id=teamid)
 
         return render(request, 'team/change_member_role.html', {'form': form,
                                                                 'member': member})

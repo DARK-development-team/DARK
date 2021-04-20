@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="text-center">
-        <h1 style="color: red">Are you sure about removing member <p style="color: green">{{ member.user_ID }}</p></h1>
+        <h1 style="color: red">Are you sure about removing member <p style="color: green">{{ member.user }}</p></h1>
     <div class="container">
         <form method="post">
             {% csrf_token %}

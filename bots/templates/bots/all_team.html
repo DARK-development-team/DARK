@@ -1,0 +1,47 @@
+{% extends "common/base.html" %}
+
+{% block content %}
+    <div class="text-center">
+        <h1 style="color: green">Team {{ team.name }}</h1>
+        <h3>bots in tournament</h3>
+        <h2>
+            <a href="{% url 'Tournament Details' team.tournament.id %}">
+                {{ team.tournament.name }}
+            </a>
+        </h2>
+    </div>
+
+    <h3>Participants:</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Round</th>
+                <th scope="col">Bot</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for r, b in round_bot_pairs %}
+            <tr>
+                <th scope="row">1</th>
+                <td><a href="{% url 'Show Round Terms' r.tournament.id r.id %}">{{ r.name }}</a></td>
+                <td>
+                    {% if b is not None %}
+                        <a href="{{ b.bot_url }}">{{ b.bot_url }}</a>
+                        <button type="button" class="btn btn-primary btn-lg float-begin" onclick="location.href ='{% url 'Manage Bot' team.id b.id %}'">
+                            Modify
+                        </button>
+                        <button type="button" class="btn btn-primary btn-lg float-begin" onclick="location.href ='{% url 'Remove Bot' team.id b.id %}'">
+                            Remove
+                        </button>
+                    {% else %}
+                        <button type="button" class="btn btn-primary btn-lg float-begin" onclick="location.href ='{% url 'Add Bot' team.id r.id %}'">
+                            Add
+                        </button>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "common/base.html" %}
+
+{% block content %}
+    <div class="text-center">
+        <h1 style="color: red">
+            Are you sure about removing bot for round
+            <p style="color: green">{{ bot.round.name }}</p>
+            <p>in tournament</p>
+            <p style="color: green">{{ bot.round.tournament.name }}</p>
+        </h1>
+    <div class="container">
+        <form method="post">
+            {% csrf_token %}
+            <button class="btn btn-danger" type="submit">Remove</button>
+        </form>
+    </div>
+    </div>
+{% endblock %}
