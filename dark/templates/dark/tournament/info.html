@@ -1,4 +1,4 @@
-{% extends "common/base.html" %}
+{% extends "dark/base.html" %}
 
 {% block content %}
 
@@ -6,8 +6,8 @@
         <h1 style="color: Blue">{{ tournament.name }}</h1>
         <h4>{{ tournament.start_date }} - {{ tournament.end_date }}</h4>
 
-        {% if user.is_authenticated %}
-            <button type="button" class="btn btn-primary btn-lg float-begin" onclick="location.href ='{% url 'Add Round' tournament.id %}'">
+        {% if is_creator_viewing %}
+            <button type="button" class="btn btn-primary btn-lg float-begin" onclick="location.href ='{% url 'tournament:tround:add' tournament.id %}'">
                 Add Round
             </button>
         {% endif %}
@@ -22,13 +22,13 @@
             </tr>
         </thead>
         <tbody>
-        {% for round in rounds %}
+        {% for tround in rounds %}
             <tr>
-                <td>{{ round.name }}</td>
-                <td>{{ round.start_date }} - {{ round.end_date }}</td>
+                <td>{{ tround.name }}</td>
+                <td>{{ tround.start_date }} - {{ tround.end_date }}</td>
                 <td>
                     <button type="button" class="btn btn-primary btn-lg float-begin"
-                            onclick="location.href ='{% url 'Show Round Terms' tournament.id round.id %}'">
+                            onclick="location.href ='{% url 'tournament:tround:info' tournament.id tround.id %}'">
                         TERMS
                     </button>
                 </td>
@@ -51,7 +51,7 @@
                 <td>{{ team.name }}</td>
                 <td>
                     <button type="button" class="btn btn-primary btn-lg float-begin"
-                            onclick="location.href ='{% url 'Show Team Info' team.id %}'">
+                            onclick="location.href ='{% url 'tournament:team:info' tournament.id team.id %}'">
                         DETAILS
                     </button>
                 </td>
@@ -59,5 +59,11 @@
         {% endfor %}
         </tbody>
     </table>
+    {% if user.is_authenticated %}
+        <button type="button" class="btn btn-primary btn-lg float-begin"
+                onclick="location.href ='{% url 'tournament:team:add' tournament.id %}'">
+            Participate
+        </button>
+    {% endif %}
 
 {% endblock %}

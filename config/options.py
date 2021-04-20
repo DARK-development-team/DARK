@@ -1,4 +1,5 @@
 from pathlib import Path
+from os import path
 
 import django.conf.global_settings
 
@@ -27,6 +28,8 @@ USE_TZ = False
 STATIC_URL = '/static/'
 
 STATICFILES_FINDERS = ['django.contrib.staticfiles.finders.AppDirectoriesFinder', ]
+
+STATIC_ROOT = path.join(BASE_DIR, 'dark/static')
 
 WSGI_APPLICATION = 'base.wsgi.application'
 

@@ -1,12 +1,12 @@
-{% extends "common/base.html" %}
+{% extends "dark/base.html" %}
 
 {% block content %}
-    <h2>Modify Bot</h2>
+    <h2>Add Round</h2>
     <div class="container">
         <form method="post">
             {% csrf_token %}
             {% for field in form %}
-                <p>
+                <div>
                     {{ field.label_tag }}<br>
                     {{ field }}
                     {% if field.help_text %}
@@ -15,9 +15,10 @@
                     {% for error in field.errors %}
                         <p style="color: red">{{ error }}</p>
                     {% endfor %}
-                </p>
+                </div>
             {% endfor %}
-            <button class="btn btn-outline-info" type="submit">Modify</button>
+            <p>DateTime Format: yyyy-MM-dd hh:mm:ss</p>
+            <button class="btn btn-outline-info" type="submit">Add Round</button>
         </form>
     </div>
 {% endblock %}

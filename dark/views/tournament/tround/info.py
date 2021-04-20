@@ -3,6 +3,7 @@ from django.views.generic import DetailView
 from dark.models.tournament import TournamentRound
 from dark.logic import tround_utils
 
+
 class TournamentRoundInfoView(DetailView):
     model = TournamentRound
     template_name = 'dark/tournament/tround/info.html'
@@ -12,5 +13,6 @@ class TournamentRoundInfoView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['results'] = tround_utils.get_tround_results()
+        #tround_utils.execute_round()
+        #context['results'] = tround_utils.get_round_results()
         return context

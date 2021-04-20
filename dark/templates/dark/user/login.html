@@ -1,4 +1,4 @@
-{% extends "common/base.html" %}
+{% extends "dark/base.html" %}
 
 {% block section_subtitle %}
     <p>User</p>
@@ -28,7 +28,7 @@
             Don't have an account?
         </div>
         <div class="row justify-content-center">
-            <a href="{% url 'Register' %}" class="text-info">Sing up here</a>!
+            <a href="{% url 'user:register' %}" class="text-info">Sing up here</a>!
         </div>
     </div>
 

@@ -1,4 +1,4 @@
-{% extends "common/base.html" %}
+{% extends "dark/base.html" %}
 
 {% block section_subtitle %}
     Tournaments
@@ -13,7 +13,7 @@
     <div class="text-center">
         {% if user.is_authenticated %}
             <button type="button" class="btn btn-secondary btn-md float-begin mb-4"
-                    onclick="location.href ='{% url 'Tournament Add' %}'">
+                    onclick="location.href ='{% url 'tournament:add' %}'">
                 Add Tournament
             </button>
         {% endif %}
@@ -31,7 +31,7 @@
             <div class="col-6">{{ tournament.start_date }} - {{ tournament.end_date }}</div>
             <div class="col-2">
                 <button type="button" class="btn btn-primary btn-sm float-begin"
-                        onclick="location.href ='{% url 'Tournament Details' tournament.id %}'">
+                        onclick="location.href ='{% url 'tournament:info' tournament.id %}'">
                     DETAILS
                 </button>
             </div>
@@ -50,7 +50,7 @@
             <div class="col-6">{{ tournament.start_date }} - {{ tournament.end_date }}</div>
             <div class="col-2">
                 <button type="button" class="btn btn-primary btn-sm float-begin"
-                        onclick="location.href ='{% url 'Tournament Details' tournament.id %}'">
+                        onclick="location.href ='{% url 'tournament:info' tournament.id %}'">
                     DETAILS
                 </button>
             </div>
@@ -89,7 +89,7 @@
                 <div class="col-6">{{ tournament.start_date }} - {{ tournament.end_date }}</div>
                 <div class="col-2">
                     <button type="button" class="btn btn-primary btn-sm float-begin"
-                            onclick="location.href ='{% url 'Tournament Details' tournament.id %}'">
+                            onclick="location.href ='{% url 'tournament:info' tournament.id %}'">
                         DETAILS
                     </button>
                 </div>

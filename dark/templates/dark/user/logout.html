@@ -1,4 +1,4 @@
-{% extends "common/base.html" %}
+{% extends "dark/base.html" %}
 {% block section_subtitle %}
     <p>User</p>
 {% endblock %}
@@ -13,6 +13,6 @@
       <h2>You have been successfully logged out!</h2>
   </div>
   <div class="my-1 py-2">
-        <a href="{% url 'Login' %}" class="btn btn-lg btn-primary">Sign In</a>
+        <a href="{% url 'user:login' %}" class="btn btn-lg btn-primary">Sign In</a>
   </div>
 {% endblock %}

@@ -1,5 +1,5 @@
 from split_settings.tools import optional, include
-
+from django_heroku import settings as dh_settings
 
 include(
     'options.py',
@@ -9,3 +9,5 @@ include(
     'subsettings/middleware.py',
     'subsettings/templates.py',
 )
+
+dh_settings(locals())

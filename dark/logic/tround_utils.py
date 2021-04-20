@@ -1,24 +1,14 @@
 import os
-import sys
 
-<<<<<<< HEAD:round/round_utils.py
 
 def execute_round():
-=======
-def execute_tround():
->>>>>>> 354d230... refactored app structure and views + added coverage file + added several tests:dark/logic/tround_utils.py
     # save current working directory
     current_dir = os.getcwd()
 
-<<<<<<< HEAD:round/round_utils.py
     # set directory for queue logs
     log_directory = 'round_results'
-=======
-    # set directory for tround logs
-    log_directory = 'tround_results'
->>>>>>> 354d230... refactored app structure and views + added coverage file + added several tests:dark/logic/tround_utils.py
 
-    # change directory to gupb and execute tround
+    # change directory to gupb and execute queue
     os.chdir('GUPB')
     os.system('python -m gupb -l {}'.format(log_directory))
 
@@ -26,7 +16,6 @@ def execute_tround():
     os.chdir(current_dir)
 
 
-<<<<<<< HEAD:round/round_utils.py
 def get_round_results():
     log_directory = 'GUPB/round_results'
     try:
@@ -35,11 +24,6 @@ def get_round_results():
         cwd = os.getcwd()
         files = os.listdir()
         raise FileNotFoundError(f'Current directory is {cwd} with files \n {files}')
-=======
-def get_tround_results():
-    log_directory = 'GUPB/tround_results'
-    result_files = os.listdir(log_directory)
->>>>>>> 354d230... refactored app structure and views + added coverage file + added several tests:dark/logic/tround_utils.py
 
     if not result_files:
         return None

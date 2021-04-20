@@ -11,7 +11,7 @@ class AllTournamentsView(UserAuthenticationDependentContextMixin, TemplateView):
     def get_authenticated_context_data(self, **kwargs):
         now = timezone.now()
         return {
-            'active': Tournament.objects
+            'in_progress': Tournament.objects
                 .filter(team__teammember__user_id=self.request.user)
                 .filter(start_date__lt=now)
                 .filter(end_date__gt=now),
@@ -25,7 +25,7 @@ class AllTournamentsView(UserAuthenticationDependentContextMixin, TemplateView):
     def get_not_authenticated_context_data(self, **kwargs):
         now = timezone.now()
         return {
-            'active': Tournament.objects
+            'in_progress': Tournament.objects
                 .filter(start_date__lt=now)
                 .filter(end_date__gt=now),
             'upcoming': Tournament.objects
