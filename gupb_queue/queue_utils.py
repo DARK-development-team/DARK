@@ -2,23 +2,38 @@ import os
 import sys
 from celery import shared_task
 
+from gupb_queue.models import Queue
 
-def execute_queue(name, queue_id):
+
+def execute_queue(queue_id):
+    queue = Queue.objects.get(pk=queue_id)
+    platform = queue.platform
     # save current working directory
     current_dir = os.getcwd()
+    if not current_dir.endswith('/DARK'):
+        current_dir = current_dir[:(current_dir.find('/DARK') + 5)]
+        os.chdir(current_dir)
     # set directory for queue logs
-    log_directory = f'queue_results_{queue_id}'
+    log_directory = f'queue_results'
 
     # change directory to gupb and execute queue
-    os.chdir(name)
-    os.system(f'python3 -m {name.lower()} -l {log_directory}')
+    os.chdir(f'{platform.name}_{queue_id}')
+    os.system(f'python3 -m {platform.package_to_run} -l {log_directory}')
 
     # restore previous directory
     os.chdir(current_dir)
 
 
 def get_queue_results(queue_id):
-    log_directory = f'GUPB/queue_results{queue_id}'
+
+    current_dir = os.getcwd()
+    if not current_dir.endswith('/DARK'):
+        current_dir = current_dir[:(current_dir.find('/DARK') + 5)]
+        os.chdir(current_dir)
+
+    queue = Queue.objects.get(pk=queue_id)
+
+    log_directory = f'{queue.platform.name}_{queue_id}/queue_results'
 
     if not os.path.exists(log_directory):
         return None

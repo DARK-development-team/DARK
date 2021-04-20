@@ -11,11 +11,11 @@ def add_platform_view(request):
         if form.is_valid():
             name = form.cleaned_data.get('name')
             address = form.cleaned_data.get('address')
+            commit = form.cleaned_data.get('commit')
+            package_to_run = form.cleaned_data.get('package_to_run')
 
-            platform = Platform(name=name, address=address)
+            platform = Platform(name=name, address=address, commit=commit, package_to_run=package_to_run)
             platform.save()
-
-            platform_utils.clone_repo(name, address)
 
             return redirect('platforms:Platform Details', platform.pk)
 

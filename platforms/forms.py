@@ -5,4 +5,4 @@ from platforms.models import Platform
 class PlatformForm(ModelForm):
     class Meta:
         model = Platform
-        fields = ['name', 'address']
+        fields = ['name', 'address', 'commit', 'package_to_run']

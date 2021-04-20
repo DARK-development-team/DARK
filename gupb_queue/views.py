@@ -6,11 +6,12 @@ from platforms.models import Platform
 from tournament.models import Tournament
 
 from . import queue_utils
+from platforms import platform_utils
 
 
 def show_queue_terms_view(request, queue_id):
     if request.method == 'POST':
-        queue_utils.execute_queue(Queue.objects.get(pk=queue_id).platform.name, queue_id)
+        queue_utils.execute_queue(queue_id)
 
     queue = Queue.objects.get(pk=queue_id)
     context = {
@@ -32,6 +33,8 @@ def add_queue_view(request, tournament_id):
 
             queue = Queue(name=name, tournament=tournament, start_date=start_date, end_date=end_date, platform=platform)
             queue.save()
+
+            platform_utils.clone_repo(f'{platform.name}_{queue.pk}', platform.address, platform.commit)
 
             return redirect('Tournament Details', tournament_id)
 
