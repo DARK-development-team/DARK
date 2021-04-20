@@ -1,24 +1,24 @@
 {% extends "common/base.html" %}
 
+{% block section_subtitle %}
+    Teams
+{% endblock %}
+{% block section_title %}
+    Your teams
+{% endblock %}
+
 {% block content %}
-    <div class="text-center">
-        <h1 style="color: Blue">All your teams</h1>
+    <div class="row justify-content-around mx-sm-5 mb-sm-2 pb-2 font-weight-bold">
+        <div class="col-1">#</div>
+        <div class="col-4">Name</div>
+        <div class="col-4">Tournament</div>
     </div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Team Name</th>
-                <th scope="col">Tournament</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for team in teams %}
-            <tr>
-                <th scope="row">1</th>
-                <td><a href="{% url 'Show Team Info' team.id%}">{{ team.name }} </a></td>
-                <td>{{ team.tournament.name }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
+    <div class="row mx-sm-5 mb-sm-2 border border-secondary"></div>
+    {% for team in teams %}
+        <div class="row justify-content-around swatch-200 mx-sm-5 my-sm-2 py-3 rounded shadow">
+            <div class="col-1">{{ forloop.counter }}</div>
+            <div class="col-4"><a href="{% url 'Show Team Info' team.id%}" class="text-info">{{ team.name }} </a></div>
+            <div class="col-4">{{ team.tournament_ID.name }}</div>
+        </div>
+    {% endfor %}
 {% endblock %}

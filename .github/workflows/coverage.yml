@@ -1,4 +1,4 @@
-name: Django CI
+name: Coverage Code Cov
 
 on:
   push:
@@ -7,12 +7,15 @@ on:
     branches: [ develop ]
 
 jobs:
-  build:
+  run:
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
       matrix:
         python-version: [3.8, 3.9]
+    env:
+      OS: ${{ matrix.os }}
+      PYTHON: '3.7'
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
@@ -27,6 +30,13 @@ jobs:
       run: |
         python manage.py makemigrations
         python manage.py migrate
-    - name: Run Tests
+    - name: Generate Coverage Report
       run: |
-        python manage.py test
+        coverage run manage.py test
+        coverage report
+        coverage xml
+    - name: Upload Coverage to Codecov
+      uses: codecov/codecov-action@v1
+      with:
+        token: 'ae0bf1f7-254f-420a-bb54-419a59f70c2b'
+        fail_ci_if_error: true
