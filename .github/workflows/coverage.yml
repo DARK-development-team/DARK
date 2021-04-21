@@ -30,6 +30,9 @@ jobs:
       run: |
         python manage.py makemigrations
         python manage.py migrate
+    - name: Collect Static Files
+      run: |
+        python manage.py collectstatic
     - name: Generate Coverage Report
       run: |
         coverage run manage.py test
