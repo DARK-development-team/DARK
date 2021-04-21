@@ -1,0 +1,57 @@
+{% extends "dark/base.html" %}
+{% load static %}
+
+{% block section_subtitle %}
+    <p>Hello</p>
+{% endblock %}
+
+{% block section_title %}
+    <p>Home</p>
+{% endblock %}
+
+{% block content %}
+    <div class="align-items-center">
+        <div class="row my-5 py-5 justify-content-md-center">
+            <div class="col my-auto">
+              <blockquote class="blockquote">
+              <h1 class="mb-1">Happiness is seeing your AI play games.</h1>
+              <p class="blockquote-footer m-0"></p>
+                  <h5 class="mt-1"><i>Somebody</i></h5>
+              </blockquote>
+            </div>
+        </div>
+        <div class="row mt-5 pt-2 justify-content-around">
+            <div class = "col-sm-1 col-md-1 col-lg-1">
+                <img src="{% static 'online-game.png' %}" class="img-fluid">
+            </div>
+            <div class = "col-sm-1 col-md-1 col-lg-1">
+                <img src="{% static 'tournament.png' %}" class="img-fluid">
+            </div>
+            <div class = "col-sm-1 col-md-1 col-lg-1">
+                <img src="{% static 'vs.png' %}" class="img-fluid">
+            </div>
+        </div>
+        <div class="row mb-5 pb-2 justify-content-around">
+            <div class = "col-sm-2 col-md-2 col-lg-2 font-weight-bold">
+                Host your games!
+            </div>
+            <div class = "col-sm-2 col-md-2 col-lg-2 font-weight-bold">
+                Join and win tournaments!
+            </div>
+            <div class = "col-sm-2 col-md-2 col-lg-2 font-weight-bold">
+                Compete with other teams!
+            </div>
+        </div>
+        <div class="row pt-5 justify-content-md-center mt-5">
+            <div class="col">
+                {% if user.is_authenticated %}
+                    <h5>Nice to see you again {{ user.username }}!</h5>
+                {% else %}
+                    <a href="{% url 'user:register' %}" class="btn btn-lg btn-primary">Sign Up</a>
+                    <a href="{% url 'user:login' %}" class="btn btn-lg btn-primary">Sign In</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
