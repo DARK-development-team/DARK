@@ -26,6 +26,7 @@ class ForeignKeysMixin(object):
             setattr(form.instance, field_name, value)
         return super(ForeignKeysMixin, self).form_valid(form)
 
+
 class FieldQuerySetMixin(object):
     def get_queryset_for_field(self, field_name, queryset):
         return queryset
