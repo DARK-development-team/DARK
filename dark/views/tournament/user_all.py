@@ -1,15 +1,17 @@
-from django.shortcuts import redirect
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
 from django.utils import timezone
 from django.views.generic import TemplateView
 
-from dark.common.views import UserAuthenticationDependentContextMixin
 from dark.models.tournament import Tournament
 
 
-class UserAllTournamentsView(UserAuthenticationDependentContextMixin, TemplateView):
+class UserAllTournamentsView(LoginRequiredMixin, TemplateView):
     template_name = 'dark/tournament/user_all.html'
+    login_url = reverse_lazy('user:login')
+    redirect_field_name = 'redirect_to'
 
-    def get_authenticated_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs):
         current_user = self.request.user
         now = timezone.now()
         user_tournaments = Tournament.objects.filter(team__teammember__user=current_user)
@@ -18,6 +20,3 @@ class UserAllTournamentsView(UserAuthenticationDependentContextMixin, TemplateVi
             "in_progress_tournaments": user_tournaments.filter(start_date__lte=now).filter(end_date__gt=now),
             "archived_tournaments": user_tournaments.filter(end_date__lte=now)
         }
-
-    def get_not_authenticated_context_data(self, **kwargs):
-        redirect('login')
