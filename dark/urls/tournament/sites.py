@@ -12,7 +12,7 @@ class TournamentSite:
             path('all', AllTournamentsView.as_view(), name="all"),
             path('add', AddTournamentView.as_view(), name='add'),
             path('<int:tournament>', TournamentInfoView.as_view(), name="info"),
-            path('<slug:user_name>/all', UserAllTournamentsView.as_view(), name='user_all'),
+            path('<slug:username>/all', UserAllTournamentsView.as_view(), name='user all'),
             path('<int:tournament>/rounds/', tround.site.urls),
             path('<int:tournament>/teams/', team.site.urls),
         ]
