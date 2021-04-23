@@ -12,6 +12,7 @@ class Tournament(models.Model):
         return self.name
 
     class Meta:
+        unique_together = ('name', 'creator')
         constraints = [
             models.CheckConstraint(check=models.Q(start_date__lt=models.F("end_date")),
                                    name='tournament_start_date_lt_end_date'),
