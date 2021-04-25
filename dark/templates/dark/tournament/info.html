@@ -43,6 +43,7 @@
                 <th scope="col">Contestants</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
@@ -54,6 +55,14 @@
                             onclick="location.href ='{% url 'tournament:team:info' tournament.id team.id %}'">
                         DETAILS
                     </button>
+                </td>
+                <td>
+                    {% if not has_team %}
+                        <button type="button" class="btn btn-primary btn-lg float-begin"
+                                onclick="location.href ='{% url 'tournament:team:join' team.tournament.id team.id %}'">
+                            JOIN
+                        </button>
+                    {% endif %}
                 </td>
             </tr>
         {% endfor %}

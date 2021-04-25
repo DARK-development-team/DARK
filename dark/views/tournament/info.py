@@ -17,4 +17,5 @@ class TournamentInfoView(DetailView):
         context['rounds'] = TournamentRound.objects.filter(tournament=self.object)
         context['contestants'] = Team.objects.filter(tournament=self.object)
         context['is_creator_viewing'] = self.object.creator == self.request.user
+        context['has_team'] = True if Tournament.objects.filter(team__teammember__user=self.request.user).filter(id=self.object.id).count() != 0 else False
         return context

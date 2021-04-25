@@ -1,8 +1,7 @@
 from django.urls import path
 
-from dark.views.home import HomePageView
-
 from dark.views.tournament.team.role import AllTeamRolesView, AddTeamRoleView, ModifyTeamRoleView, RemoveTeamRoleView
+
 
 class TeamRoleSite:
     def get_urls(self):

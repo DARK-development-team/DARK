@@ -7,4 +7,5 @@ class DarkConfig(AppConfig):
     def ready(self):
         pass
 
+
 default_app_config = 'dark.DarkConfig'
