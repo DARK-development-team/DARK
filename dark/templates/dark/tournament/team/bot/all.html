@@ -27,7 +27,7 @@
                 <td><a href="{% url 'tournament:tround:info' team.tournament.id tround.id %}">{{ tround.name }}</a></td>
                 <td>
                     {% if bot is not None %}
-                        <a href="{{ bot.bot_url }}">{{ bot.bot_url }}</a>
+                        {{ bot|stringformat:"s" }}
                         <button type="button" class="btn btn-primary btn-lg float-begin" onclick="location.href ='{% url 'tournament:team:bot:modify' team.tournament.id team.id bot.id %}'">
                             Modify
                         </button>
