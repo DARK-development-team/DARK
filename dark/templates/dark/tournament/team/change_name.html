@@ -9,9 +9,11 @@
 {% endblock %}
 
 {% block content %}
-    <div class="text-center">
-        <h2 class="text-dark">Current name: {{ team.name }}</h2>
     <div class="container">
+        <div class="row justify-content-around mx-sm-5 mt-sm-2 pb-">
+            <div class="col-5"><b>Team:</b> {{ team.name }}</div>
+        </div>
+        <div class="row mx-sm-5 mb-4 border border-secondary"></div>
         <form method="post">
             {% csrf_token %}
             {% for field in form %}
@@ -39,5 +41,5 @@
             <button class="btn btn-primary" type="submit">Modify</button>
         </form>
     </div>
-    </div>
+
 {% endblock %}
