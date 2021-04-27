@@ -10,8 +10,9 @@ class AllTournamentsView(UserAuthenticationDependentContextMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         now = timezone.now()
+        tournaments = Tournament.objects.filter(is_private=False)
         return {
-            "upcoming_tournaments": Tournament.objects.filter(start_date__gt=now),
-            "in_progress_tournaments": Tournament.objects.filter(start_date__lt=now, end_date__gt=now),
-            "archived_tournaments": Tournament.objects.filter(end_date__lte=now)
+            "upcoming_tournaments": tournaments.filter(start_date__gt=now),
+            "in_progress_tournaments": tournaments.filter(start_date__lt=now, end_date__gt=now),
+            "archived_tournaments": tournaments.filter(end_date__lte=now)
         }

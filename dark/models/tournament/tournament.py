@@ -7,6 +7,7 @@ class Tournament(models.Model):
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
+    is_private = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
