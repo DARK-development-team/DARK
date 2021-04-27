@@ -11,6 +11,3 @@ class TeamRole(models.Model):
 
     def __str__(self):
         return self.name
-
-    class Meta:
-        unique_together = ("team", "name")

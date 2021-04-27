@@ -13,9 +13,15 @@ class AddTournamentView(CreateView):
     form_class = AddTournamentForm
 
     def form_valid(self, form):
+        creator = self.request.user
+
         self.object = form.save(commit=False)
-        self.object.creator = self.request.user
+        self.object.creator = creator
         self.object.save()
+
+        tournament = Tournament.objects.get(pk=self.object.id)
+
+        tournament.participants.add(creator)
 
         number_of_teams = form.cleaned_data.get('number_of_teams')
 
