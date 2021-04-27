@@ -5,6 +5,7 @@
     <div class="text-center">
         <h1 style="color: Blue">{{ tournament.name }}</h1>
         <h4>{{ tournament.start_date }} - {{ tournament.end_date }}</h4>
+        <h4>Access Key: {{ tournament.access_key }}</h4>
 
         {% if is_creator_viewing %}
             <button type="button" class="btn btn-primary btn-lg float-begin" onclick="location.href ='{% url 'tournament:tround:add' tournament.id %}'">

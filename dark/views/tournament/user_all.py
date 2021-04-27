@@ -14,7 +14,7 @@ class UserAllTournamentsView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         current_user = self.request.user
         now = timezone.now()
-        user_tournaments = Tournament.objects.filter(team__teammember__user=current_user)
+        user_tournaments = Tournament.objects.filter(participants__in=[current_user])
         return {
             "upcoming_tournaments": user_tournaments.filter(start_date__gt=now),
             "in_progress_tournaments": user_tournaments.filter(start_date__lte=now).filter(end_date__gt=now),
