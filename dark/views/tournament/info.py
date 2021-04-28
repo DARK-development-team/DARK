@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse
 from django.views.generic import DetailView
@@ -21,9 +22,11 @@ class TournamentInfoView(UserAuthenticationDependentContextMixin, DetailView):
         if tournament.is_private:
             if request.user.is_authenticated:
                 if request.user not in tournament.participants.all():
+                    messages.info(request, 'Tournament is private, enter access key')
                     return redirect(reverse('tournament:access', kwargs={'tournament': self.kwargs['tournament']}))
             else:
-                return redirect(reverse('tournament:all'))
+                messages.error(request, 'Tournament is private, login first')
+                return redirect(reverse('user:login'))
 
         return super().get(request, *args, **kwargs)
 
