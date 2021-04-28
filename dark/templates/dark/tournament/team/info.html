@@ -1,13 +1,16 @@
 {% extends "dark/base.html" %}
 
 {% block section_subtitle %}
-    Tournament {{ team.tournament.name }}
+    Team Details
 {% endblock %}
 {% block section_title %}
-    Team {{ team.name }}
+    {{ team.name }}
 {% endblock %}
 
 {% block content %}
+    <b>Team:</b> {{ team.name }} <br>
+    <b>Tournament:</b> {{ team.tournament.name }}
+    <div class="row mx-sm-5 mb-3 border border-secondary"></div>
     <div class="row justify-content-center">
         <div class="col-2 text-center">
             {% if user.is_authenticated %}
@@ -33,7 +36,7 @@
             <div class="col-2 text-center">
                 <button type="button" class="btn btn-info"
                         onclick="location.href ='{% url 'tournament:team:change name' team.tournament.id team.id %}'">
-                    Change Name
+                    Edit Team Name
                 </button>
             </div>
             <div class="col-2 text-center">
