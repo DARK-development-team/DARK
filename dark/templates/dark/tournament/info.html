@@ -8,7 +8,8 @@
 {% endblock %}
 
 {% block content %}
-    <b>Tournament Dates:</b> {{ tournament.start_date }} - {{ tournament.end_date }}
+    <b>Tournament:</b> {{ tournament.name }} <br>
+    <b>Dates:</b> {{ tournament.start_date }} - {{ tournament.end_date }}
     <div class="row mx-sm-5 mb-3 border border-secondary"></div>
     <div>
         {% if is_creator_viewing %}
