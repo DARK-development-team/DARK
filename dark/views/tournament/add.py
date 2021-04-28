@@ -4,7 +4,7 @@ from django.urls import reverse
 
 from dark.models.tournament import Tournament
 from dark.forms.tournament import AddTournamentForm
-from dark.models.tournament.team import Team
+from dark.models.tournament.team import Team, TeamRole
 
 
 class AddTournamentView(CreateView):
@@ -27,8 +27,8 @@ class AddTournamentView(CreateView):
 
         for i in range(number_of_teams):
             team_name = 'Team ' + str(i + 1)
-            team = Team(tournament_id=self.object.id, name=team_name)
-            team.save()
+            team = Team.objects.create(tournament_id=self.object.id, name=team_name)
+            TeamRole.objects.create(team=team, name="Participant")
 
         return redirect(self.get_success_url())
 
