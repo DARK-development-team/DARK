@@ -2,12 +2,13 @@ from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse
 from django.views.generic import DetailView
 
+from dark.common.views import UserAuthenticationDependentContextMixin
 from dark.models.tournament import Tournament
 from dark.models.tournament import TournamentRound
 from dark.models.tournament.team import Team
 
 
-class TournamentInfoView(DetailView):
+class TournamentInfoView(UserAuthenticationDependentContextMixin, DetailView):
     model = Tournament
     template_name = 'dark/tournament/info.html'
     context_object_name = 'tournament'
@@ -15,27 +16,38 @@ class TournamentInfoView(DetailView):
     slug_field = 'id'
 
     def get(self, request, *args, **kwargs):
-        self.object = get_object_or_404(Tournament, id=self.kwargs['tournament'])
-        tournament = self.object
+        tournament = get_object_or_404(Tournament, id=self.kwargs['tournament'])
 
-        context = super().get_context_data(object=tournament)
-        context['rounds'] = TournamentRound.objects.filter(tournament=tournament)
-        context['contestants'] = Team.objects.filter(tournament=tournament)
-        context['is_creator_viewing'] = False
-        context['is_private'] = tournament.is_private
-        context['has_team'] = False
+        if tournament.is_private:
+            if request.user.is_authenticated:
+                if request.user not in tournament.participants.all():
+                    return redirect(reverse('tournament:access', kwargs={'tournament': self.kwargs['tournament']}))
+            else:
+                return redirect(reverse('tournament:all'))
 
-        if request.user.is_authenticated:
-            user = request.user
+        return super().get(request, *args, **kwargs)
 
-            if tournament.is_private and user not in tournament.participants.all():
-                return redirect(reverse('tournament:access', kwargs={'tournament': self.kwargs['tournament']}))
+    def get_common_context(self):
+        tournament = get_object_or_404(Tournament, id=self.kwargs['tournament'])
 
-            context['is_creator_viewing'] = tournament.creator == user
-            context['has_team'] = True if Tournament.objects.filter(team__teammember__user=user).filter(
+        return {
+            'rounds': TournamentRound.objects.filter(tournament=tournament),
+            'contestants': Team.objects.filter(tournament=tournament),
+            'is_creator_viewing': False,
+            'is_private': tournament.is_private,
+            'has_team': False,
+        }
+
+    def get_authenticated_context_data(self, **kwargs):
+        tournament = get_object_or_404(Tournament, id=self.kwargs['tournament'])
+
+        context = self.get_common_context()
+        context.update({
+            'is_creator_viewing': tournament.creator == self.request.user,
+            'has_team': True if Tournament.objects.filter(team__teammember__user=self.request.user).filter(
                 id=tournament.id).count() != 0 else False
+        })
+        return context
 
-        elif tournament.is_private:
-            return redirect(reverse('tournament:all'))
-
-        return self.render_to_response(context)
+    def get_not_authenticated_context_data(self, **kwargs):
+        return self.get_common_context()
