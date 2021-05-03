@@ -1,54 +1,67 @@
 import os
+import subprocess
 
-from dark.models.tournament import TournamentRound
-
-
-def execute_round(round_id):
-    tround = TournamentRound.objects.get(pk=round_id)
-    platform = tround.platform
-    # save current working directory
-    current_dir = os.getcwd()
-    if not current_dir.endswith('/DARK'):
-        current_dir = current_dir[:(current_dir.find('/DARK') + 5)]
-        os.chdir(current_dir)
-    # set directory for round logs
-    log_directory = f'round_results'
-
-    # change directory to gupb and execute round
-    os.chdir(f'{platform.name}_{round_id}')
-    os.system(f'python3 -m {platform.package_to_run} -l {log_directory}')
-
-    os.chdir(current_dir)
+from .common import data_path, preserve_cwd
+import shutil
+import venv
+from .platform_utils import *
 
 
-def get_round_results(round_id):
-    tround = TournamentRound.objects.get(pk=round_id)
-
-    log_directory = f'{tround.platform.name}_{round_id}/round_results'
-    try:
-        result_files = os.listdir(log_directory)
-    except FileNotFoundError:
-        cwd = os.getcwd()
-        files = os.listdir()
-        raise FileNotFoundError(f'Current directory is {cwd} with files \n {files}')
-
-    if not result_files:
-        return None
-
-    result_files = [file for file in result_files if file[-3:] == 'log']
-    file_path = log_directory + '/' + result_files[0]
-
-    with open(file_path, 'r') as logs:
-        final_scores = get_final_scores_from_logs(list(logs))
-
-    return final_scores
+def tournaments_data_path():
+    return 'tournaments'
 
 
-def get_final_scores_from_logs(logs):
-    results = []
-    for line in reversed(logs):
-        results.append(line.split(' | ')[3])
-        if len(results) == 4:
-            break
+def tround_tournaments_path(name, tournament):
+    return f'{tournament.name}/{name}'
 
-    return sorted(results)
+
+def full_tround_path(name, tournament):
+    return f'{data_path()}/{tournaments_data_path()}/{tround_tournaments_path(name, tournament)}'
+
+
+@preserve_cwd()
+def create_tround(name, tournament, platform):
+    shutil.copytree(full_platform_path(platform), full_tround_path(name, tournament))
+
+
+class EnvBuilder(venv.EnvBuilder):
+    def __init__(self, *args, **kwargs):
+        self.context = None
+        super().__init__(*args, **kwargs)
+
+    def post_setup(self, context):
+        self.context = context
+
+
+def create_venv(path):
+    venv_builder = EnvBuilder(with_pip=True)
+    venv_builder.create(f'{os.getcwd()}/{path}/venv')
+    return venv_builder.context
+
+
+def install_dependencies(venv_context, requirements_path):
+    command = [venv_context.env_exe] + ['-m', 'pip', 'install', '-r', requirements_path]
+    return subprocess.check_call(command)
+
+
+@preserve_cwd()
+def prepare_tround_venv(name, tournament):
+    context = create_venv(full_tround_path(name, tournament))
+    install_dependencies(context, f'{full_tround_path(name, tournament)}/requirements.txt')
+
+
+@preserve_cwd()
+def get_tround_venv_context(name, tournament):
+    return create_venv(full_tround_path(name, tournament))
+
+
+@preserve_cwd()
+def remove_tround(name, tournament):
+    shutil.rmtree(full_tround_path(name, tournament))
+
+
+@preserve_cwd()
+def reload_tround(name, tournament, platform):
+    remove_tround(name, tournament)
+    create_tround(name, tournament, platform)
+
