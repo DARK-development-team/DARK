@@ -15,7 +15,9 @@ class TournamentRound(models.Model):
     tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
+
     platform = models.ForeignKey(Platform, on_delete=models.CASCADE, null=False)
+    extra_config_values = models.JSONField(default='{}')
 
     def __str__(self):
         return self.name

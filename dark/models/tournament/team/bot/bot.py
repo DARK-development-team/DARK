@@ -24,6 +24,7 @@ class TeamBot(models.Model):
 
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     tround = models.ForeignKey(TournamentRound, on_delete=models.CASCADE)
+
     bot_code = models.FileField(default=None, max_length=max_length, upload_to=bot_code_upload_path)
     bot_class_name = models.CharField(default=None, max_length=30)
 
