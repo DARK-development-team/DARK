@@ -12,7 +12,7 @@ class RemoveTeamBotView(DeleteView):
     slug_field = 'id'
 
     def get_success_url(self):
-        return reverse('tournament:team:bot:all', kwargs={
+        return reverse('tournament:team:info', kwargs={
             'tournament': self.object.team.tournament.id,
             'team': self.object.team.id,
         })
