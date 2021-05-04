@@ -1,8 +1,10 @@
+from django.shortcuts import redirect
 from django.views.generic import CreateView
 from django.urls import reverse
 
 from dark.models.tournament import Tournament
 from dark.forms.tournament import AddTournamentForm
+from dark.models.tournament.team import Team, TeamRole
 
 
 class AddTournamentView(CreateView):
@@ -11,8 +13,24 @@ class AddTournamentView(CreateView):
     form_class = AddTournamentForm
 
     def form_valid(self, form):
-        form.instance.creator = self.request.user
-        return super(AddTournamentView, self).form_valid(form)
+        creator = self.request.user
+
+        self.object = form.save(commit=False)
+        self.object.creator = creator
+        self.object.save()
+
+        tournament = Tournament.objects.get(pk=self.object.id)
+
+        tournament.participants.add(creator)
+
+        number_of_teams = form.cleaned_data.get('number_of_teams')
+
+        for i in range(number_of_teams):
+            team_name = 'Team ' + str(i + 1)
+            team = Team.objects.create(tournament_id=self.object.id, name=team_name)
+            TeamRole.objects.create(team=team, name="Participant")
+
+        return redirect(self.get_success_url())
 
     def get_success_url(self):
         return reverse('tournament:info', kwargs={

@@ -9,7 +9,10 @@
 
 {% block content %}
     <b>Tournament:</b> {{ tournament.name }} <br>
-    <b>Dates:</b> {{ tournament.start_date }} - {{ tournament.end_date }}
+    <b>Dates:</b> {{ tournament.start_date }} - {{ tournament.end_date }} <br>
+    {% if is_private  %}
+        <b>Access Key:</b> {{ tournament.access_key }}
+    {% endif %}
     <div class="row mx-sm-5 mb-3 border border-secondary"></div>
     <div>
         {% if is_creator_viewing %}
@@ -50,6 +53,12 @@
             <div class="col-2">{{ team.name }}</div>
             <div class="col-6"></div>
             <div class="col-2">
+                {% if not has_team %}
+                        <button type="button" class="btn btn-primary btn-sm float-begin"
+                                onclick="location.href ='{% url 'tournament:team:join' team.tournament.id team.id %}'">
+                            JOIN
+                        </button>
+                    {% endif %}
                 <button type="button" class="btn btn-primary btn-sm float-begin"
                         onclick="location.href ='{% url 'tournament:team:info' tournament.id team.id %}'">
                     DETAILS

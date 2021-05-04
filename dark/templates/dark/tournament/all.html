@@ -20,12 +20,12 @@
     </div>
 
     <div class="row justify-content-around mx-sm-5 mt-sm-2 pb-2 font-weight-bold">
-        <div class="col-4 text-left">In Progress</div>
+        <div class="col-4 text-left">Upcoming</div>
         <div class="col-4"></div>
         <div class="col-4"></div>
     </div>
     <div class="row mx-sm-5 mb-sm-2 border border-secondary"></div>
-    {% for tournament in in_progress %}
+    {% for tournament in upcoming_tournaments %}
         <div class="row justify-content-around swatch-200 mx-sm-5 my-sm-2 py-3 rounded shadow">
             <div class="col-2">{{ tournament.name }}</div>
             <div class="col-6">{{ tournament.start_date }} - {{ tournament.end_date }}</div>
@@ -39,12 +39,12 @@
     {% endfor %}
 
     <div class="row justify-content-around mx-sm-5 mt-sm-2 pb-2 font-weight-bold">
-        <div class="col-4 text-left">Upcoming</div>
+        <div class="col-4 text-left">In Progress</div>
         <div class="col-4"></div>
         <div class="col-4"></div>
     </div>
     <div class="row mx-sm-5 mb-sm-2 border border-secondary"></div>
-    {% for tournament in upcoming %}
+    {% for tournament in in_progress_tournaments %}
         <div class="row justify-content-around swatch-200 mx-sm-5 my-sm-2 py-3 rounded shadow">
             <div class="col-2">{{ tournament.name }}</div>
             <div class="col-6">{{ tournament.start_date }} - {{ tournament.end_date }}</div>
@@ -57,44 +57,23 @@
         </div>
     {% endfor %}
 
-    {% if user.is_authenticated %}
-{#        <div class="row justify-content-around mx-sm-5 mt-sm-2 pb-2 font-weight-bold">#}
-{#            <div class="col-4 text-left">Joined</div>#}
-{#            <div class="col-4"></div>#}
-{#            <div class="col-4"></div>#}
-{#        </div>#}
-{#        <div class="row mx-sm-5 mb-sm-2 border border-secondary"></div>#}
-{#        {% for tournament in your_upcoming %}#}
-{#            <div class="row justify-content-around swatch-200 mx-sm-5 my-sm-2 py-3 rounded shadow">#}
-{#                <div class="col-2">{{ tournament.name }}</div>#}
-{#                <div class="col-6">{{ tournament.start_date }} - {{ tournament.end_date }}</div>#}
-{#                <div class="col-2">#}
-{#                    <button type="button" class="btn btn-primary btn-sm float-begin"#}
-{#                            onclick="location.href ='{% url 'Tournament Details' tournament.id %}'">#}
-{#                        DETAILS#}
-{#                    </button>#}
-{#                </div>#}
-{#            </div>#}
-{#        {% endfor %}#}
-
-        <div class="row justify-content-around mx-sm-5 mt-sm-2 pb-2 font-weight-bold">
-            <div class="col-4 text-left">Created By You</div>
-            <div class="col-4"></div>
-            <div class="col-4"></div>
-        </div>
-        <div class="row mx-sm-5 mb-sm-2 border border-secondary"></div>
-        {% for tournament in created_by_you %}
-            <div class="row justify-content-around swatch-200 mx-sm-5 my-sm-2 py-3 rounded shadow">
-                <div class="col-2">{{ tournament.name }}</div>
-                <div class="col-6">{{ tournament.start_date }} - {{ tournament.end_date }}</div>
-                <div class="col-2">
-                    <button type="button" class="btn btn-primary btn-sm float-begin"
-                            onclick="location.href ='{% url 'tournament:info' tournament.id %}'">
-                        DETAILS
-                    </button>
-                </div>
+    <div class="row justify-content-around mx-sm-5 mt-sm-2 pb-2 font-weight-bold">
+        <div class="col-4 text-left">Archived</div>
+        <div class="col-4"></div>
+        <div class="col-4"></div>
+    </div>
+    <div class="row mx-sm-5 mb-sm-2 border border-secondary"></div>
+    {% for tournament in archived_tournaments %}
+        <div class="row justify-content-around swatch-200 mx-sm-5 my-sm-2 py-3 rounded shadow">
+            <div class="col-2">{{ tournament.name }}</div>
+            <div class="col-6">{{ tournament.start_date }} - {{ tournament.end_date }}</div>
+            <div class="col-2">
+                <button type="button" class="btn btn-primary btn-sm float-begin"
+                        onclick="location.href ='{% url 'tournament:info' tournament.id %}'">
+                    DETAILS
+                </button>
             </div>
-        {% endfor %}
-    {% endif %}
+        </div>
+    {% endfor %}
 
 {% endblock %}
