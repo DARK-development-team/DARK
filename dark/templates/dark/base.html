@@ -49,7 +49,7 @@
 
             {#        temporaty adding platform button  #}
             <ul class="nav navbar-nav ms-auto w-100 justify-content-end"> {# Log/Register #}
-            {#        temporaty adding platform button  !!#}
+                {#        temporaty adding platform button  !!#}
                 <li class="nav-item active">
                     <a class="nav-link text-secondary " href="{% url 'platform:add' %}">Add platform</a>
                 </li>
@@ -68,10 +68,12 @@
                            role="button" data-bs-toggle="dropdown" aria-expanded="false"> Profile </a>
                         <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarScrollingDropdown">
                             <li class="nav-item active">
-                                <a class="dropdown-item text-dark" href="{% url 'teams:user all' user.username %}">Your Teams</a>
+                                <a class="dropdown-item text-dark" href="{% url 'teams:user all' user.username %}">Your
+                                    Teams</a>
                             </li>
                             <li class="nav-item active">
-                                <a class="dropdown-item text-dark" href="{% url 'tournament:user all' user.username %}">Your Tournaments</a>
+                                <a class="dropdown-item text-dark" href="{% url 'tournament:user all' user.username %}">Your
+                                    Tournaments</a>
                             </li>
                             <li>
                                 <hr class="dropdown-divider">
@@ -100,8 +102,18 @@
     </div>
 </div>
 
+{% if messages %}
+    <div class="alert alert-danger text-center" role="alert">
+        {% for message in messages %}
+            {{ message }} <br/>
+        {% endfor %}
+{#        <button type="button" class="btn btn-sm btn-outline-danger" data-bs-dismiss="alert" aria-label="Close">OK</button>#}
+    </div>
+{% endif %}
+
 <div class="container bg-white justify-content-center rounded mt-5 px-md-4 py-4 text-center text-dark"
      style="min-height: 75vh">
+
     {% block content %}
     {% endblock %}
 </div>
