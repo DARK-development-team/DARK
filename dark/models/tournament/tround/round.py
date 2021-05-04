@@ -3,6 +3,7 @@ from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.db import IntegrityError
 
+from dark.models.platform.platform import Platform
 from .. import Tournament
 
 
@@ -11,6 +12,7 @@ class TournamentRound(models.Model):
     tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
+    platform = models.ForeignKey(Platform, on_delete=models.CASCADE, null=False)
 
     def __str__(self):
         return self.name

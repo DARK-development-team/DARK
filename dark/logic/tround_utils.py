@@ -1,23 +1,30 @@
 import os
 
+from dark.models.tournament import TournamentRound
 
-def execute_round():
+
+def execute_round(round_id):
+    tround = TournamentRound.objects.get(pk=round_id)
+    platform = tround.platform
     # save current working directory
     current_dir = os.getcwd()
+    if not current_dir.endswith('/DARK'):
+        current_dir = current_dir[:(current_dir.find('/DARK') + 5)]
+        os.chdir(current_dir)
+    # set directory for round logs
+    log_directory = f'round_results'
 
-    # set directory for queue logs
-    log_directory = 'round_results'
+    # change directory to gupb and execute round
+    os.chdir(f'{platform.name}_{round_id}')
+    os.system(f'python3 -m {platform.package_to_run} -l {log_directory}')
 
-    # change directory to gupb and execute queue
-    os.chdir('GUPB')
-    os.system('python -m gupb -l {}'.format(log_directory))
-
-    # restore previous directory
     os.chdir(current_dir)
 
 
-def get_round_results():
-    log_directory = 'GUPB/round_results'
+def get_round_results(round_id):
+    tround = TournamentRound.objects.get(pk=round_id)
+
+    log_directory = f'{tround.platform.name}_{round_id}/round_results'
     try:
         result_files = os.listdir(log_directory)
     except FileNotFoundError:

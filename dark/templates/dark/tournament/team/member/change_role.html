@@ -1,23 +1,44 @@
 {% extends "dark/base.html" %}
 
+{% block section_subtitle %}
+    <p>Member</p>
+{% endblock %}
+
+{% block section_title %}
+    <p>Modify Role</p>
+{% endblock %}
+
 {% block content %}
-    <h2>Change {{ member.user }} role:</h2>
-    <div class="container">
+    <div class="container pb-5">
+        <div class="row justify-content-around mx-sm-5 mt-sm-2 pb-2">
+            <div class="col-5"><b>Member:</b> {{ member.user }}</div>
+        </div>
+        <div class="row mx-sm-5 mb-4 border border-secondary"></div>
         <form method="post">
             {% csrf_token %}
             {% for field in form %}
-                <p>
-                    {{ field.label_tag }}<br>
-                    {{ field }}
-                    {% if field.help_text %}
-                        <small style="color: grey">{{ field.help_text }}</small>
-                    {% endif %}
-                    {% for error in field.errors %}
-                        <p style="color: red">{{ error }}</p>
-                    {% endfor %}
-                </p>
+                <div class="form-row justify-content-center">
+                    <div class="col-2 text-right">
+                        <label>
+                            {{ field.label_tag }}
+                        </label>
+                    </div>
+                    <div class="col-3 text-left">
+                        {{ field }}
+                    </div>
+                </div>
+                {% if field.help_text %}
+                    <div class="row mb-3 justify-content-center">
+                        <small class="text-secondary">{{ field.help_text }}</small>
+                    </div>
+                {% endif %}
+                {% for error in field.errors %}
+                    <div class="row mb-3 justify-content-center">
+                        <p class="text-warning">{{ error }}</p>
+                    </div>
+                {% endfor %}
             {% endfor %}
-            <button class="btn btn-outline-info" type="submit">Change</button>
+            <button class="btn btn-primary" type="submit">Change</button>
         </form>
     </div>
 {% endblock %}
