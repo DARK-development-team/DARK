@@ -1,10 +1,12 @@
 import os
+
+from dark.common.models.fields import GitRepoField
 from dark.logic.platform_utils import\
     clone_platform, \
     remove_platform, \
     update_platform_url, \
     update_platform_commit,\
-    update_platform_name\
+    update_platform_name
 from dark.logic.platform_model_logic import is_repository
 
 
@@ -14,30 +16,30 @@ from django.dispatch import receiver
 from django.db import IntegrityError
 
 
+def platform_repo_local_directory_path(instance):
+    return f'data/platforms/{instance.name}'
+
+
 class Platform(models.Model):
     name = models.CharField(max_length=30, blank=False, unique=True)
-    url = models.URLField(blank=False)
-    commit = models.CharField(max_length=50)
+    repo = GitRepoField(local_directory=platform_repo_local_directory_path, unique=True)
     package_to_run = models.CharField(max_length=30)
     platform_relative_wd = models.CharField(max_length=30, default='.')
 
-    default_extra_config = models.JSONField(default='{}')
-    customizable_extra_config_fields = models.JSONField(default='{}')
-    customizable_extra_config_fields_values = models.JSONField(default='{}')
-
-    class Meta:
-        unique_together = ('url', 'commit')
+    default_extra_config = models.JSONField(default=dict)
+    customizable_extra_config_fields = models.JSONField(default=dict)
+    customizable_extra_config_fields_values = models.JSONField(default=dict)
 
     def __str__(self):
         return self.name
 
 
-@receiver(post_delete, sender=Platform)
+#@receiver(post_delete, sender=Platform)
 def remove_platform_on_delete(sender, instance: Platform, **kwargs):
     remove_platform(instance.name)
 
 
-@receiver(pre_save, sender=Platform)
+#@receiver(pre_save, sender=Platform)
 def clone_or_update_platform_on_save(sender, instance: Platform, **kwargs):
     if not is_repository(instance.url):
         raise IntegrityError()
