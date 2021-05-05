@@ -14,7 +14,7 @@
     <div class="row justify-content-center my-3">
         {% if user_member.role.can_remove %}
             <div class="col-2 text-center">
-                <button type="button" class="btn btn-info"
+                <button type="button" class="btn btn-primary"
                         onclick="location.href ='{% url 'tournament:team:change name' team.tournament.id team.id %}'">
                     Edit Team Name
                 </button>
@@ -121,12 +121,12 @@
                                     onclick="location.href ='{% url 'tournament:team:bot:modify' team.tournament.id team.id bot.id %}'">
                                 Modify
                             </button>
-                            <button type="button" class="btn btn-primary btn-sm"
+                            <button type="button" class="btn btn-danger btn-sm"
                                     onclick="location.href ='{% url 'tournament:team:bot:remove' team.tournament.id team.id bot.id %}'">
                                 Remove
                             </button>
                         {% else %}
-                            <button type="button" class="btn btn-primary btn-sm"
+                            <button type="button" class="btn btn-secondary btn-sm"
                                     onclick="location.href ='{% url 'tournament:team:bot:add' team.tournament.id team.id tround.id %}'">
                                 Add
                             </button>
