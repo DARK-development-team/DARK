@@ -118,7 +118,7 @@
 
 {% if messages %}
     {% for message in messages %}
-        <div class="alert {% if message.tags %} {{ message.tags }} {% else %} alert-info alert-dismissible {% endif %} text-center mb-0"
+        <div class="alert {% if message.tags %} {{ message.tags }} {% else %} alert-info {% endif %} alert-dismissible text-center mb-0"
              role="alert">
             <button type="button" class="close" data-dismiss="alert">
                 <span aria-hidden="true">&times;</span>
