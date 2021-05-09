@@ -1,67 +1,38 @@
 import os
-import subprocess
+from .common import data_path
 
-from .common import data_path, preserve_cwd
-import shutil
-import venv
-from .platform_utils import *
-
-
-def tournaments_data_path():
+def tournaments_relto_data_path():
     return 'tournaments'
 
 
-def tround_tournaments_path(name, tournament):
-    return f'{tournament.name}/{name}'
+def tournament_relto_data_path(tournament_name):
+    return f'{tournaments_relto_data_path()}/{tournament_name}'
 
 
-def full_tround_path(name, tournament):
-    return f'{data_path()}/{tournaments_data_path()}/{tround_tournaments_path(name, tournament)}'
+def tround_relto_tournament_path(tround_name):
+    return tround_name
 
 
-@preserve_cwd()
-def create_tround(name, tournament, platform):
-    shutil.copytree(full_platform_path(platform), full_tround_path(name, tournament))
+def tround_relative_local_directory(tround_name, tournament_name):
+    return f'{data_path()}/{tournament_relto_data_path(tournament_name)}/{tround_relto_tournament_path(tround_name)}'
 
 
-class EnvBuilder(venv.EnvBuilder):
-    def __init__(self, *args, **kwargs):
-        self.context = None
-        super().__init__(*args, **kwargs)
-
-    def post_setup(self, context):
-        self.context = context
+def tround_absolute_local_directory(tround_name, tournament_name):
+    return os.path.abspath(tround_relative_local_directory(tround_name, tournament_name))
 
 
-def create_venv(path):
-    venv_builder = EnvBuilder(with_pip=True)
-    venv_builder.create(f'{os.getcwd()}/{path}/venv')
-    return venv_builder.context
+def tround_config_relative_local_directory(tround_name, tournament_name):
+    return f'{data_path()}/{tournament_relto_data_path(tournament_name)}/{tround_relto_tournament_path(tround_name)}_config.py'
 
 
-def install_dependencies(venv_context, requirements_path):
-    command = [venv_context.env_exe] + ['-m', 'pip', 'install', '-r', requirements_path]
-    return subprocess.check_call(command)
+def tround_config_absolute_local_directory(tround_name, tournament_name):
+    return os.path.abspath(tround_config_relative_local_directory(tround_name, tournament_name))
 
 
-@preserve_cwd()
-def prepare_tround_venv(name, tournament):
-    context = create_venv(full_tround_path(name, tournament))
-    install_dependencies(context, f'{full_tround_path(name, tournament)}/requirements.txt')
+def tround_log_output_relative_local_directory(tround_name, tournament_name):
+    return f'{data_path()}/{tournament_relto_data_path(tournament_name)}/' \
+           f'{tround_relto_tournament_path(tround_name)}_queue_execution_logs'
 
 
-@preserve_cwd()
-def get_tround_venv_context(name, tournament):
-    return create_venv(full_tround_path(name, tournament))
-
-
-@preserve_cwd()
-def remove_tround(name, tournament):
-    shutil.rmtree(full_tround_path(name, tournament))
-
-
-@preserve_cwd()
-def reload_tround(name, tournament, platform):
-    remove_tround(name, tournament)
-    create_tround(name, tournament, platform)
-
+def tround_log_output_absolute_local_directory(tround_name, tournament_name):
+    return os.path.abspath(tround_log_output_relative_local_directory(tround_name, tournament_name))

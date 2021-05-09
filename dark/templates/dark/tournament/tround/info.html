@@ -15,12 +15,30 @@
     </form>
 
     {% if results %}
-        <h3>
-            Round results:
-        </h3>
-        {% for score in results %}
-                <p> {{ score }} </p>
-            {% endfor %}
+        {% for single_execution_log, run_logs in results %}
+            <h2>
+                Round execution ({{ single_execution_log }})
+            </h2>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Timestamp</th>
+                    <th scope="col">Log level</th>
+                    <th scope="col">Module</th>
+                    <th scope="col">Log</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for log in run_logs %}
+                    <tr>
+                        {% for info in log %}
+                            <td>{{ info }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endfor %}
     {% endif %}
 
 {% endblock %}
