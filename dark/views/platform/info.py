@@ -1,6 +1,5 @@
 import json
 
-from celery.result import AsyncResult
 from django.http import HttpResponse
 from django.views.generic import DetailView
 
@@ -21,11 +20,12 @@ class PlatformInfoView(DetailView):
 
 def poll_platform_state(request):
     """ A view to report the progress to the user """
+    """ not working :( """
     if 'job_progress_id' in request.GET:
         job_progress_id = request.GET['job_progress_id']
     else:
         return HttpResponse('No job id given.')
 
-    job = AsyncResult(job_progress_id)
-    data = job.result or job.state
+    #job = AsyncResult(job_progress_id)
+    data = [] #job.result or job.state
     return HttpResponse(json.dumps(data), mimetype='application/json')
