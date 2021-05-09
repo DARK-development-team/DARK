@@ -14,7 +14,7 @@ class AllTeamBotsView(TemplateView):
         round_bot_pairs = []
         for tround in rounds:
             try:
-                bot = TeamBot.objects.get(tround=tround)
+                bot = TeamBot.objects.get(tround=tround, team=team)
             except TeamBot.DoesNotExist:
                 bot = None
             round_bot_pairs.append((tround, bot))

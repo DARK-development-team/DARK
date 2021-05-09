@@ -74,7 +74,7 @@ def prepare_config_for_round(tround: TournamentRound):
         'start_balancing': False,
         'visualise': False,
         'show_sight': None,
-        'runs_no': 300,
+        'runs_no': 10,
         'profiling_metrics': ['all', 'total', 'avg']
     }
     meta_repr = repr(meta)
@@ -101,9 +101,6 @@ def execute_round_in_venv(venv_context, tround: TournamentRound):
     package_absolute_working_directory = f'{tround_absolute_local_directory(tround.name, tround.tournament.name)}/' \
                                          f'{package_relative_working_directory}'
 
-    print(package_relative_working_directory)
-    print(package_absolute_working_directory)
-
     package_absolute_path = f'{tround_absolute_local_directory(tround.name, tround.tournament.name)}/' \
                             f'{tround.platform.package_to_run}'
     config_absolute_path = tround_config_absolute_local_directory(tround.name, tround.tournament.name)
@@ -112,10 +109,9 @@ def execute_round_in_venv(venv_context, tround: TournamentRound):
 
     tround_env_vars = os.environ.copy()
     tround_env_vars['PYTHONPATH'] = package_absolute_working_directory
-    print(package_absolute_working_directory)
     sp = subprocess.Popen(command, stdout=subprocess.PIPE, cwd=package_absolute_working_directory, env=tround_env_vars)
-    stdout = sp.communicate()[0]
-    print(stdout)
+    stdout = sp.communicate()[0] # sync to this subprocess
+    #print(stdout)
 
 
 def remove_environment(tround: TournamentRound):
