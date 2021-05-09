@@ -31,6 +31,5 @@ class TournamentRoundInfoView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        #tround_utils.execute_round()
-        #context['results'] = tround_utils.get_round_results()
+        context['results'] = tround_execution.get_round_results(self.object)
         return context

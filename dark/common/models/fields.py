@@ -1,8 +1,11 @@
+import os
+import shutil
 import subprocess
 import pickle
 from datetime import datetime
 
 from django.db.models.fields import Field
+from django.db.models.fields.files import FileField
 
 import dark.common.forms.fields as fields
 from dark.common.validators import GitRepoValidator
@@ -68,16 +71,16 @@ class GitRepoField(Field):
             return '\t'.join([prep_url, prep_commit])
 
     def _clone(self, url, commit, local_directory):
+        if os.path.exists(local_directory):
+            shutil.rmtree(local_directory)
         subprocess.call(['git', 'clone', url, local_directory])
+        subprocess.call(['git', 'checkout', commit], cwd=local_directory)
 
     def pre_save(self, model_instance, add):
         gitrepo = super().pre_save(model_instance, add)
-        if add:
-            local_directory = self.generate_local_directory_name(model_instance)
-            gitrepo.local_directory = local_directory
-            self._clone(gitrepo.url, gitrepo.commit, local_directory)
-        else:
-            pass
+        local_directory = self.generate_local_directory_name(model_instance)
+        gitrepo.local_directory = local_directory
+        self._clone(gitrepo.url, gitrepo.commit, local_directory)
         return gitrepo
 
     def value_to_string(self, obj):

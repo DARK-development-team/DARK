@@ -37,14 +37,14 @@ class TeamBot(models.Model):
 
 
 @receiver(models.signals.post_delete, sender=TeamBot)
-def auto_delete_file_on_delete(sender, instance, **kwargs):
+def auto_delete_file_on_delete(sender, instance: TeamBot, **kwargs):
     if instance.bot_code:
         if os.path.isfile(instance.bot_code.path):
             os.remove(instance.bot_code.path)
 
 
 @receiver(models.signals.pre_save, sender=TeamBot)
-def auto_delete_file_on_change(sender, instance, **kwargs):
+def auto_delete_file_on_change(sender, instance: TeamBot, **kwargs):
     if not instance.id:
         return False
 
