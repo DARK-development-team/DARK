@@ -2,7 +2,9 @@ import os
 import shutil
 import subprocess
 import pickle
+import threading
 from datetime import datetime
+from dark.common.git import remove_git_repo
 
 from django.db.models.fields import Field
 from django.db.models.fields.files import FileField
@@ -20,6 +22,9 @@ class GitRepo:
         self.url = url
         self.commit = commit
         self.local_directory = local_directory
+
+    def __repr__(self):
+        return f'GitRepo(url={self.url},commit={self.commit},local_directory={self.local_directory})'
 
 
 class GitRepoField(Field):
@@ -72,7 +77,7 @@ class GitRepoField(Field):
 
     def _clone(self, url, commit, local_directory):
         if os.path.exists(local_directory):
-            shutil.rmtree(local_directory)
+            remove_git_repo(local_directory)
         subprocess.call(['git', 'clone', url, local_directory])
         subprocess.call(['git', 'checkout', commit], cwd=local_directory)
 
@@ -80,7 +85,9 @@ class GitRepoField(Field):
         gitrepo = super().pre_save(model_instance, add)
         local_directory = self.generate_local_directory_name(model_instance)
         gitrepo.local_directory = local_directory
-        self._clone(gitrepo.url, gitrepo.commit, local_directory)
+        t = threading.Thread(target=self._clone, args=[gitrepo.url, gitrepo.commit, local_directory])
+        t.setDaemon(True)
+        t.start()
         return gitrepo
 
     def value_to_string(self, obj):
