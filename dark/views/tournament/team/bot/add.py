@@ -21,7 +21,7 @@ class AddTeamBotView(View):
         form.instance.tround = TournamentRound.objects.get(id=tround)
         if form.is_valid():
             obj = form.save()
-            return redirect(reverse('tournament:team:bot:all', kwargs={
+            return redirect(reverse('tournament:team:info', kwargs={
                 'tournament': obj.team.tournament.id,
                 'team': obj.team.id
             }))

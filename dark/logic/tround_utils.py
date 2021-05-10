@@ -1,6 +1,7 @@
 import os
 from .common import data_path
 
+
 def tournaments_relto_data_path():
     return 'tournaments'
 

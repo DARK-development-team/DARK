@@ -2,6 +2,7 @@
 /generated/
 .idea
 /GUPB/
+/dark/data/
 
 # Django #
 *.log

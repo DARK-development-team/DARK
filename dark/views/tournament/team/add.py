@@ -23,12 +23,10 @@ class AddTeamView(LoginRequiredMixin, ForeignKeysMixin, CreateView):
 
     def add_members(self, form):
         team = self.object
-        TeamRole.objects.create(team=team, name="Moderator", can_modify_members=True)
-        TeamRole.objects.create(team=team, name="Member")
-        creator_role = TeamRole.objects.create(team=team, name="Creator",
-                                               can_modify_members=True, can_remove=True)
+        TeamRole.objects.create(team=team, name="Organizer", can_modify_members=True, can_remove=True)
+        participant_role = TeamRole.objects.create(team=team, name="Participant")
 
-        TeamMember.objects.create(team=team, user=self.request.user, role=creator_role)
+        TeamMember.objects.create(team=team, user=self.request.user, role=participant_role)
 
     @after(add_members)
     def form_valid(self, form):

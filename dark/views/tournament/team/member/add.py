@@ -1,10 +1,9 @@
-from django.views.generic import CreateView
 from django.urls import reverse
+from django.views.generic import CreateView
 
-from dark.models.tournament.team import TeamMember
-from dark.models.tournament.team import TeamRole
-from dark.forms.tournament.team import AddTeamMemberForm
 from dark.common.views import ForeignKeysMixin, FieldQuerySetMixin
+from dark.forms.tournament.team import AddTeamMemberForm
+from dark.models.tournament.team import TeamMember
 
 
 class AddTeamMemberView(FieldQuerySetMixin, ForeignKeysMixin, CreateView):
