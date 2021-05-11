@@ -15,7 +15,7 @@
     {% endif %}
     <div class="row mx-sm-5 mb-3 border border-secondary"></div>
     <div>
-        {% if is_creator_viewing %}
+        {% if is_editable and is_creator_viewing %}
             <button type="button" class="btn btn-secondary btn-md float-begin mb-4"
                     onclick="location.href ='{% url 'tournament:tround:add' tournament.id %}'">
                 Add Round
@@ -53,7 +53,7 @@
             <div class="col-2">{{ team.name }}</div>
             <div class="col-6"></div>
             <div class="col-2">
-                {% if not has_team %}
+                {% if is_editable and not has_team %}
                         <button type="button" class="btn btn-primary btn-sm float-begin"
                                 onclick="location.href ='{% url 'tournament:team:join' team.tournament.id team.id %}'">
                             JOIN
@@ -68,7 +68,7 @@
     {% endfor %}
 
     <div class="row my-3 justify-content-center">
-        {% if user.is_authenticated %}
+        {% if is_editable and user.is_authenticated %}
             <button type="button" class="btn btn-primary btn-md float-begin"
                     onclick="location.href ='{% url 'tournament:team:add' tournament.id %}'">
                 Participate

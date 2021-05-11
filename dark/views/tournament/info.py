@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse
+from django.utils import timezone
 from django.views.generic import DetailView
 
 from dark.common.views import UserAuthenticationDependentContextMixin
@@ -38,6 +39,7 @@ class TournamentInfoView(UserAuthenticationDependentContextMixin, DetailView):
             'contestants': Team.objects.filter(tournament=tournament),
             'is_creator_viewing': False,
             'is_private': tournament.is_private,
+            'is_editable': True if tournament.start_date > timezone.now() else False,
             'has_team': False,
         }
 
@@ -48,7 +50,7 @@ class TournamentInfoView(UserAuthenticationDependentContextMixin, DetailView):
         context.update({
             'is_creator_viewing': tournament.creator == self.request.user,
             'has_team': True if Tournament.objects.filter(team__teammember__user=self.request.user).filter(
-                id=tournament.id).count() != 0 else False
+                id=tournament.id).count() != 0  else False
         })
         return context
 
