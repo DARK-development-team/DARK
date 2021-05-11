@@ -13,8 +13,8 @@
         <form method="post">
             {% csrf_token %}
             {% for field in form %}
-                <div class="form-row justify-content-center">
-                    <div class="col-2 text-right">
+                <div class="form-row justify-content-md-center justify-content-start">
+                    <div class="col-3 col-lg-2 mr-5 mr-lg-1 text-right">
                         <label>
                             {{ field.label_tag }}
                         </label>
