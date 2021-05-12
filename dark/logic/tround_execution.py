@@ -138,20 +138,16 @@ def execute_round(tround: TournamentRound):
     cleanup_after_execution(tround)
 
 
-def get_round_final_scores(tround: TournamentRound):
+def get_round_results(tround: TournamentRound):
     log_output_relative_path = tround_log_output_relative_local_directory(tround.name, tround.tournament.name)
 
-    if os.path.isdir(log_output_relative_path):
-        result_files = os.listdir(log_output_relative_path)
-    else:
-        return None
+    if not os.path.isdir(log_output_relative_path):
+        return None, None, None
 
-    log_file = [file for file in result_files if os.path.splitext(file)[1] == '.log'][0]
-    json_file = [file for file in result_files if os.path.splitext(file)[1] == '.json'][0]
-    log_files_path = os.path.join(log_output_relative_path, log_file)
+    log_file_path, json_file_path = get_round_log_and_json_files_paths(log_output_relative_path)
 
     team_scores_as_text = []
-    with open(log_files_path) as file:
+    with open(log_file_path) as file:
         lines = file.readlines()
         for line in reversed(lines):
             if line.split(' | ')[1] != 'INFO':
@@ -159,7 +155,14 @@ def get_round_final_scores(tround: TournamentRound):
             score = get_refined_text_from_result(line.split(' | ')[3])
             team_scores_as_text.insert(0, score)
 
-    return team_scores_as_text
+    return team_scores_as_text, log_file_path, json_file_path
+
+
+def get_round_log_and_json_files_paths(path):
+    result_files = os.listdir(path)
+    log_file = [file for file in result_files if os.path.splitext(file)[1] == '.log'][0]
+    json_file = [file for file in result_files if os.path.splitext(file)[1] == '.json'][0]
+    return os.path.join(path, log_file), os.path.join(path, json_file)
 
 
 def get_refined_text_from_result(result):

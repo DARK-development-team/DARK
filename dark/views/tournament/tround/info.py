@@ -2,6 +2,8 @@ import os
 
 from django.shortcuts import render
 from django.views.generic import DetailView
+from django.conf import settings
+from django.http import HttpResponse, Http404
 
 from dark.models.tournament import TournamentRound
 from dark.logic import tround_execution
@@ -31,5 +33,8 @@ class TournamentRoundInfoView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['results'] = tround_execution.get_round_final_scores(self.object)
+        context['results'], context['log_file_path'], context['json_file_path'] =\
+            tround_execution.get_round_results(self.object)
+        print(os.getcwd())
+        print(context['log_file_path'])
         return context

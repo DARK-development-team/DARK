@@ -23,4 +23,12 @@
         {% endfor %}
     {% endif %}
 
+    {% if log_file_path %}
+        <a href="{{ log_file_path }}" download> Pobierz plik .log  </a>
+    {% endif %}
+
+    {% if json_file_path %}
+        <a href="{{ json_file_path }}" download> Pobierz plik .json </a>
+    {% endif %}
+
 {% endblock %}
