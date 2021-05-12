@@ -1,54 +1,38 @@
 import os
+from .common import data_path
 
-from dark.models.tournament import TournamentRound
-
-
-def execute_round(round_id):
-    tround = TournamentRound.objects.get(pk=round_id)
-    platform = tround.platform
-    # save current working directory
-    current_dir = os.getcwd()
-    if not current_dir.endswith('/DARK'):
-        current_dir = current_dir[:(current_dir.find('/DARK') + 5)]
-        os.chdir(current_dir)
-    # set directory for round logs
-    log_directory = f'round_results'
-
-    # change directory to gupb and execute round
-    os.chdir(f'{platform.name}_{round_id}')
-    os.system(f'python3 -m {platform.package_to_run} -l {log_directory}')
-
-    os.chdir(current_dir)
+def tournaments_relto_data_path():
+    return 'tournaments'
 
 
-def get_round_results(round_id):
-    tround = TournamentRound.objects.get(pk=round_id)
-
-    log_directory = f'{tround.platform.name}_{round_id}/round_results'
-    try:
-        result_files = os.listdir(log_directory)
-    except FileNotFoundError:
-        cwd = os.getcwd()
-        files = os.listdir()
-        raise FileNotFoundError(f'Current directory is {cwd} with files \n {files}')
-
-    if not result_files:
-        return None
-
-    result_files = [file for file in result_files if file[-3:] == 'log']
-    file_path = log_directory + '/' + result_files[0]
-
-    with open(file_path, 'r') as logs:
-        final_scores = get_final_scores_from_logs(list(logs))
-
-    return final_scores
+def tournament_relto_data_path(tournament_name):
+    return f'{tournaments_relto_data_path()}/{tournament_name}'
 
 
-def get_final_scores_from_logs(logs):
-    results = []
-    for line in reversed(logs):
-        results.append(line.split(' | ')[3])
-        if len(results) == 4:
-            break
+def tround_relto_tournament_path(tround_name):
+    return tround_name
 
-    return sorted(results)
+
+def tround_relative_local_directory(tround_name, tournament_name):
+    return f'{data_path()}/{tournament_relto_data_path(tournament_name)}/{tround_relto_tournament_path(tround_name)}'
+
+
+def tround_absolute_local_directory(tround_name, tournament_name):
+    return os.path.abspath(tround_relative_local_directory(tround_name, tournament_name))
+
+
+def tround_config_relative_local_directory(tround_name, tournament_name):
+    return f'{data_path()}/{tournament_relto_data_path(tournament_name)}/{tround_relto_tournament_path(tround_name)}_config.py'
+
+
+def tround_config_absolute_local_directory(tround_name, tournament_name):
+    return os.path.abspath(tround_config_relative_local_directory(tround_name, tournament_name))
+
+
+def tround_log_output_relative_local_directory(tround_name, tournament_name):
+    return f'{data_path()}/{tournament_relto_data_path(tournament_name)}/' \
+           f'{tround_relto_tournament_path(tround_name)}_queue_execution_logs'
+
+
+def tround_log_output_absolute_local_directory(tround_name, tournament_name):
+    return os.path.abspath(tround_log_output_relative_local_directory(tround_name, tournament_name))
