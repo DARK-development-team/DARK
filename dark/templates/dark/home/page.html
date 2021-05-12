@@ -11,7 +11,7 @@
 
 {% block content %}
     <div class="align-items-center">
-        <div class="row my-5 py-5 justify-content-md-center">
+        <div class="row my-5 py-5 justify-content-center">
             <div class="col my-auto">
                 <blockquote class="blockquote">
                     <h1 class="mb-1">Happiness is seeing your AI play games.</h1>
@@ -20,29 +20,28 @@
                 </blockquote>
             </div>
         </div>
+
         <div class="row mt-5 pt-2 justify-content-around">
-            <div class="col-2">
-                <figure class="figure">
-                    <img src="{% static 'online-game.png' %}" class="figure-img img-fluid rounded"
-                         alt="A generic square placeholder image with rounded corners in a figure.">
+            <div class="col-sm-2 mx-2 p-0">
+                <figure class="figure w-50">
+                    <img src="{% static 'online-game.png' %}" class="figure-img img-fluid rounded">
                     <figcaption class="figure-caption font-weight-bold text-dark"> Host your games!</figcaption>
                 </figure>
-
             </div>
-            <div class="col-2">
-                <figure class="figure">
-                    <img src="{% static 'tournament.png' %}" class="figure-img img-fluid rounded"
-                         alt="A generic square placeholder image with rounded corners in a figure.">
+            <div class="col-sm-2 mx-2 p-0">
+                <figure class="figure w-50">
+                    <img src="{% static 'tournament.png' %}" class="figure-img img-fluid rounded">
                     <figcaption class="figure-caption font-weight-bold text-dark">Join and win tournaments!</figcaption>
                 </figure>
             </div>
-            <div class="col-2">
-                <figure class="figure">
-                    <img src="{% static 'vs.png' %}" class="figure-img img-fluid rounded"
-                         alt="A generic square placeholder image with rounded corners in a figure.">
-                    <figcaption class="figure-caption font-weight-bold text-dark"> Compete with other teams!</figcaption>
+            <div class="col-sm-2 mx-2 p-0">
+                <figure class="figure w-50">
+                    <img src="{% static 'vs.png' %}" class="figure-img img-fluid rounded">
+                    <figcaption class="figure-caption font-weight-bold text-dark"> Compete with other teams!
+                    </figcaption>
                 </figure>
             </div>
+
         </div>
         <div class="row pt-5 justify-content-md-center mt-5">
             <div class="col">
