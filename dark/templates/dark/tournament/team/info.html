@@ -10,7 +10,7 @@
 {% block content %}
     <b>Team:</b> {{ team.name }} <br>
     <b>Tournament:</b> {{ team.tournament.name }}
-    <div class="row mx-sm-5 mb-3 border border-secondary"></div>
+    <div class="row mx-md-5 mb-3 border border-secondary"></div>
     <div class="row justify-content-center my-3">
         {% if user_member.role.can_remove %}
             <div class="col-2 text-center">
@@ -28,14 +28,14 @@
 
         {% endif %}
     </div>
-    <div class="card mx-sm-5">
+    <div class="card mx-md-5">
         <div class="card-header" style="background-color: #a1a1a1">
             <h5 class="mb-0">
                 MEMBERS
             </h5>
         </div>
         <div class="card-body">
-            <div class="row justify-content-around mx-sm-1 mb-sm-2 pb-2 font-weight-bold">
+            <div class="row justify-content-around mx-md-1 mb-2 pb-2 font-weight-bold">
                 <div class="col-1">#</div>
                 <div class="col-4">Name</div>
                 <div class="col-4">Role</div>
@@ -43,9 +43,9 @@
                     <div class="col-3"></div>
                 {% endif %}
             </div>
-            <div class="row mx-sm-1 mb-sm-2 border border-secondary"></div>
+            <div class="row mx-md-1 mb-2 border border-secondary"></div>
             {% for m in members %}
-                <div class="row justify-content-around swatch-200 mx-sm-1 my-sm-2 py-3 rounded shadow">
+                <div class="row justify-content-around swatch-200 mx-md-1 my-2 py-3 rounded shadow">
                     <div class="col-1">{{ forloop.counter }}</div>
                     <div class="col-4"><a class="text-info"
                                           href="{% url 'tournament:team:member:info' team.tournament.id team.id m.id %}">{{ m.user.username }} </a>
@@ -87,7 +87,7 @@
             </div>
         </div>
     </div>
-    <div class="card mt-2 mx-sm-5">
+    <div class="card mt-2 mx-md-5">
         <div class="card-header" style="background-color: #a1a1a1">
             <h5 class="mb-0">
                 BOTS
@@ -95,17 +95,17 @@
         </div>
 
         <div class="card-body">
-            <div class="row justify-content-around mx-sm-1 mb-sm-2 pb-2 font-weight-bold">
+            <div class="row justify-content-around mx-md-1 mb-2 pb-2 font-weight-bold">
                 <div class="col-1">#</div>
-                <div class="col-2">Round</div>
+                <div class="col-3">Round</div>
                 <div class="col-5">URL</div>
-                <div class="col-4">Action</div>
+                <div class="col-3">Action</div>
             </div>
-            <div class="row mx-sm-1 mb-sm-2 border border-secondary"></div>
+            <div class="row mx-md-1 mb-2 border border-secondary"></div>
             {% for tround, bot in round_bot_pairs %}
-                <div class="row justify-content-around swatch-200 mx-sm-1 my-sm-2 py-3 rounded shadow">
+                <div class="row justify-content-around swatch-200 mx-md-1 my-2 py-3 rounded shadow">
                     <div class="col-1">{{ forloop.counter }}</div>
-                    <div class="col-2"><a class="text-info"
+                    <div class="col-3"><a class="text-info"
                                           href="{% url 'tournament:tround:info' team.tournament.id tround.id %}">{{ tround.name }}</a>
                     </div>
                     <div class="col-5">
@@ -115,7 +115,7 @@
                             ---
                         {% endif %}
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
                         {% if bot is not None %}
                             <button type="button" class="btn btn-primary btn-sm"
                                     onclick="location.href ='{% url 'tournament:team:bot:modify' team.tournament.id team.id bot.id %}'">
