@@ -8,11 +8,12 @@
         <p>Start Date: {{ tround.start_date }}</p>
         <p>End Date: {{ tround.end_date }}</p>
     </div>
-
-    <form method="post">
-        {% csrf_token %}
-        <input type="submit" value="Run round">
-    </form>
+    {% if is_creator_viewing %}
+        <form method="post">
+            {% csrf_token %}
+            <input type="submit" value="Run round">
+        </form>
+    {% endif %}
 
     {% if results %}
         <h3>
