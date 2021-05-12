@@ -3,6 +3,7 @@ import os
 from django.shortcuts import render
 from django.views.generic import DetailView
 
+from dark.logic.platform_utils import get_platform_requirements
 from dark.models.tournament import TournamentRound
 from dark.logic import tround_execution
 
@@ -32,4 +33,5 @@ class TournamentRoundInfoView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['results'] = tround_execution.get_round_results(self.object)
+        context['requirements'] = get_platform_requirements(self.object.platform)
         return context
