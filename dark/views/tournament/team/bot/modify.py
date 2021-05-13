@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.views.generic import UpdateView
 from django.urls import reverse
 
@@ -12,6 +13,10 @@ class ModifyTeamBotView(UpdateView):
     context_object_name = 'bot'
     slug_url_kwarg = 'bot'
     slug_field = 'id'
+
+    def form_valid(self, form):
+        messages.success(self.request, 'Bot ' + form.cleaned_data.get('bot_class_name') + ' has successfully modified!')
+        return super(ModifyTeamBotView, self).form_valid(form)
 
     def get_success_url(self):
         return reverse('tournament:team:info', kwargs={
