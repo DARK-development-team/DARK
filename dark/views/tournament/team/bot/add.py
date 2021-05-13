@@ -1,11 +1,12 @@
+from django.contrib import messages
 from django.shortcuts import render, redirect
-from django.views.generic import CreateView, View
 from django.urls import reverse
+from django.views.generic import View
 
-from dark.models.tournament import Tournament, TournamentRound
-from dark.models.tournament.team import TeamBot, Team
 from dark.forms.tournament.team import AddTeamBotForm
-from dark.common.views import ForeignKeysMixin
+from dark.models.tournament import TournamentRound
+from dark.models.tournament.team import Team
+
 
 class AddTeamBotView(View):
     form_class = AddTeamBotForm
@@ -15,17 +16,16 @@ class AddTeamBotView(View):
         form = self.form_class()
         return render(request, self.template_name, {'form': form})
 
-    def post(self, request, tournament, team, tround,  *args, **kwargs):
+    def post(self, request, tournament, team, tround, *args, **kwargs):
         form = self.form_class(request.POST, request.FILES)
         form.instance.team = Team.objects.get(id=team)
         form.instance.tround = TournamentRound.objects.get(id=tround)
         if form.is_valid():
             obj = form.save()
+            messages.success(request, 'Bot ' + obj.bot_class_name + ' has successfully added!')
             return redirect(reverse('tournament:team:info', kwargs={
                 'tournament': obj.team.tournament.id,
                 'team': obj.team.id
             }))
         else:
             return render(request, self.template_name, {'form': form})
-
-

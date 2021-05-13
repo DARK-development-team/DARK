@@ -1,7 +1,8 @@
-from django.views.generic import CreateView
-from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
+from django.contrib import messages
 from django.contrib.auth import authenticate, login
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
+from django.views.generic import CreateView
 
 from dark.forms.user import UserRegistrationForm
 
@@ -23,5 +24,6 @@ class UserRegistrationView(CreateView):
         raw_password = form.cleaned_data.get('password1')
         user = authenticate(username=username, password=raw_password)
         login(self.request, user)
+        messages.success(self.request, 'You have successfully registered!')
 
         return valid

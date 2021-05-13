@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views.generic import FormView
@@ -17,6 +18,7 @@ class AccessPrivateTournamentView(FormView):
 
         if access_key == tournament.access_key:
             if self.request.user not in tournament.participants.all():
+                messages.info(self.request, 'You have gained an access to ' + tournament.name)
                 tournament.participants.add(self.request.user)
 
         return super().form_valid(form)
