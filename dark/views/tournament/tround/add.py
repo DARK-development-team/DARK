@@ -1,3 +1,4 @@
+from django.shortcuts import redirect
 from django.views.generic import CreateView
 from django.urls import reverse
 
@@ -18,3 +19,12 @@ class AddTournamentRoundView(ForeignKeysMixin, CreateView):
             'tournament': self.object.tournament.id,
             'tround': self.object.id
         })
+
+    def post(self, request, *args, **kwargs):
+        if "cancel" in request.POST:
+            tournament_id = kwargs.get('tournament')
+            return redirect(reverse('tournament:info', kwargs={
+                'tournament': tournament_id
+            }))
+        else:
+            super(self)
