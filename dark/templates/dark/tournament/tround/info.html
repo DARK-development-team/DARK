@@ -1,5 +1,18 @@
 {% extends "dark/base.html" %}
 
+{% block section_subtitle %}
+    Round Details
+{% endblock %}
+{% block section_title %}
+    {{ tround.name }}
+{% endblock %}
+
+{% block back %}
+    <button type="button" class="float-left btn btn-secondary btn-sm mt-2 py-1 px-2"
+            onclick="location.href ='{% url 'tournament:info' tround.tournament.id %}'">
+        Back to Tournament Details
+    </button>
+{% endblock %}
 
 {% block content %}
     <div class="m-5">
