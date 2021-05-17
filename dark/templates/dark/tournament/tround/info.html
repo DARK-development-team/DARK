@@ -8,10 +8,14 @@
 {% endblock %}
 
 {% block back %}
-    <button type="button" class="float-left btn btn-secondary btn-sm mt-2 py-1 px-2"
-            onclick="location.href ='{% url 'tournament:info' tround.tournament.id %}'">
-        Back to Tournament Details
-    </button>
+    <a type="button" class="float-left btn btn-secondary btn-sm mt-2 py-1 px-2"
+            {% if request.META.HTTP_REFERER %} href="{{ request.META.HTTP_REFERER }}">
+                Back to Details
+            {% else %}  href='{% url 'tournament:info' tround.tournament.id %}'>
+                {# this is called when user enters the site directly from link #}
+                Back to Tournament Details
+            {% endif %}
+    </a>
 {% endblock %}
 
 {% block content %}
