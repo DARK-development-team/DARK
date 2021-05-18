@@ -1,3 +1,5 @@
+import os
+
 from split_settings.tools import optional, include
 from django.contrib.messages import constants as messages
 
@@ -9,6 +11,7 @@ include(
     'subsettings/middleware.py',
     'subsettings/templates.py',
 )
+
 
 if 'HEROKU' in os.environ:
     import django_heroku

@@ -46,28 +46,23 @@
 </head>
 <body class="swatch-200">
 
-<nav class="navbar navbar-dark navbar-expand-md bg-dark justify-content-center">
+<nav class="navbar sticky-top navbar-dark navbar-expand-md bg-dark justify-content-center">
     <div class="container">
         <a href="/" class="navbar-brand d-flex w-50 me-auto text-secondary font-weight-bold">DARK</a>
         <button class="navbar-toggler flex-grow-sm-1 flex-grow-0 me-2" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbar5">
+                data-bs-target="#collapsingNavbar3">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="navbar-collapse collapse w-100" id="collapsingNavbar3"> {# Main pages #}
             <ul class="navbar-nav w-100 justify-content-center">
                 <li class="nav-item">
-                    <a class="nav-link text-secondary font-weight-bold"
+                    <a class="nav-link text-secondary"
                        href="{% url 'tournament:all' %}">TOURNAMENTS</a>
                 </li>
             </ul>
 
             {#        temporaty adding platform button  #}
             <ul class="nav navbar-nav ms-auto w-100 justify-content-end"> {# Log/Register #}
-                {#        temporaty adding platform button  !!#}
-                <li class="nav-item active">
-                    <a class="nav-link text-secondary " href="{% url 'platform:add' %}">Add platform</a>
-                </li>
-
                 {% if not user.is_authenticated %}
                     <li class="nav-item active">
                         <a class="nav-link text-secondary " href="{% url 'user:register' %}">Sign up</a>
@@ -76,6 +71,10 @@
                         <a class="nav-link text-secondary font-weight-bold" href="{% url 'user:login' %}">Sign in</a>
                     </li>
                 {% else %} {# Profile dropdown #}
+                    {#        temporaty adding platform button  !!#}
+                    <li class="nav-item active">
+                        <a class="nav-link text-secondary " href="{% url 'platform:add' %}">Add platform</a>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-secondary font-weight-bold" href="#"
                            id="navbarScrollingDropdown"
@@ -103,8 +102,8 @@
     </div>
 </nav>
 
-<div class="container-fluid bg-white justify-content-center" style="height: 7%">
-    <div class="container h-100">
+<div class="container-fluid bg-white justify-content-center" style="height: 60px">
+    <div class="container h-100 justify-content-start">
         <div class="row h-50 pt-2 font-weight-normal text-muted">
             {% block section_subtitle %}
             {% endblock %}
@@ -128,7 +127,7 @@
     {% endfor %}
 {% endif %}
 
-<div class="container bg-white justify-content-center rounded mt-5 px-md-4 py-4 text-center text-dark"
+<div class="container bg-white justify-content-center rounded mt-5 px-sm-4 py-4 text-center text-dark"
      style="min-height: 75vh">
 
     {% block content %}

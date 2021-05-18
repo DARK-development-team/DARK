@@ -5,12 +5,14 @@ from datetime import datetime
 
 from ..user import User
 from ..tournament import Tournament, TournamentRound
+from ..platform import Platform
 
 
 class RoundModelTests(TestCase):
     @classmethod
     def setUpTestData(cls):
         user = User.objects.create_user(username='testuser', password='12345')
+        cls.stub_platform = Platform(id=0)
         cls.tournament = Tournament.objects.create(
             name="dummy",
             creator=user,
@@ -25,7 +27,8 @@ class RoundModelTests(TestCase):
             name="dummy",
             tournament=self.tournament,
             start_date=datetime.strptime("01/01/20 20:00:00", '%d/%m/%y %H:%M:%S'),
-            end_date=datetime.strptime("01/01/20 19:00:00", '%d/%m/%y %H:%M:%S')
+            end_date=datetime.strptime("01/01/20 19:00:00", '%d/%m/%y %H:%M:%S'),
+            platform=self.stub_platform
         )
 
     def test_start_date_ge_tournament_start_date(self):
@@ -35,7 +38,8 @@ class RoundModelTests(TestCase):
             name="dummy",
             tournament=self.tournament,
             start_date=datetime.strptime("01/01/20 17:00:00", '%d/%m/%y %H:%M:%S'),
-            end_date=datetime.strptime("01/01/20 19:00:00", '%d/%m/%y %H:%M:%S')
+            end_date=datetime.strptime("01/01/20 19:00:00", '%d/%m/%y %H:%M:%S'),
+            platform=self.stub_platform
         )
 
     def test_end_date_le_tournament_end_date(self):
@@ -45,5 +49,6 @@ class RoundModelTests(TestCase):
             name="dummy",
             tournament=self.tournament,
             start_date=datetime.strptime("01/01/20 21:00:00", '%d/%m/%y %H:%M:%S'),
-            end_date=datetime.strptime("01/01/20 23:00:00", '%d/%m/%y %H:%M:%S')
+            end_date=datetime.strptime("01/01/20 23:00:00", '%d/%m/%y %H:%M:%S'),
+            platform=self.stub_platform
         )

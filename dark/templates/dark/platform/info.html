@@ -4,7 +4,9 @@
 {% block content %}
     <div class="m-5">
         <p>Name: {{ platform.name }}</p>
-        <p>Url: {{ platform.address }}</p>
+        <p>Url: {{ platform.repo.url }}</p>
+        <p>Commit: {{ platform.repo.commit }}</p>
+        <p>Local: {{ platform.repo.local_directory }}</p>
     </div>
 
 {% endblock %}
