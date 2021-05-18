@@ -68,19 +68,11 @@
                 </div>
             {% endfor %}
             <div class="row justify-content-center mt-3">
-                {% if user.is_authenticated %}
+                {% if tournament_editable and user.is_authenticated %}
                     <div class="col-2 text-center">
                         <button type="button" class="btn btn-secondary"
-                                onclick="location.href ='{% url 'tournament:team:member:add' team.tournament.id team.id %}'">
-                            Add Member
-                        </button>
-                    </div>
-                {% endif %}
-                {% if user_member.role.can_remove %}
-                    <div class="col-2 text-center">
-                        <button type="button" class="btn btn-primary"
-                                onclick="location.href ='{% url 'tournament:team:role:all' team.tournament.id team.id %}'">
-                            Show Roles
+                                onclick="location.href ='{% url 'tournament:team:change name' team.tournament.id team.id %}'">
+                            Change team name
                         </button>
                     </div>
                 {% endif %}
@@ -102,7 +94,7 @@
                 <div class="col-3">Action</div>
             </div>
             <div class="row mx-md-1 mb-2 border border-secondary"></div>
-            {% for tround, bot in round_bot_pairs %}
+            {% for tround, bot, editable in round_bot_editable_trios %}
                 <div class="row justify-content-around swatch-200 mx-md-1 my-2 py-3 rounded shadow">
                     <div class="col-1">{{ forloop.counter }}</div>
                     <div class="col-3"><a class="text-info"
@@ -116,20 +108,22 @@
                         {% endif %}
                     </div>
                     <div class="col-3">
-                        {% if bot is not None %}
-                            <button type="button" class="btn btn-primary btn-sm"
-                                    onclick="location.href ='{% url 'tournament:team:bot:modify' team.tournament.id team.id bot.id %}'">
-                                Modify
-                            </button>
-                            <button type="button" class="btn btn-danger btn-sm"
-                                    onclick="location.href ='{% url 'tournament:team:bot:remove' team.tournament.id team.id bot.id %}'">
-                                Remove
-                            </button>
-                        {% else %}
-                            <button type="button" class="btn btn-secondary btn-sm"
-                                    onclick="location.href ='{% url 'tournament:team:bot:add' team.tournament.id team.id tround.id %}'">
-                                Add
-                            </button>
+                        {% if editable %}
+                            {% if bot is not None %}
+                                <button type="button" class="btn btn-primary btn-sm"
+                                        onclick="location.href ='{% url 'tournament:team:bot:modify' team.tournament.id team.id bot.id %}'">
+                                    Modify
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm"
+                                        onclick="location.href ='{% url 'tournament:team:bot:remove' team.tournament.id team.id bot.id %}'">
+                                    Remove
+                                </button>
+                            {% else %}
+                                <button type="button" class="btn btn-secondary btn-sm"
+                                        onclick="location.href ='{% url 'tournament:team:bot:add' team.tournament.id team.id tround.id %}'">
+                                    Add
+                                </button>
+                            {% endif %}
                         {% endif %}
                     </div>
                 </div>
