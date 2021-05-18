@@ -1,10 +1,11 @@
 from django.views.generic import DeleteView
 from django.urls import reverse
 
+from dark.common.views import RoundEditableMixin
 from dark.models.tournament.team import TeamBot
 
 
-class RemoveTeamBotView(DeleteView):
+class RemoveTeamBotView(RoundEditableMixin, DeleteView):
     model = TeamBot
     template_name = 'dark/tournament/team/bot/remove.html'
     context_object_name = 'bot'

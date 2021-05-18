@@ -1,11 +1,12 @@
 from django.views.generic import UpdateView
 from django.urls import reverse
 
+from dark.common.views import RoundEditableMixin
 from dark.models.tournament.team import TeamBot
 from dark.forms.tournament.team import ModifyTeamBotForm
 
 
-class ModifyTeamBotView(UpdateView):
+class ModifyTeamBotView(RoundEditableMixin, UpdateView):
     model = TeamBot
     form_class = ModifyTeamBotForm
     template_name = 'dark/tournament/team/bot/modify.html'

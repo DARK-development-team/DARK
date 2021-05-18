@@ -1,13 +1,14 @@
 from django.shortcuts import render, redirect
-from django.views.generic import CreateView, View
 from django.urls import reverse
+from django.views.generic import View
 
-from dark.models.tournament import Tournament, TournamentRound
-from dark.models.tournament.team import TeamBot, Team
+from dark.common.views import RoundEditableMixin
 from dark.forms.tournament.team import AddTeamBotForm
-from dark.common.views import ForeignKeysMixin
+from dark.models.tournament import TournamentRound
+from dark.models.tournament.team import Team
 
-class AddTeamBotView(View):
+
+class AddTeamBotView(RoundEditableMixin, View):
     form_class = AddTeamBotForm
     template_name = 'dark/tournament/team/bot/add.html'
 

@@ -3,7 +3,8 @@ from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from django.utils import timezone
 
-from dark.models.tournament import Tournament
+from dark.models.tournament import Tournament, TournamentRound
+from dark.models.tournament.team import TeamBot
 
 
 class UserAuthenticationDependentContextMixin(object):
@@ -56,3 +57,21 @@ class TournamentEditableMixin(object):
             return redirect(reverse('tournament:info', kwargs={'tournament': self.kwargs['tournament']}))
         else:
             return super().dispatch(request, *args, **kwargs)
+
+
+class RoundEditableMixin(object):
+    def dispatch(self, request, *args, **kwargs):
+        now = timezone.now()
+
+        if 'tround' in kwargs:
+            tround = get_object_or_404(TournamentRound, id=self.kwargs['tround'])
+        else:
+            bot = get_object_or_404(TeamBot, id=self.kwargs['bot'])
+            tround = bot.tround
+
+        if tround.start_date < now < tround.end_date:
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            messages.error(request, 'Round is no longer editable!')
+            return redirect(reverse('tournament:team:info',
+                                    kwargs={'tournament': self.kwargs['tournament'], 'team': self.kwargs['team']}))
