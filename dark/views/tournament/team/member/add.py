@@ -34,4 +34,4 @@ class AddTeamMemberView(FieldQuerySetMixin, ForeignKeysMixin, CreateView):
                 'team': team_id
             }))
         else:
-            super(self)
+            return super().post(request, *args, **kwargs)

@@ -1,7 +1,14 @@
 {% extends "dark/base.html" %}
 
+{% block section_subtitle %}
+    <p>Platform</p>
+{% endblock %}
+
+{% block section_title %}
+    <p>Add Platform</p>
+{% endblock %}
+
 {% block content %}
-    <h2>Add Tournament</h2>
     <div class="container">
         <form method="post">
             {% csrf_token %}

@@ -36,7 +36,7 @@ class AddTeamView(LoginRequiredMixin, ForeignKeysMixin, CreateView):
                 'tournament': tournament_id
             }))
         else:
-            super(self)
+            return super().post(request, *args, **kwargs)
 
     @after(add_members)
     def form_valid(self, form):

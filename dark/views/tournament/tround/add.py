@@ -27,4 +27,4 @@ class AddTournamentRoundView(ForeignKeysMixin, CreateView):
                 'tournament': tournament_id
             }))
         else:
-            super(self)
+            return super().post(request, *args, **kwargs)
