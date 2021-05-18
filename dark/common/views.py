@@ -1,3 +1,11 @@
+from django.contrib import messages
+from django.shortcuts import get_object_or_404, redirect
+from django.urls import reverse
+from django.utils import timezone
+
+from dark.models.tournament import Tournament
+
+
 class UserAuthenticationDependentContextMixin(object):
     def get_context_data(self, **kwargs):
         context = super(UserAuthenticationDependentContextMixin, self).get_context_data(**kwargs)
@@ -36,3 +44,15 @@ class FieldQuerySetMixin(object):
         for field_name, value in form.fields.items():
             form.fields[field_name].queryset = self.get_queryset_for_field(field_name, value.queryset)
         return form
+
+
+class TournamentEditableMixin(object):
+    def dispatch(self, request, *args, **kwargs):
+        tournament = get_object_or_404(Tournament, id=self.kwargs['tournament'])
+        now = timezone.now()
+
+        if tournament.start_date < now or tournament.end_date < now:
+            messages.error(request, 'Tournament is no longer editable!')
+            return redirect(reverse('tournament:info', kwargs={'tournament': self.kwargs['tournament']}))
+        else:
+            return super().dispatch(request, *args, **kwargs)

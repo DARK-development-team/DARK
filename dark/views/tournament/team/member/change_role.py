@@ -1,12 +1,12 @@
 from django.views.generic import UpdateView
 from django.urls import reverse
 
-from dark.common.views import FieldQuerySetMixin
+from dark.common.views import FieldQuerySetMixin, TournamentEditableMixin
 from dark.models.tournament.team import TeamMember
 from dark.forms.tournament.team import ChangeTeamMemberRoleForm
 
 
-class ChangeTeamMemberRoleView(FieldQuerySetMixin, UpdateView):
+class ChangeTeamMemberRoleView(TournamentEditableMixin, FieldQuerySetMixin, UpdateView):
     model = TeamMember
     form_class = ChangeTeamMemberRoleForm
     template_name = 'dark/tournament/team/member/change_role.html'

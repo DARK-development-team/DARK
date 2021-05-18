@@ -1,12 +1,12 @@
 from django.urls import reverse
 from django.views.generic import CreateView
 
-from dark.common.views import ForeignKeysMixin, FieldQuerySetMixin
+from dark.common.views import ForeignKeysMixin, FieldQuerySetMixin, TournamentEditableMixin
 from dark.forms.tournament.team import AddTeamMemberForm
 from dark.models.tournament.team import TeamMember
 
 
-class AddTeamMemberView(FieldQuerySetMixin, ForeignKeysMixin, CreateView):
+class AddTeamMemberView(TournamentEditableMixin, FieldQuerySetMixin, ForeignKeysMixin, CreateView):
     model = TeamMember
     template_name = 'dark/tournament/team/member/add.html'
     form_class = AddTeamMemberForm
