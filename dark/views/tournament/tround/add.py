@@ -1,12 +1,9 @@
-from django.contrib import messages
-from django.shortcuts import get_object_or_404, redirect
-from django.utils import timezone
-from django.views.generic import CreateView
 from django.urls import reverse
+from django.views.generic import CreateView
 
-from dark.models.tournament import TournamentRound, Tournament
-from dark.forms.tournament import AddTournamentRoundForm
 from dark.common.views import ForeignKeysMixin, TournamentEditableMixin
+from dark.forms.tournament import AddTournamentRoundForm
+from dark.models.tournament import TournamentRound
 
 
 class AddTournamentRoundView(TournamentEditableMixin, ForeignKeysMixin, CreateView):
