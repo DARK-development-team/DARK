@@ -59,6 +59,18 @@ class TournamentEditableMixin(object):
             return super().dispatch(request, *args, **kwargs)
 
 
+class RoundAddableMixin(object):
+    def dispatch(self, request, *args, **kwargs):
+        tournament = get_object_or_404(Tournament, id=self.kwargs['tournament'])
+        now = timezone.now()
+
+        if now < tournament.end_date:
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            messages.error(request, 'Tournament is no longer editable!')
+            return redirect(reverse('tournament:info', kwargs={'tournament': self.kwargs['tournament']}))
+
+
 class RoundEditableMixin(object):
     def dispatch(self, request, *args, **kwargs):
         now = timezone.now()

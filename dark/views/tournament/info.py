@@ -39,7 +39,8 @@ class TournamentInfoView(UserAuthenticationDependentContextMixin, DetailView):
             'contestants': Team.objects.filter(tournament=tournament),
             'is_creator_viewing': False,
             'is_private': tournament.is_private,
-            'is_editable': True if tournament.start_date > timezone.now() else False,
+            'changeable_teams': True if tournament.start_date > timezone.now() else False,
+            'addable_rounds': True if tournament.end_date > timezone.now() else False,
             'has_team': False,
         }
 

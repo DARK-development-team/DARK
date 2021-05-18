@@ -1,12 +1,12 @@
 from django.urls import reverse
 from django.views.generic import CreateView
 
-from dark.common.views import ForeignKeysMixin, TournamentEditableMixin
+from dark.common.views import ForeignKeysMixin, RoundAddableMixin
 from dark.forms.tournament import AddTournamentRoundForm
 from dark.models.tournament import TournamentRound
 
 
-class AddTournamentRoundView(TournamentEditableMixin, ForeignKeysMixin, CreateView):
+class AddTournamentRoundView(RoundAddableMixin, ForeignKeysMixin, CreateView):
     model = TournamentRound
     template_name = 'dark/tournament/tround/add.html'
     form_class = AddTournamentRoundForm
