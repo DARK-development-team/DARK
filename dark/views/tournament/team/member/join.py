@@ -14,5 +14,6 @@ class JoinTeamMemberView(TournamentEditableMixin, View):
         role = TeamRole.objects.get(team=team_obj, name="Participant")
 
         TeamMember.objects.create(team=team_obj, user=user, role=role)
+        messages.success(request, 'You have joined ' + team_obj.name)
 
         return HttpResponseRedirect(reverse('tournament:team:info', kwargs={'tournament': tournament, 'team': team}))

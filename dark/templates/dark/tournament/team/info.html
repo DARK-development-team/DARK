@@ -7,6 +7,12 @@
     {{ team.name }}
 {% endblock %}
 
+{% block back %}
+    <button type="button" class="float-left btn btn-secondary btn-sm mt-2 py-1 px-2" onclick="location.href ='{% url 'tournament:info' team.tournament.id %}'">
+        Back to Tournament Details
+    </button>
+{% endblock %}
+
 {% block content %}
     <b>Team:</b> {{ team.name }} <br>
     <b>Tournament:</b> {{ team.tournament.name }}

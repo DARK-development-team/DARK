@@ -1,3 +1,4 @@
+from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import CreateView
 
@@ -23,3 +24,14 @@ class AddTeamMemberView(TournamentEditableMixin, FieldQuerySetMixin, ForeignKeys
             'tournament': self.object.team.tournament.id,
             'team': self.object.team.id
         })
+
+    def post(self, request, *args, **kwargs):
+        if "cancel" in request.POST:
+            team_id = kwargs.get('team')
+            tournament_id = kwargs.get('tournament')
+            return redirect(reverse('tournament:team:info', kwargs={
+                'tournament': tournament_id,
+                'team': team_id
+            }))
+        else:
+            return super().post(request, *args, **kwargs)
