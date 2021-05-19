@@ -25,7 +25,23 @@
         <p>Start Date: {{ tround.start_date }}</p>
         <p>End Date: {{ tround.end_date }}</p>
     </div>
-
+    <h3>Requirements:</h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Library</th>
+            <th scope="col">Version</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for req in requirements %}
+            <tr>
+                <td align="left">{{ req.name }}</td>
+                <td align="left">{% for item in req.specs %} {% for i in item %} {{ i }} {% endfor %} {% endfor %}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
     <form method="post">
         {% csrf_token %}
         <input type="submit" value="Run round">
