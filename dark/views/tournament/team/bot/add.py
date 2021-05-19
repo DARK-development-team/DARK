@@ -20,6 +20,11 @@ class AddTeamBotView(View):
         form = self.form_class(request.POST, request.FILES)
         form.instance.team = Team.objects.get(id=team)
         form.instance.tround = TournamentRound.objects.get(id=tround)
+        if "cancel" in request.POST:
+            return redirect(reverse('tournament:team:info', kwargs={
+                'tournament': tournament,
+                'team': team
+            }))
         if form.is_valid():
             obj = form.save()
             messages.success(request, 'Bot ' + obj.bot_class_name + ' has successfully added!')

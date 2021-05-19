@@ -7,6 +7,12 @@
     {{ tournament.name }}
 {% endblock %}
 
+{% block back %}
+    <button type="button" class="float-left btn btn-secondary btn-sm mt-2 py-1 px-2" onclick="location.href ='{% url 'tournament:all' %}'">
+        Back to Tournaments List
+    </button>
+{% endblock %}
+
 {% block content %}
     <b>Tournament:</b> {{ tournament.name }} <br>
     <b>Dates:</b> {{ tournament.start_date }} - {{ tournament.end_date }} <br>

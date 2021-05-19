@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect
 from django.views.generic import CreateView
 from django.urls import reverse
 
@@ -27,6 +28,15 @@ class AddTeamView(LoginRequiredMixin, ForeignKeysMixin, CreateView):
         participant_role = TeamRole.objects.create(team=team, name="Participant")
 
         TeamMember.objects.create(team=team, user=self.request.user, role=participant_role)
+
+    def post(self, request, *args, **kwargs):
+        if "cancel" in request.POST:
+            tournament_id = kwargs.get('tournament')
+            return redirect(reverse('tournament:info', kwargs={
+                'tournament': tournament_id
+            }))
+        else:
+            return super().post(request, *args, **kwargs)
 
     @after(add_members)
     def form_valid(self, form):
