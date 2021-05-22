@@ -23,7 +23,7 @@ class TeamInfoView(UserAuthenticationDependentContextMixin, DetailView):
                 bot = TeamBot.objects.get(tround=tround, team=self.object)
             except TeamBot.DoesNotExist:
                 bot = None
-            editable = True if tround.start_date < now < tround.end_date else False
+            editable = True if tround.start_date > now else False
             round_bot_editable_trios.append((tround, bot, editable))
         return {
             'members': TeamMember.objects.filter(team=self.object),

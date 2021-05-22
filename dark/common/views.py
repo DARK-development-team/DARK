@@ -81,7 +81,7 @@ class RoundEditableMixin(object):
             bot = get_object_or_404(TeamBot, id=self.kwargs['bot'])
             tround = bot.tround
 
-        if tround.start_date < now < tround.end_date:
+        if tround.start_date > now:
             return super().dispatch(request, *args, **kwargs)
         else:
             messages.error(request, 'Round is no longer editable!')
