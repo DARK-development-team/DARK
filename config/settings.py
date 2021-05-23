@@ -24,9 +24,3 @@ MESSAGE_TAGS = {
     messages.WARNING: 'alert-warning',
     messages.ERROR: 'alert-danger',
 }
-
-ALLOWED_HOSTS = [
-    '0.0.0.0',
-    'darkplatform.herokuapp.com',
-    '127.0.0.1'
-]
