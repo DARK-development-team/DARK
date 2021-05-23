@@ -33,3 +33,6 @@ jobs:
     - name: Run Tests
       run: |
         python manage.py test
+    - name: Run with gunicorn
+      run: |
+        gunicorn dark.wsgi
