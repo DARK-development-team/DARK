@@ -1,0 +1,41 @@
+{"time_stamp": "2021-05-19 13:54:52,821", "severity": "INFO", "line": "core.log:11", "type": "GameStartReport", "value": {"game_number": 1}}
+{"time_stamp": "2021-05-19 13:54:52,822", "severity": "DEBUG", "line": "core.log:11", "type": "RandomArenaPickReport", "value": {"arena_name": "fisher_island"}}
+{"time_stamp": "2021-05-19 13:54:52,833", "severity": "DEBUG", "line": "core.log:11", "type": "MenhirSpawnedReport", "value": {"position": [22, 4]}}
+{"time_stamp": "2021-05-19 13:54:52,834", "severity": "DEBUG", "line": "core.log:11", "type": "EpisodeStartReport", "value": {"episode_number": 1}}
+{"time_stamp": "2021-05-19 13:54:52,835", "severity": "INFO", "line": "core.log:11", "type": "GameStartReport", "value": {"game_number": 2}}
+{"time_stamp": "2021-05-19 13:54:52,835", "severity": "DEBUG", "line": "core.log:11", "type": "RandomArenaPickReport", "value": {"arena_name": "fisher_island"}}
+{"time_stamp": "2021-05-19 13:54:52,854", "severity": "DEBUG", "line": "core.log:11", "type": "MenhirSpawnedReport", "value": {"position": [27, 17]}}
+{"time_stamp": "2021-05-19 13:54:52,855", "severity": "DEBUG", "line": "core.log:11", "type": "EpisodeStartReport", "value": {"episode_number": 1}}
+{"time_stamp": "2021-05-19 13:54:52,856", "severity": "INFO", "line": "core.log:11", "type": "GameStartReport", "value": {"game_number": 3}}
+{"time_stamp": "2021-05-19 13:54:52,856", "severity": "DEBUG", "line": "core.log:11", "type": "RandomArenaPickReport", "value": {"arena_name": "wasteland"}}
+{"time_stamp": "2021-05-19 13:54:52,863", "severity": "DEBUG", "line": "core.log:11", "type": "MenhirSpawnedReport", "value": {"position": [26, 9]}}
+{"time_stamp": "2021-05-19 13:54:52,865", "severity": "DEBUG", "line": "core.log:11", "type": "EpisodeStartReport", "value": {"episode_number": 1}}
+{"time_stamp": "2021-05-19 13:54:52,865", "severity": "INFO", "line": "core.log:11", "type": "GameStartReport", "value": {"game_number": 4}}
+{"time_stamp": "2021-05-19 13:54:52,865", "severity": "DEBUG", "line": "core.log:11", "type": "RandomArenaPickReport", "value": {"arena_name": "fisher_island"}}
+{"time_stamp": "2021-05-19 13:54:52,874", "severity": "DEBUG", "line": "core.log:11", "type": "MenhirSpawnedReport", "value": {"position": [30, 30]}}
+{"time_stamp": "2021-05-19 13:54:52,875", "severity": "DEBUG", "line": "core.log:11", "type": "EpisodeStartReport", "value": {"episode_number": 1}}
+{"time_stamp": "2021-05-19 13:54:52,876", "severity": "INFO", "line": "core.log:11", "type": "GameStartReport", "value": {"game_number": 5}}
+{"time_stamp": "2021-05-19 13:54:52,876", "severity": "DEBUG", "line": "core.log:11", "type": "RandomArenaPickReport", "value": {"arena_name": "archipelago"}}
+{"time_stamp": "2021-05-19 13:54:52,883", "severity": "DEBUG", "line": "core.log:11", "type": "MenhirSpawnedReport", "value": {"position": [7, 8]}}
+{"time_stamp": "2021-05-19 13:54:52,884", "severity": "DEBUG", "line": "core.log:11", "type": "EpisodeStartReport", "value": {"episode_number": 1}}
+{"time_stamp": "2021-05-19 13:54:52,885", "severity": "INFO", "line": "core.log:11", "type": "GameStartReport", "value": {"game_number": 6}}
+{"time_stamp": "2021-05-19 13:54:52,885", "severity": "DEBUG", "line": "core.log:11", "type": "RandomArenaPickReport", "value": {"arena_name": "fisher_island"}}
+{"time_stamp": "2021-05-19 13:54:52,891", "severity": "DEBUG", "line": "core.log:11", "type": "MenhirSpawnedReport", "value": {"position": [31, 24]}}
+{"time_stamp": "2021-05-19 13:54:52,892", "severity": "DEBUG", "line": "core.log:11", "type": "EpisodeStartReport", "value": {"episode_number": 1}}
+{"time_stamp": "2021-05-19 13:54:52,893", "severity": "INFO", "line": "core.log:11", "type": "GameStartReport", "value": {"game_number": 7}}
+{"time_stamp": "2021-05-19 13:54:52,893", "severity": "DEBUG", "line": "core.log:11", "type": "RandomArenaPickReport", "value": {"arena_name": "wasteland"}}
+{"time_stamp": "2021-05-19 13:54:52,907", "severity": "DEBUG", "line": "core.log:11", "type": "MenhirSpawnedReport", "value": {"position": [6, 19]}}
+{"time_stamp": "2021-05-19 13:54:52,910", "severity": "DEBUG", "line": "core.log:11", "type": "EpisodeStartReport", "value": {"episode_number": 1}}
+{"time_stamp": "2021-05-19 13:54:52,912", "severity": "INFO", "line": "core.log:11", "type": "GameStartReport", "value": {"game_number": 8}}
+{"time_stamp": "2021-05-19 13:54:52,912", "severity": "DEBUG", "line": "core.log:11", "type": "RandomArenaPickReport", "value": {"arena_name": "archipelago"}}
+{"time_stamp": "2021-05-19 13:54:52,919", "severity": "DEBUG", "line": "core.log:11", "type": "MenhirSpawnedReport", "value": {"position": [30, 35]}}
+{"time_stamp": "2021-05-19 13:54:52,920", "severity": "DEBUG", "line": "core.log:11", "type": "EpisodeStartReport", "value": {"episode_number": 1}}
+{"time_stamp": "2021-05-19 13:54:52,921", "severity": "INFO", "line": "core.log:11", "type": "GameStartReport", "value": {"game_number": 9}}
+{"time_stamp": "2021-05-19 13:54:52,921", "severity": "DEBUG", "line": "core.log:11", "type": "RandomArenaPickReport", "value": {"arena_name": "archipelago"}}
+{"time_stamp": "2021-05-19 13:54:52,928", "severity": "DEBUG", "line": "core.log:11", "type": "MenhirSpawnedReport", "value": {"position": [29, 26]}}
+{"time_stamp": "2021-05-19 13:54:52,930", "severity": "DEBUG", "line": "core.log:11", "type": "EpisodeStartReport", "value": {"episode_number": 1}}
+{"time_stamp": "2021-05-19 13:54:52,931", "severity": "INFO", "line": "core.log:11", "type": "GameStartReport", "value": {"game_number": 10}}
+{"time_stamp": "2021-05-19 13:54:52,931", "severity": "DEBUG", "line": "core.log:11", "type": "RandomArenaPickReport", "value": {"arena_name": "wasteland"}}
+{"time_stamp": "2021-05-19 13:54:52,940", "severity": "DEBUG", "line": "core.log:11", "type": "MenhirSpawnedReport", "value": {"position": [17, 31]}}
+{"time_stamp": "2021-05-19 13:54:52,942", "severity": "DEBUG", "line": "core.log:11", "type": "EpisodeStartReport", "value": {"episode_number": 1}}
+{"time_stamp": "2021-05-19 13:54:52,945", "severity": "INFO", "line": "core.log:11", "type": "FinalScoresReport", "value": {"scores": []}}
