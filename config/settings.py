@@ -20,6 +20,6 @@ MESSAGE_TAGS = {
     messages.ERROR: 'alert-danger',
 }
 
-if True or 'DYNO' in os.environ:
+if 'DYNO' in os.environ:
     import django_heroku
     django_heroku.settings(locals())
