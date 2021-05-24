@@ -1,5 +1,22 @@
 {% extends "dark/base.html" %}
 
+{% block section_subtitle %}
+    Round Details
+{% endblock %}
+{% block section_title %}
+    {{ tround.name }}
+{% endblock %}
+
+{% block back %}
+    <a type="button" class="float-left btn btn-secondary btn-sm mt-2 py-1 px-2"
+            {% if request.META.HTTP_REFERER %} href="{{ request.META.HTTP_REFERER }}">
+                Back to Details
+            {% else %}  href='{% url 'tournament:info' tround.tournament.id %}'>
+                {# this is called when user enters the site directly from link #}
+                Back to Tournament Details
+            {% endif %}
+    </a>
+{% endblock %}
 
 {% block content %}
     <div class="m-5">
@@ -8,6 +25,24 @@
         <p>Start Date: {{ tround.start_date }}</p>
         <p>End Date: {{ tround.end_date }}</p>
     </div>
+
+    <h3>Requirements:</h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Library</th>
+            <th scope="col">Version</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for req in requirements %}
+            <tr>
+                <td align="left">{{ req.name }}</td>
+                <td align="left">{% for item in req.specs %} {% for i in item %} {{ i }} {% endfor %} {% endfor %}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
     {% if not results %}
         <form method="post">
@@ -29,6 +64,7 @@
 
     {% if json_file_path %}
         <a href="{{ json_file_path }}" download> Pobierz plik .json </a>
+
     {% endif %}
 
 {% endblock %}

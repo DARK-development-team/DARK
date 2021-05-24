@@ -168,3 +168,4 @@ def get_round_log_and_json_files_paths(path):
 
 def get_refined_text_from_result(result):
     return result[:result.find('{')] + result[result.find('}') + 1:]
+

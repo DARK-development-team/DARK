@@ -1,7 +1,14 @@
 {% extends "dark/base.html" %}
 
+{% block section_subtitle %}
+    <p>Platform</p>
+{% endblock %}
+
+{% block section_title %}
+    <p>Add Platform</p>
+{% endblock %}
+
 {% block content %}
-    <h2>Add Tournament</h2>
     <div class="container">
         <form method="post">
             {% csrf_token %}
@@ -17,7 +24,8 @@
                     {% endfor %}
                 </div>
             {% endfor %}
-            <button class="btn btn-outline-info" type="submit">Add Platform</button>
+            <a class="btn btn-secondary" href="/">Cancel</a>
+            <button class="btn btn-primary" type="submit">Add Platform</button>
         </form>
     </div>
 {% endblock %}

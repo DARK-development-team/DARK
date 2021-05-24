@@ -8,6 +8,10 @@ from django.http import HttpResponse, Http404
 from dark.models.tournament import TournamentRound
 from dark.logic import tround_execution
 
+from dark.logic.platform_utils import get_platform_requirements
+from dark.models.tournament import TournamentRound
+from dark.logic import tround_execution
+
 from dark.models.tournament import TournamentRound
 
 
@@ -35,6 +39,7 @@ class TournamentRoundInfoView(DetailView):
         context = super().get_context_data(**kwargs)
         context['results'], context['log_file_path'], context['json_file_path'] =\
             tround_execution.get_round_results(self.object)
+        context['requirements'] = get_platform_requirements(self.object.platform)
         print(os.getcwd())
         print(context['log_file_path'])
         return context

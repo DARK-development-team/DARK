@@ -1,7 +1,7 @@
 import os
 
 from split_settings.tools import optional, include
-
+from django.contrib.messages import constants as messages
 
 include(
     'options.py',
@@ -16,3 +16,11 @@ include(
 if 'HEROKU' in os.environ:
     import django_heroku
     django_heroku.settings(locals())
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'alert-info',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
+}

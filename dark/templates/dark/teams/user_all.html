@@ -8,76 +8,102 @@
 {% endblock %}
 
 {% block content %}
-    <div class="row justify-content-around mx-sm-5 mt-sm-2 pb-2 font-weight-bold">
-            <div class="col-4 text-left">In Progress</div>
-            <div class="col-4"></div>
-            <div class="col-4"></div>
-    </div>
-    <div class="row mx-sm-5 mb-sm-2 border border-secondary"></div>
-    {% for team in in_progress_teams %}
-        <div class="row justify-content-around swatch-200 mx-sm-5 my-sm-2 py-3 rounded shadow">
-            <div class="col-2">{{ team.name }}</div>
-            <div class="col-6">
-                <button type="button" class="btn btn-primary btn-sm float-begin"
-                        onclick="location.href ='{% url 'tournament:team:info' team.tournament_id team.id %}'">
-                    TEAM DETAILS
-                </button>
-            </div>
-            <div class="col-2">
-                <button type="button" class="btn btn-primary btn-sm float-begin"
-                        onclick="location.href ='{% url 'tournament:info' team.tournament_id %}'">
-                    TOURNAMENT DETAILS
-                </button>
-            </div>
+    <div class="card mx-md-5">
+        <div class="card-header" style="background-color: #a1a1a1">
+            <h5 class="mb-0">
+                In Progress
+            </h5>
         </div>
-    {% endfor %}
-
-    <div class="row justify-content-around mx-sm-5 mt-sm-2 pb-2 font-weight-bold">
-            <div class="col-4 text-left">Upcoming</div>
-            <div class="col-4"></div>
-            <div class="col-4"></div>
-    </div>
-    <div class="row mx-sm-5 mb-sm-2 border border-secondary"></div>
-    {% for team in upcoming_teams %}
-        <div class="row justify-content-around swatch-200 mx-sm-5 my-sm-2 py-3 rounded shadow">
-            <div class="col-2">{{ team.name }}</div>
-            <div class="col-6">
-                <button type="button" class="btn btn-primary btn-sm float-begin"
-                        onclick="location.href ='{% url 'tournament:team:info' team.tournament_id team.id %}'">
-                    TEAM DETAILS
-                </button>
+        <div class="card-body">
+            <div class="row justify-content-around mx-md-1 mb-2 pb-2 font-weight-bold">
+                <div class="col-6">Team</div>
+                <div class="col-6">Tournament</div>
             </div>
-            <div class="col-2">
-                <button type="button" class="btn btn-primary btn-sm float-begin"
-                        onclick="location.href ='{% url 'tournament:info' team.tournament_id %}'">
-                    TOURNAMENT DETAILS
-                </button>
-            </div>
+            <div class="row mx-md-1 mb-2 border border-secondary"></div>
+            {% for team in in_progress_teams %}
+                <div class="row justify-content-around swatch-200 mx-md-1 my-2 py-3 rounded shadow">
+                    <div class="col-2">{{ team.name }}</div>
+                    <div class="col-4">
+                        <button type="button" class="btn btn-primary btn-sm float-begin"
+                                onclick="location.href ='{% url 'tournament:team:info' team.tournament_id team.id %}'">
+                            DETAILS
+                        </button>
+                    </div>
+                    <div class="col-2">{{ team.tournament.name }}</div>
+                    <div class="col-4 col-md-4">
+                        <button type="button" class="btn btn-primary btn-sm float-begin"
+                                onclick="location.href ='{% url 'tournament:info' team.tournament_id %}'">
+                            DETAILS
+                        </button>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
-    {% endfor %}
-
-    <div class="row justify-content-around mx-sm-5 mt-sm-2 pb-2 font-weight-bold">
-            <div class="col-4 text-left">Archived</div>
-            <div class="col-4"></div>
-            <div class="col-4"></div>
     </div>
-    <div class="row mx-sm-5 mb-sm-2 border border-secondary"></div>
-    {% for team in archived_teams %}
-        <div class="row justify-content-around swatch-200 mx-sm-5 my-sm-2 py-3 rounded shadow">
-            <div class="col-2">{{ team.name }}</div>
-            <div class="col-6">
-                <button type="button" class="btn btn-primary btn-sm float-begin"
-                        onclick="location.href ='{% url 'team:info' team.tournament_id team.id %}'">
-                    TEAM DETAILS
-                </button>
-            </div>
-            <div class="col-2">
-                <button type="button" class="btn btn-primary btn-sm float-begin"
-                        onclick="location.href ='{% url 'tournament:info' team.tournament_id %}'">
-                    TOURNAMENT DETAILS
-                </button>
-            </div>
-        </div>
-    {% endfor %}
 
+    <div class="card mx-md-5">
+        <div class="card-header" style="background-color: #a1a1a1">
+            <h5 class="mb-0">
+                Upcoming
+            </h5>
+        </div>
+        <div class="card-body">
+            <div class="row justify-content-around mx-md-1 mb-2 pb-2 font-weight-bold">
+                <div class="col-6">Team</div>
+                <div class="col-6">Tournament</div>
+            </div>
+            <div class="row mx-md-1 mb-2 border border-secondary"></div>
+            {% for team in upcoming_teams %}
+                <div class="row justify-content-around swatch-200 mx-md-1 my-2 py-3 rounded shadow">
+                    <div class="col-2">{{ team.name }}</div>
+                    <div class="col-4">
+                        <button type="button" class="btn btn-primary btn-sm float-begin"
+                                onclick="location.href ='{% url 'tournament:team:info' team.tournament_id team.id %}'">
+                            DETAILS
+                        </button>
+                    </div>
+                    <div class="col-2">{{ team.tournament.name }}</div>
+                    <div class="col-4 col-md-4">
+                        <button type="button" class="btn btn-primary btn-sm float-begin"
+                                onclick="location.href ='{% url 'tournament:info' team.tournament_id %}'">
+                            DETAILS
+                        </button>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="card mx-md-5">
+        <div class="card-header" style="background-color: #a1a1a1">
+            <h5 class="mb-0">
+                Archived
+            </h5>
+        </div>
+        <div class="card-body">
+            <div class="row justify-content-around mx-md-1 mb-2 pb-2 font-weight-bold">
+                <div class="col-6">Team</div>
+                <div class="col-6">Tournament</div>
+            </div>
+            <div class="row mx-md-1 mb-2 border border-secondary"></div>
+            {% for team in archived_teams %}
+                <div class="row justify-content-around swatch-200 mx-md-1 my-2 py-3 rounded shadow">
+                    <div class="col-2">{{ team.name }}</div>
+                    <div class="col-4">
+                        <button type="button" class="btn btn-primary btn-sm float-begin"
+                                onclick="location.href ='{% url 'team:info' team.tournament_id team.id %}'">
+                            DETAILS
+                        </button>
+                    </div>
+                    <div class="col-2">{{ team.tournament.name }}</div>
+                    <div class="col-4 col-md-4">
+                        <button type="button" class="btn btn-primary btn-sm float-begin"
+                                onclick="location.href ='{% url 'tournament:info' team.tournament_id %}'">
+                            DETAILS
+                        </button>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}
