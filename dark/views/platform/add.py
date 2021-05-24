@@ -11,13 +11,6 @@ def add_platform(instance: Platform):
     # self.update_state(state='PROGRESS', meta={'status': "Cloning platform repository..."})
     instance.save()
 
-
-def add_platform(instance: Platform):
-    # logger.info(instance.name)
-    # self.update_state(state='PROGRESS', meta={'status': "Cloning platform repository..."})
-    instance.save()
-
-
 class AddPlatformView(CreateView):
     model = Platform
     template_name = 'dark/platform/add.html'

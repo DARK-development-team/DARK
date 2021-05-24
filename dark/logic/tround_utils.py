@@ -4,16 +4,10 @@ from .common import data_path
 def tournaments_relto_data_path():
     return 'tournaments'
 
-def tournaments_relto_data_path():
-    return 'tournaments'
-
 
 def tournament_relto_data_path(tournament_name):
     return f'{tournaments_relto_data_path()}/{tournament_name}'
 
-
-def tround_relto_tournament_path(tround_name):
-    return tround_name
 
 def tround_relto_tournament_path(tround_name):
     return tround_name
