@@ -151,6 +151,7 @@ def get_round_results(tround: TournamentRound):
         lines = file.readlines()
         for line in reversed(lines):
             if line.split(' | ')[1] != 'INFO':
+                team_scores_as_text = team_scores_as_text[1:]
                 break
             score = get_refined_text_from_result(line.split(' | ')[3])
             team_scores_as_text.insert(0, score)
@@ -166,4 +167,4 @@ def get_round_log_and_json_files_paths(path):
 
 
 def get_refined_text_from_result(result):
-    return result
+    return result[:result.find('{')] + result[result.find('}') + 1:]
