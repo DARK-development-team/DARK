@@ -12,11 +12,6 @@ include(
     'subsettings/templates.py',
 )
 
-
-if 'HEROKU' in os.environ:
-    import django_heroku
-    django_heroku.settings(locals())
-
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-info',
     messages.INFO: 'alert-info',
@@ -24,3 +19,7 @@ MESSAGE_TAGS = {
     messages.WARNING: 'alert-warning',
     messages.ERROR: 'alert-danger',
 }
+
+if True or 'DYNO' in os.environ:
+    import django_heroku
+    django_heroku.settings(locals())
