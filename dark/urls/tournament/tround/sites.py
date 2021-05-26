@@ -2,7 +2,6 @@ from django.urls import path
 
 from dark.views.tournament.tround import AddTournamentRoundView, TournamentRoundInfoView
 
-
 class TournamentRoundSite:
     def get_urls(self):
         urlpatterns = [
