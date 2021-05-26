@@ -2,8 +2,9 @@ import os
 import subprocess
 import shutil
 import venv
-
-#from celery import task
+from django.core.mail import send_mail
+from django.conf import settings
+# from celery import task
 
 from dark.models.tournament import TournamentRound
 from dark.models.tournament.team import TeamBot
@@ -95,8 +96,8 @@ def prepare_config_for_round(tround: TournamentRound):
 def execute_round_in_venv(venv_context, tround: TournamentRound):
     package_relative_working_directory = \
         tround_relative_local_directory(tround.name, tround.tournament.name) \
-        if tround.platform.platform_relative_wd is None \
-        else tround.platform.platform_relative_wd
+            if tround.platform.platform_relative_wd is None \
+            else tround.platform.platform_relative_wd
 
     package_absolute_working_directory = f'{tround_absolute_local_directory(tround.name, tround.tournament.name)}/' \
                                          f'{package_relative_working_directory}'
@@ -110,8 +111,8 @@ def execute_round_in_venv(venv_context, tround: TournamentRound):
     tround_env_vars = os.environ.copy()
     tround_env_vars['PYTHONPATH'] = package_absolute_working_directory
     sp = subprocess.Popen(command, stdout=subprocess.PIPE, cwd=package_absolute_working_directory, env=tround_env_vars)
-    stdout = sp.communicate()[0] # sync to this subprocess
-    #print(stdout)
+    stdout = sp.communicate()[0]  # sync to this subprocess
+    # print(stdout)
 
 
 def remove_environment(tround: TournamentRound):
@@ -129,13 +130,21 @@ def cleanup_after_execution(tround: TournamentRound):
     remove_config(tround)
 
 
-#@task(bind=True)
+def notify_contestants(tround: TournamentRound, message: str):
+    recipient_list = [user.email for user in tround.tournament.participants.all()]
+    subject = f'Round \"{tround}\" execution'
+    send_mail(subject, message, settings.EMAIL_HOST_USER, recipient_list)
+
+
+# @task(bind=True)
 def execute_round(tround: TournamentRound):
-    #self.update_state(state='PROGRESS', meta={'current': i, 'total': n})
+    # self.update_state(state='PROGRESS', meta={'current': i, 'total': n})
     tround_execution_environment = prepare_environment_for_round(tround)
     prepare_config_for_round(tround)
+    notify_contestants(tround, f'Round \"{tround}\" execution has started')
     execute_round_in_venv(tround_execution_environment, tround)
     cleanup_after_execution(tround)
+    notify_contestants(tround, f'Round \"{tround}\" execution has finished')
 
 
 def get_round_results(tround: TournamentRound):

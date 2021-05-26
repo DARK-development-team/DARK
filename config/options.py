@@ -28,7 +28,7 @@ USE_TZ = False
 STATIC_URL = '/static/'
 
 STATICFILES_FINDERS = [
-	'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
@@ -39,3 +39,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 LOGIN_REDIRECT_URL = 'home:page'
 LOGOUT_REDIRECT_URL = 'home:page'
+
+DEFAULT_FROM_EMAIL = "dark.io.project@gmail.com"
+EMAIL_HOST_USER = "dark.io.project@gmail.com"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST_PASSWORD = "SuperSecretPassword"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
