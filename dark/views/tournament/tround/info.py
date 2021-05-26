@@ -40,6 +40,4 @@ class TournamentRoundInfoView(DetailView):
         context['results'], context['log_file_path'], context['json_file_path'] =\
             tround_execution.get_round_results(self.object)
         context['requirements'] = get_platform_requirements(self.object.platform)
-        print(os.getcwd())
-        print(context['log_file_path'])
         return context
