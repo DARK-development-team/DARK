@@ -16,7 +16,6 @@
 {% block content %}
     <b>Tournament:</b> {{ tournament.name }} <br>
     <b>Dates:</b> {{ tournament.start_date }} - {{ tournament.end_date }} <br>
-
     {% if is_private %}
         <b>Access Key:</b> {{ tournament.access_key }}
     {% endif %}
