@@ -13,7 +13,7 @@ class TeamInfoView(UserAuthenticationDependentContextMixin, DetailView):
     slug_field = 'id'
 
     def get_common_context(self):
-        rounds = TournamentRound.objects.filter(tournament=self.object.tournament)
+        rounds = TournamentRound.objects.filter(tournament=self.object.tournament).order_by('end_date', 'start_date')
         round_bot_pairs = []
         for tround in rounds:
             try:

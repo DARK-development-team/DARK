@@ -35,7 +35,7 @@ class TournamentInfoView(UserAuthenticationDependentContextMixin, DetailView):
 
         return {
             'rounds': TournamentRound.objects.filter(tournament=tournament).order_by('end_date', 'start_date'),
-            'contestants': Team.objects.filter(tournament=tournament).order_by('score'),
+            'contestants': Team.objects.filter(tournament=tournament).order_by('-score'),
             'is_creator_viewing': False,
             'is_private': tournament.is_private,
             'has_team': False,
