@@ -11,7 +11,11 @@ SECRET_KEY = '_h)u(6buzc2kk6^(svrf(c0d7^xaous&f_8yv&l#ekp4u=3_xg'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '0.0.0.0',
+    'darkplatform.herokuapp.com',
+    '127.0.0.1'
+]
 
 ROOT_URLCONF = 'dark.root_urls'
 

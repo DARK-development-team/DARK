@@ -1,13 +1,8 @@
-from django.forms import ModelForm, DateTimeInput
-
+from dark.common.forms.forms import TimePeriodForm
 from dark.models.tournament import TournamentRound
 
 
-class AddTournamentRoundForm(ModelForm):
-    class Meta:
+class AddTournamentRoundForm(TimePeriodForm):
+    class Meta(TimePeriodForm.Meta):
         model = TournamentRound
         fields = ['name', 'start_date', 'end_date', 'platform']
-        widgets = {
-            'start_date': DateTimeInput(attrs={'type': 'datetime-local'}),
-            'end_date': DateTimeInput(attrs={'type': 'datetime-local'}),
-        }
