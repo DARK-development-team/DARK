@@ -141,27 +141,40 @@ def execute_round(tround: TournamentRound):
 def get_round_results(tround: TournamentRound):
     log_output_relative_path = tround_log_output_relative_local_directory(tround.name, tround.tournament.name)
 
-    if os.path.isdir(log_output_relative_path):
-        result_files = os.listdir(log_output_relative_path)
-    else:
-        return None
+    if not os.path.isdir(log_output_relative_path):
+        return None, None, None
 
-    log_files = [file for file in result_files if os.path.splitext(file)[1] == '.log']
-    json_files = [file for file in result_files if os.path.splitext(file)[1] == '.json']
-    log_files_paths = [os.path.join(log_output_relative_path, log_file) for log_file in log_files]
+    log_file_path, json_file_path = get_round_log_and_json_files_paths(log_output_relative_path)
 
-    final_run_scores = []
-    for log_file_path in log_files_paths:
-        with open(log_file_path, 'r') as logs:
-            final_run_score = get_final_scores_from_logs(list(logs))
-        final_run_scores.append((log_file_path, final_run_score))
-    return final_run_scores
+    team_scores_as_text = get_bots_scores_from_log_file(log_file_path)
+
+    static_log_file_path = '/'.join(log_file_path.split('/')[2:])
+    static_json_file_path = '/'.join(json_file_path.split('/')[2:])
+
+    return team_scores_as_text, static_log_file_path, static_json_file_path
 
 
-def get_final_scores_from_logs(logs):
-    results = []
+def get_round_log_and_json_files_paths(path):
+    result_files = os.listdir(path)
+    log_file = [file for file in result_files if os.path.splitext(file)[1] == '.log'][0]
+    json_file = [file for file in result_files if os.path.splitext(file)[1] == '.json'][0]
 
-    for line in reversed(logs):
-        results.append(line.split(' | '))
+    return os.path.join(path, log_file), os.path.join(path, json_file)
 
-    return results
+
+def get_bots_scores_from_log_file(log_file_path):
+    team_scores_as_text = []
+    with open(log_file_path) as file:
+        lines = file.readlines()
+        for line in reversed(lines):
+            if line.split(' | ')[1] != 'INFO':
+                team_scores_as_text = team_scores_as_text[1:]
+                break
+            score = get_refined_text_from_result(line.split(' | ')[3])
+            team_scores_as_text.insert(0, score)
+    return team_scores_as_text
+
+
+def get_refined_text_from_result(result):
+    return result[:result.find('{')] + result[result.find('}') + 1:]
+

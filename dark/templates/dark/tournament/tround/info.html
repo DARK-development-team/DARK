@@ -9,12 +9,8 @@
 
 {% block back %}
     <a type="button" class="float-left btn btn-secondary btn-sm mt-2 py-1 px-2"
-            {% if request.META.HTTP_REFERER %} href="{{ request.META.HTTP_REFERER }}">
-                Back to Details
-            {% else %}  href='{% url 'tournament:info' tround.tournament.id %}'>
-                {# this is called when user enters the site directly from link #}
-                Back to Tournament Details
-            {% endif %}
+       href='{% url 'tournament:info' tround.tournament.id %}'>
+        Back to Tournament Details
     </a>
 {% endblock %}
 
@@ -25,6 +21,7 @@
         <p>Start Date: {{ tround.start_date }}</p>
         <p>End Date: {{ tround.end_date }}</p>
     </div>
+
     <h3>Requirements:</h3>
     <table class="table">
         <thead>
@@ -42,36 +39,28 @@
         {% endfor %}
         </tbody>
     </table>
-    <form method="post">
-        {% csrf_token %}
-        <input type="submit" value="Run round">
-    </form>
+
+    {% if not results %}
+        <form method="post">
+            {% csrf_token %}
+            <input type="submit" value="Run round">
+        </form>
+    {% endif %}
 
     {% if results %}
-        {% for single_execution_log, run_logs in results %}
-            <h2>
-                Round execution ({{ single_execution_log }})
-            </h2>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">Timestamp</th>
-                    <th scope="col">Log level</th>
-                    <th scope="col">Module</th>
-                    <th scope="col">Log</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for log in run_logs %}
-                    <tr>
-                        {% for info in log %}
-                            <td>{{ info }}</td>
-                        {% endfor %}
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+        <h2> Scores: </h2>
+        {% for score in results %}
+            <p> {{ score }} </p>
         {% endfor %}
+    {% endif %}
+
+    {% load static %}
+    {% if log_file_path %}
+        <a href="{% static log_file_path %}" download> Download .log file</a>
+    {% endif %}
+
+    {% if json_file_path %}
+        <a href="{% static json_file_path %}" download> Download .json file</a>
     {% endif %}
 
 {% endblock %}
