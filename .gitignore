@@ -3,7 +3,9 @@
 /generated/
 .idea
 /GUPB/
-/dark/data/
+/dark/data/platforms/
+/dark/data/tournaments/
+
 /dark/models/migrations/*.py
 !/dark/models/migrations/__init__.py
 
