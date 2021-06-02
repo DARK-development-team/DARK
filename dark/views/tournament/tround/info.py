@@ -1,15 +1,5 @@
-import os
-
-from django.shortcuts import render
 from django.views.generic import DetailView
-from django.conf import settings
-from django.http import HttpResponse, Http404
-
-from dark.models.tournament import TournamentRound
-from dark.logic import tround_execution
-
 from dark.logic.platform_utils import get_platform_requirements
-from dark.models.tournament import TournamentRound
 from dark.logic import tround_execution
 
 from dark.models.tournament import TournamentRound
