@@ -34,8 +34,8 @@ class TournamentInfoView(UserAuthenticationDependentContextMixin, DetailView):
         tournament = get_object_or_404(Tournament, id=self.kwargs['tournament'])
 
         return {
-            'rounds': TournamentRound.objects.filter(tournament=tournament),
-            'contestants': Team.objects.filter(tournament=tournament),
+            'rounds': TournamentRound.objects.filter(tournament=tournament).order_by('end_date', 'start_date'),
+            'contestants': Team.objects.filter(tournament=tournament).order_by('score'),
             'is_creator_viewing': False,
             'is_private': tournament.is_private,
             'has_team': False,
