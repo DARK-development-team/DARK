@@ -4,9 +4,10 @@ from django.urls import reverse
 from django.views.generic import CreateView
 
 from dark.common.decorators import after
-from dark.common.views import ForeignKeysMixin, TournamentEditableMixin
+from dark.common.views import ForeignKeysMixin
 from dark.forms.tournament.team import AddTeamForm
 from dark.models.tournament.team import Team, TeamRole, TeamMember
+from dark.views.tournament.mixins import TournamentEditableMixin
 
 
 class AddTeamView(LoginRequiredMixin, ForeignKeysMixin, TournamentEditableMixin, CreateView):

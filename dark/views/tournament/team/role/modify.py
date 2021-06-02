@@ -1,9 +1,9 @@
 from django.views.generic import UpdateView
 from django.urls import reverse
 
-from dark.common.views import TournamentEditableMixin
 from dark.models.tournament.team import TeamRole
 from dark.forms.tournament.team import ModifyTeamRoleForm
+from dark.views.tournament.mixins import TournamentEditableMixin
 
 
 class ModifyTeamRoleView(TournamentEditableMixin, UpdateView):

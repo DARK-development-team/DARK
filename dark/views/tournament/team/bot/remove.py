@@ -2,8 +2,8 @@ from django.contrib import messages
 from django.views.generic import DeleteView
 from django.urls import reverse
 
-from dark.common.views import RoundEditableMixin
 from dark.models.tournament.team import TeamBot
+from dark.views.tournament.tround.mixins import RoundEditableMixin
 
 
 class RemoveTeamBotView(RoundEditableMixin, DeleteView):

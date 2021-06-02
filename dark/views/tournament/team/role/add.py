@@ -3,7 +3,8 @@ from django.urls import reverse
 
 from dark.models.tournament.team import Team
 from dark.forms.tournament.team import AddTeamRoleForm
-from dark.common.views import ForeignKeysMixin, TournamentEditableMixin
+from dark.common.views import ForeignKeysMixin
+from dark.views.tournament.mixins import TournamentEditableMixin
 
 
 class AddTeamRoleView(TournamentEditableMixin, ForeignKeysMixin, CreateView):

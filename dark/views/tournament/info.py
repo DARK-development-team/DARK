@@ -51,7 +51,7 @@ class TournamentInfoView(UserAuthenticationDependentContextMixin, DetailView):
         context.update({
             'is_creator_viewing': tournament.creator == self.request.user,
             'has_team': True if Tournament.objects.filter(team__teammember__user=self.request.user).filter(
-                id=tournament.id).count() != 0  else False
+                id=tournament.id).count() != 0 else False
         })
         return context
 

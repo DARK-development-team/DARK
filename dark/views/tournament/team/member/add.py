@@ -2,9 +2,10 @@ from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import CreateView
 
-from dark.common.views import ForeignKeysMixin, FieldQuerySetMixin, TournamentEditableMixin
+from dark.common.views import ForeignKeysMixin, FieldQuerySetMixin
 from dark.forms.tournament.team import AddTeamMemberForm
 from dark.models.tournament.team import TeamMember
+from dark.views.tournament.mixins import TournamentEditableMixin
 
 
 class AddTeamMemberView(TournamentEditableMixin, FieldQuerySetMixin, ForeignKeysMixin, CreateView):

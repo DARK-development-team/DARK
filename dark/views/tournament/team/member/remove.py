@@ -1,8 +1,8 @@
 from django.views.generic import DeleteView
 from django.urls import reverse
 
-from dark.common.views import TournamentEditableMixin
 from dark.models.tournament.team import TeamMember
+from dark.views.tournament.mixins import TournamentEditableMixin
 
 
 class RemoveTeamMemberView(TournamentEditableMixin, DeleteView):

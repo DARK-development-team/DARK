@@ -2,9 +2,9 @@ from django.contrib import messages
 from django.views.generic import UpdateView
 from django.urls import reverse
 
-from dark.common.views import RoundEditableMixin
 from dark.models.tournament.team import TeamBot
 from dark.forms.tournament.team import ModifyTeamBotForm
+from dark.views.tournament.tround.mixins import RoundEditableMixin
 
 
 class ModifyTeamBotView(RoundEditableMixin, UpdateView):

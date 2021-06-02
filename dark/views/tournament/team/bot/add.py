@@ -3,10 +3,10 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import View
 
-from dark.common.views import RoundEditableMixin
 from dark.forms.tournament.team import AddTeamBotForm
 from dark.models.tournament import TournamentRound
 from dark.models.tournament.team import Team
+from dark.views.tournament.tround.mixins import RoundEditableMixin
 
 
 class AddTeamBotView(RoundEditableMixin, View):

@@ -2,9 +2,10 @@ from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import CreateView
 
-from dark.common.views import ForeignKeysMixin, RoundAddableMixin
+from dark.common.views import ForeignKeysMixin
 from dark.forms.tournament import AddTournamentRoundForm
 from dark.models.tournament import TournamentRound
+from dark.views.tournament.tround.mixins import RoundAddableMixin
 
 
 class AddTournamentRoundView(RoundAddableMixin, ForeignKeysMixin, CreateView):
