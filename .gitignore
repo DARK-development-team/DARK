@@ -1,7 +1,11 @@
 /venv/
+/venvwin/
 /generated/
 .idea
 /GUPB/
+/dark/data/
+/dark/models/migrations/*.py
+!/dark/models/migrations/__init__.py
 
 # Django #
 *.log
