@@ -1,3 +1,5 @@
+from django.contrib import messages
+from django.db import IntegrityError
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import CreateView
@@ -24,6 +26,13 @@ class AddTeamMemberView(FieldQuerySetMixin, ForeignKeysMixin, CreateView):
             'tournament': self.object.team.tournament.id,
             'team': self.object.team.id
         })
+
+    def form_valid(self, form):
+        try:
+            return super(AddTeamMemberView, self).form_valid(form)
+        except IntegrityError as e:
+            messages.error(self.request, f'Failed to add member - make sure that field values are valid')
+            return super(AddTeamMemberView, self).form_invalid(form)
 
     def post(self, request, *args, **kwargs):
         if "cancel" in request.POST:

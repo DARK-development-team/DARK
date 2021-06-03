@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.db import IntegrityError
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import View
@@ -26,11 +27,16 @@ class AddTeamBotView(View):
                 'team': team
             }))
         if form.is_valid():
-            obj = form.save()
-            messages.success(request, 'Bot ' + obj.bot_class_name + ' has successfully added!')
-            return redirect(reverse('tournament:team:info', kwargs={
-                'tournament': obj.team.tournament.id,
-                'team': obj.team.id
-            }))
+            try:
+                obj = form.save()
+                messages.success(request, 'Bot ' + obj.bot_class_name + ' has successfully added!')
+                return redirect(reverse('tournament:team:info', kwargs={
+                    'tournament': obj.team.tournament.id,
+                    'team': obj.team.id
+                }))
+            except IntegrityError as e:
+                messages.error(self.request, f'Failed to add bot - make sure that field values are valid')
+                return render(request, self.template_name, {'form': form})
+
         else:
             return render(request, self.template_name, {'form': form})
