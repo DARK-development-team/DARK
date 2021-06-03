@@ -29,7 +29,9 @@ class TournamentRoundInfoView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         tround = get_object_or_404(TournamentRound, id=self.kwargs['tround'])
+
         context['is_creator_viewing'] = True if tround.tournament.creator == self.request.user else False
-        context['results'] = tround_execution.get_round_results(self.object)
         context['requirements'] = get_platform_requirements(self.object.platform)
+        context['results'], context['log_file_path'], context['json_file_path'] = \
+            tround_execution.get_round_results(self.object)
         return context
