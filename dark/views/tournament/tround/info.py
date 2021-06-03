@@ -1,3 +1,6 @@
+import threading
+
+from django.contrib import messages
 from django.views.generic import DetailView
 from dark.logic.platform_utils import get_platform_requirements
 from dark.logic import tround_execution
@@ -21,7 +24,9 @@ class TournamentRoundInfoView(DetailView):
         get_kwargs = {
             self.slug_field: kwargs[self.slug_url_kwarg]
         }
-        tround_execution.execute_round(TournamentRound.objects.get(**get_kwargs))
+        threading.Thread(
+            target=lambda: tround_execution.execute_round(TournamentRound.objects.get(**get_kwargs))).start()
+        messages.success(self.request, 'The round has been started, please wait for email notifications.')
 
         return result
 
