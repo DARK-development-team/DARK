@@ -18,7 +18,7 @@ class RemoveTeamBotView(RoundEditableMixin, DeleteView):
             self.slug_field: kwargs[self.slug_url_kwarg]
         }
         bot = TeamBot.objects.get(**get_kwargs)
-        messages.success(self.request, 'Bot ' + bot.bot_class_name + ' has successfully deleted!')
+        messages.success(self.request, 'Bot ' + bot.bot_symbol_name + ' has successfully deleted!')
         return super(RemoveTeamBotView, self).delete(request, *args, **kwargs)
 
     def get_success_url(self):

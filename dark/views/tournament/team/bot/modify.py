@@ -18,7 +18,7 @@ class ModifyTeamBotView(RoundEditableMixin, UpdateView):
 
     def form_valid(self, form):
         try:
-            messages.success(self.request, 'Bot ' + form.cleaned_data.get('bot_class_name') + 'has been successfully '
+            messages.success(self.request, 'Bot ' + form.cleaned_data.get('bot_symbol_name') + 'has been successfully '
                                                                                               'modified!')
             return super(ModifyTeamBotView, self).form_valid(form)
         except IntegrityError as e:

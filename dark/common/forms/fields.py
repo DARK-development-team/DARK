@@ -3,6 +3,7 @@ import pickle
 from django.forms import MultiValueField, URLField, CharField, MultiWidget, TextInput
 
 from dark.common.validators import GitRepoValidator
+from dark.common.gitrepo import GitRepo
 
 
 class GitRepoWidget(MultiWidget):
@@ -12,7 +13,9 @@ class GitRepoWidget(MultiWidget):
         super(GitRepoWidget, self).__init__(widgets, attrs)
 
     def decompress(self, value):
-        if value:
+        if isinstance(value, GitRepo):
+            return [value.url, value.commit]
+        elif value:
             return pickle.loads(value)
         else:
             return ['', '']
