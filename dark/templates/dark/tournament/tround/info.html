@@ -40,7 +40,8 @@
         </tbody>
     </table>
 
-    {% if not log_file_path and status != 'running' %}
+
+    {% if not log_file_path and status != 'running' and is_creator_viewing %}
         <form method="post">
             {% csrf_token %}
             <input type="submit" value="Run round">
