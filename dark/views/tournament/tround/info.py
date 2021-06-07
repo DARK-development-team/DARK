@@ -21,7 +21,7 @@ class TournamentRoundInfoView(DetailView):
         return super(TournamentRoundInfoView, self).get(request, *args, *kwargs)
 
     def post(self, request, *args, **kwargs):
-        result = self.get(request, *args, **kwargs)
+        self.get(request, *args, **kwargs)
 
         get_kwargs = {
             self.slug_field: kwargs[self.slug_url_kwarg]
@@ -30,13 +30,11 @@ class TournamentRoundInfoView(DetailView):
         tround = TournamentRound.objects.get(**get_kwargs)
         threading.Thread(
             target=lambda: tround_execution.execute_round(tround)).start()
-        messages.success(self.request, 'The round has been started, please wait for email notifications.')
+        messages.info(self.request, 'The round has been started, please wait for email notifications.')
 
         context = self.get_context_data()
         context['status'] = 'running'
         return render(request, self.template_name, context)
-
-        # return result
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
