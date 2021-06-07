@@ -40,7 +40,7 @@
         </tbody>
     </table>
 
-    {% if not results %}
+    {% if not results and is_creator_viewing %}
         <form method="post">
             {% csrf_token %}
             <input type="submit" value="Run round">

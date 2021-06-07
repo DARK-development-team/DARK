@@ -6,9 +6,10 @@ from django.views.generic import View
 from dark.forms.tournament.team import AddTeamBotForm
 from dark.models.tournament import TournamentRound
 from dark.models.tournament.team import Team
+from dark.views.tournament.tround.mixins import RoundEditableMixin
 
 
-class AddTeamBotView(View):
+class AddTeamBotView(RoundEditableMixin, View):
     form_class = AddTeamBotForm
     template_name = 'dark/tournament/team/bot/add.html'
 
