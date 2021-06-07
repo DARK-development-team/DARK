@@ -40,7 +40,7 @@
         </tbody>
     </table>
 
-    {% if not results %}
+    {% if not log_file_path and status != 'running' %}
         <form method="post">
             {% csrf_token %}
             <input type="submit" value="Run round">
