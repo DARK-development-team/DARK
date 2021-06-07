@@ -56,19 +56,31 @@
     {% endif %}
 
     {% if results %}
-        <h2> Scores: </h2>
-        {% for score in results %}
-            <p> {{ score }} </p>
-        {% endfor %}
-    {% endif %}
+        <div class="card mt-3 mx-md-5">
+        <div class="card-header" style="background-color: #a1a1a1">
+            <h5 class="mb-0">
+                Scores
+            </h5>
+        </div>
 
-    {% load static %}
-    {% if log_file_path %}
-        <a href="{% static log_file_path %}" download> Download .log file</a>
-    {% endif %}
+        <div class="card-body">
+            {% for score in results %}
+                <div class="row justify-content-around swatch-200 mx-md-1 my-2 py-3 rounded shadow">
+                    <div class="col-8">{{ score }}</div>
+                </div>
+            {% endfor %}
+            {% load static %}
+            {% if log_file_path %}
+                <a class="btn btn-sm btn-secondary mt-2" href="{% static log_file_path %}" download> Download .log
+                    file</a>
+            {% endif %}
 
-    {% if json_file_path %}
-        <a href="{% static json_file_path %}" download> Download .json file</a>
+            {% if json_file_path %}
+                <a class="btn btn-sm btn-secondary mt-2" href="{% static json_file_path %}" download> Download .json
+                    file</a>
+            {% endif %}
+        </div>
     {% endif %}
-
+</div>
+    
 {% endblock %}
