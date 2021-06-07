@@ -15,7 +15,7 @@ class TeamInfoView(UserAuthenticationDependentContextMixin, DetailView):
 
     def get_common_context(self):
         tournament = Tournament.objects.get(pk=self.object.tournament.pk)
-        rounds = TournamentRound.objects.filter(tournament=tournament)
+        rounds = TournamentRound.objects.filter(tournament=tournament).order_by('end_date', 'start_date')
         round_bot_editable_trios = []
         now = timezone.now()
         for tround in rounds:
