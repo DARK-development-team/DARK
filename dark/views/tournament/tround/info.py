@@ -1,12 +1,8 @@
-import os
-
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView
 
-from dark.logic.platform_utils import get_platform_requirements
-from dark.models.tournament import TournamentRound
 from dark.logic import tround_execution
-
+from dark.logic.platform_utils import get_platform_requirements
 from dark.models.tournament import TournamentRound
 
 
@@ -32,6 +28,10 @@ class TournamentRoundInfoView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['results'] = tround_execution.get_round_results(self.object)
+        tround = get_object_or_404(TournamentRound, id=self.kwargs['tround'])
+
+        context['is_creator_viewing'] = True if tround.tournament.creator == self.request.user else False
         context['requirements'] = get_platform_requirements(self.object.platform)
+        context['results'], context['log_file_path'], context['json_file_path'] = \
+            tround_execution.get_round_results(self.object)
         return context

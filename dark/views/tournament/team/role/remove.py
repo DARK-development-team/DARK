@@ -2,9 +2,10 @@ from django.views.generic import DeleteView
 from django.urls import reverse
 
 from dark.models.tournament.team import TeamRole
+from dark.views.tournament.mixins import TournamentEditableMixin
 
 
-class RemoveTeamRoleView(DeleteView):
+class RemoveTeamRoleView(TournamentEditableMixin, DeleteView):
     model = TeamRole
     template_name = 'dark/tournament/team/role/remove.html'
     context_object_name = 'role'

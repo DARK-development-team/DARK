@@ -3,9 +3,10 @@ from django.views.generic import DeleteView
 from django.urls import reverse
 
 from dark.models.tournament.team import Team
+from dark.views.tournament.mixins import TournamentEditableMixin
 
 
-class RemoveTeamView(DeleteView):
+class RemoveTeamView(TournamentEditableMixin, DeleteView):
     model = Team
     template_name = 'dark/tournament/team/remove.html'
     context_object_name = 'team'

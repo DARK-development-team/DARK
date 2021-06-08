@@ -4,9 +4,10 @@ from django.urls import reverse
 from dark.models.tournament.team import Team
 from dark.forms.tournament.team import AddTeamRoleForm
 from dark.common.views import ForeignKeysMixin
+from dark.views.tournament.mixins import TournamentEditableMixin
 
 
-class AddTeamRoleView(ForeignKeysMixin, CreateView):
+class AddTeamRoleView(TournamentEditableMixin, ForeignKeysMixin, CreateView):
     model = Team
     template_name = 'dark/tournament/team/role/add.html'
     form_class = AddTeamRoleForm

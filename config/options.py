@@ -11,7 +11,11 @@ SECRET_KEY = '_h)u(6buzc2kk6^(svrf(c0d7^xaous&f_8yv&l#ekp4u=3_xg'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '0.0.0.0',
+    'darkplatform.herokuapp.com',
+    '127.0.0.1'
+]
 
 ROOT_URLCONF = 'dark.root_urls'
 
@@ -25,13 +29,18 @@ USE_L10N = True
 
 USE_TZ = False
 
-STATIC_URL = '/static/'
-
 STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'dark/data/'),
+]
+
 
 WSGI_APPLICATION = 'base.wsgi.application'
 
