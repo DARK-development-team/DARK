@@ -48,14 +48,14 @@
         </div>
     </div>
 
-    {% if not results and is_creator_viewing %}
+    {% if not log_file_path and is_creator_viewing %}
         <form method="post">
             {% csrf_token %}
             <input class="btn btn-secondary my-3" type="submit" value="Run round">
         </form>
     {% endif %}
 
-    {% if results %}
+    {% if log_file_path %}
         <div class="card mt-3 mx-md-5">
         <div class="card-header" style="background-color: #a1a1a1">
             <h5 class="mb-0">
