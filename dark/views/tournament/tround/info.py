@@ -1,3 +1,7 @@
+import threading
+
+from django.contrib import messages
+from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView
 
@@ -17,14 +21,20 @@ class TournamentRoundInfoView(DetailView):
         return super(TournamentRoundInfoView, self).get(request, *args, *kwargs)
 
     def post(self, request, *args, **kwargs):
-        result = self.get(request, *args, **kwargs)
+        self.get(request, *args, **kwargs)
 
         get_kwargs = {
             self.slug_field: kwargs[self.slug_url_kwarg]
         }
-        tround_execution.execute_round(TournamentRound.objects.get(**get_kwargs))
 
-        return result
+        tround = TournamentRound.objects.get(**get_kwargs)
+        threading.Thread(
+            target=lambda: tround_execution.execute_round(tround)).start()
+        messages.info(self.request, 'The round has been started, please wait for email notifications.')
+
+        context = self.get_context_data()
+        context['status'] = 'running'
+        return render(request, self.template_name, context)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
