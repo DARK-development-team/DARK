@@ -15,53 +15,73 @@
 {% endblock %}
 
 {% block content %}
-    <div class="m-5">
-        <p>Name: {{ tround.name }}</p>
-        <p>Tournament: {{ tround.tournament }}</p>
-        <p>Start Date: {{ tround.start_date }}</p>
-        <p>End Date: {{ tround.end_date }}</p>
+
+    <b>Name:</b> {{ tround.name }}<br>
+    <b>Tournament:</b> {{ tround.tournament }}<br>
+    <b>Start Date:</b> {{ tround.start_date }}<br>
+    <b>End Date:</b> {{ tround.end_date }}<br>
+
+    <div class="card mt-3 mx-md-5">
+        <div class="card-header" style="background-color: #a1a1a1">
+            <h5 class="mb-0">
+                Requirements
+            </h5>
+        </div>
+
+        <div class="card-body">
+            <div class="row justify-content-around mx-md-1 mb-2 pb-2 font-weight-bold">
+                <div class="col-8">Library</div>
+                <div class="col-4">Version</div>
+                {% if user_member.role.can_modify_members %}
+                    <div class="col-3"></div>
+                {% endif %}
+            </div>
+            <div class="row mx-md-1 mb-2 border border-secondary"></div>
+
+            {% for req in requirements %}
+                <div class="row justify-content-around swatch-200 mx-md-1 my-2 py-3 rounded shadow">
+                    <div class="col-8">{{ req.name }}</div>
+                    <div class="col-4">{% for item in req.specs %} {% for i in item %} {{ i }}
+                    {% endfor %} {% endfor %}</div>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 
-    <h3>Requirements:</h3>
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">Library</th>
-            <th scope="col">Version</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for req in requirements %}
-            <tr>
-                <td align="left">{{ req.name }}</td>
-                <td align="left">{% for item in req.specs %} {% for i in item %} {{ i }} {% endfor %} {% endfor %}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-
     {% if not log_file_path and status != 'running' and is_creator_viewing %}
+
         <form method="post">
             {% csrf_token %}
-            <input type="submit" value="Run round">
+            <input class="btn btn-secondary my-3" type="submit" value="Run round">
         </form>
     {% endif %}
 
-    {% if results %}
-        <h2> Scores: </h2>
-        {% for score in results %}
-            <p> {{ score }} </p>
-        {% endfor %}
-    {% endif %}
+    {% if log_file_path  %}
+        <div class="card mt-3 mx-md-5">
+        <div class="card-header" style="background-color: #a1a1a1">
+            <h5 class="mb-0">
+                Scores
+            </h5>
+        </div>
 
-    {% load static %}
-    {% if log_file_path %}
-        <a href="{% static log_file_path %}" download> Download .log file</a>
-    {% endif %}
+        <div class="card-body">
+            {% for score in results %}
+                <div class="row justify-content-around swatch-200 mx-md-1 my-2 py-3 rounded shadow">
+                    <div class="col-8">{{ score }}</div>
+                </div>
+            {% endfor %}
+            {% load static %}
+            {% if log_file_path %}
+                <a class="btn btn-sm btn-secondary mt-2" href="{% static log_file_path %}" download> Download .log
+                    file</a>
+            {% endif %}
 
-    {% if json_file_path %}
-        <a href="{% static json_file_path %}" download> Download .json file</a>
+            {% if json_file_path %}
+                <a class="btn btn-sm btn-secondary mt-2" href="{% static json_file_path %}" download> Download .json
+                    file</a>
+            {% endif %}
+        </div>
     {% endif %}
-
+</div>
+    
 {% endblock %}
