@@ -2,6 +2,11 @@ import os
 import shutil
 import subprocess
 import venv
+from django.core.mail import send_mail
+from django.conf import settings
+
+from dark.models.tournament import TournamentRound
+from dark.models.tournament.team import TeamBot
 
 from dark.models.platform import Platform
 from dark.models.tournament import TournamentRound
@@ -126,6 +131,12 @@ def cleanup_after_execution(tround: TournamentRound):
     remove_config(tround)
 
 
+def notify_contestants(tround: TournamentRound, message: str):
+    recipient_list = [user.email for user in tround.tournament.participants.all()]
+    subject = f'Round \"{tround}\" execution'
+    send_mail(subject, message, settings.EMAIL_HOST_USER, recipient_list)
+
+
 def write_team_scores(tround: TournamentRound):
     results, _, _ = get_round_results(tround)
     for result in results:
@@ -153,8 +164,10 @@ def execute_round(tround: TournamentRound):
     # self.update_state(state='PROGRESS', meta={'current': i, 'total': n})
     tround_execution_environment = prepare_environment_for_round(tround)
     prepare_config_for_round(tround)
+    notify_contestants(tround, f'Round \"{tround}\" execution has started')
     execute_round_in_venv(tround_execution_environment, tround)
     cleanup_after_execution(tround)
+    notify_contestants(tround, f'Round \"{tround}\" execution has finished')
     write_team_scores(tround)
 
 
