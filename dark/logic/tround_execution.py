@@ -170,7 +170,8 @@ def execute_round(tround: TournamentRound):
     results, _, _ = get_round_results(tround)
     notify_contestants(tround,
                        f'Round \"{tround}\" execution has finished\nResults:\n'
-                       f'{"".join(f"{result}" for result in results)}')
+                       f'{"".join(f"{result}" for result in results)}'
+                       f'https://darkplatform.herokuapp.com/tournaments/{tround.tournament_id}/rounds/{tround.id}')
     write_team_scores(tround)
 
 
