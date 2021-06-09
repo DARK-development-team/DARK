@@ -65,30 +65,21 @@ def prepare_config_for_round(tround: TournamentRound):
     bot_objects = TeamBot.objects.filter(tround=tround)
 
     meta = (tround.tournament.name, tround.name)
-    controllers = [(bot.bot_code.path, bot.bot_class_name, bot.team.name) for bot in bot_objects]
-    extra_config = {
-        'arenas': [
-            'archipelago',
-            'wasteland',
-            'dungeon',
-            'fisher_island',
-        ],
-        'start_balancing': False,
-        'visualise': False,
-        'show_sight': None,
-        'runs_no': 10,
-        'profiling_metrics': ['all', 'total', 'avg']
-    }
+    controllers = [(os.path.abspath(f'{bot.bot.local_directory}/{bot.bot_package}'),
+                    os.path.abspath(f'{bot.bot.local_directory}/{bot.bot_package_relative_wd}'),
+                    bot.bot_symbol_name,
+                    bot.team.name) for bot in bot_objects]
+    config_to_patch_path = tround.platform.platform_config_relative_path
     meta_repr = repr(meta)
     controllers_repr = repr(controllers)
-    extra_config_repr = repr(extra_config)
+    config_to_patch_path_repr = repr(config_to_patch_path)
 
-    base_config = open('dark/logic/tround/base_config.py.template', "r")
+    base_config = open('dark/logic/tround/patch_config.py.template', "r")
     tround_config = open(tround_config_relative_local_directory(tround.name, tround.tournament.name), "w")
     for line in base_config:
         line = line.replace('meta = tuple[str, str]()', f'meta = {meta_repr}')
-        line = line.replace('controllers = list[tuple[str, str, str]]()', f'controllers = {controllers_repr}')
-        line = line.replace('extra_config = dict[str, Any]()', f'extra_config = {extra_config_repr}')
+        line = line.replace('controllers = list[tuple[str, str, str, str]]()', f'controllers = {controllers_repr}')
+        line = line.replace('config_to_patch_path = str()', f'config_to_patch_path = {config_to_patch_path_repr}')
         tround_config.write(line)
     base_config.close()
     tround_config.close()
@@ -161,13 +152,16 @@ def get_score_from_result(result):
 
 
 def execute_round(tround: TournamentRound):
-    # self.update_state(state='PROGRESS', meta={'current': i, 'total': n})
     tround_execution_environment = prepare_environment_for_round(tround)
     prepare_config_for_round(tround)
     notify_contestants(tround, f'Round \"{tround}\" execution has started')
     execute_round_in_venv(tround_execution_environment, tround)
     cleanup_after_execution(tround)
-    notify_contestants(tround, f'Round \"{tround}\" execution has finished')
+    results, _, _ = get_round_results(tround)
+    notify_contestants(tround,
+                       f'Round \"{tround}\" execution has finished\nResults:\n'
+                       f'{"".join(f"{result}" for result in results)}'
+                       f'https://darkplatform.herokuapp.com/tournaments/{tround.tournament_id}/rounds/{tround.id}')
     write_team_scores(tround)
 
 
@@ -210,3 +204,4 @@ def get_bots_scores_from_log_file(log_file_path):
 
 def get_refined_text_from_result(result):
     return result[:result.find('{')] + result[result.find('}') + 1:]
+

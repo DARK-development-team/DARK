@@ -1,0 +1,68 @@
+import importlib
+import importlib.util
+import os
+import sys
+import uuid
+from typing import Any
+
+# edited by external python script
+# format (tournament_name, queue_name)
+meta = tuple[str, str]()
+# format [(controller_path, controller_package_wd, controller_symbol (class), team_name), ...]
+controllers = list[tuple[str, str, str, str]]()
+# config to patch
+config_to_patch_path = str()
+# end external editor
+
+
+def load_module(module_path: str):
+    spec = importlib.util.spec_from_file_location(f'{uuid.uuid4()}', module_path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def load_controller_module(module_path: str, wd: str):
+    sys.path.append(wd)
+    module = load_module(module_path)
+    sys.path.pop()
+    return module
+
+
+def extract_configuration(module, configuration_symbol_name = 'CONFIGURATION'):
+    return getattr(module, configuration_symbol_name)
+
+
+def load_controller_class(controller_module, controller_class_name: str):
+    return getattr(controller_module, controller_class_name)
+
+
+def instantiate_controller_class(controller_module_path, controller_working_dir, controller_class_name, team_name):
+    try:
+        return load_controller_class(
+            load_controller_module(controller_module_path, controller_working_dir),
+            controller_class_name
+        )(f'{{{meta[0]}-{meta[1]}}}: {team_name}')
+    except Exception as ex:
+        print(f'Controller [{controller_class_name}, team={team_name}] failed to load [exception: {ex}]!')
+    return None
+
+
+def create_controllers(controllers):
+    initial_controllers_objects = [
+        instantiate_controller_class(controller_module_path, controller_working_dir, controller_class_name, team_name)
+        for controller_module_path, controller_working_dir, controller_class_name, team_name in controllers
+    ]
+    controllers_objects = [controllers_object
+                           for controllers_object in initial_controllers_objects
+                           if controllers_object is not None]
+    return controllers_objects
+
+
+def create_configuration(controllers, config_to_patch_path):
+    configuration = extract_configuration(load_module(config_to_patch_path))
+    configuration['controllers'] = create_controllers(controllers)
+    return configuration
+
+
+CONFIGURATION = create_configuration(controllers, config_to_patch_path)

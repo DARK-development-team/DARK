@@ -6,4 +6,4 @@ from dark.models.tournament.team import TeamBot
 class AddTeamBotForm(ModelForm):
     class Meta:
         model = TeamBot
-        fields = ['bot_code', 'bot_class_name']
+        fields = ['bot', 'bot_package', 'bot_package_relative_wd', 'bot_symbol_name']
