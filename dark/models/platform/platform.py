@@ -16,10 +16,7 @@ class Platform(models.Model):
     repo = GitRepoField(local_directory=platform_repo_local_directory_path, unique=True)
     package_to_run = models.CharField(max_length=30)
     platform_relative_wd = models.CharField(max_length=30, default='.')
-
-    # default_extra_config = models.JSONField(default=dict)
-    # customizable_extra_config_fields = models.JSONField(default=dict)
-    # customizable_extra_config_fields_value_types = models.JSONField(default=dict)
+    platform_config_relative_path = models.CharField(max_length=30, default='gupb/default_config.py')
 
     def __str__(self):
         return self.name

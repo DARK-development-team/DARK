@@ -30,7 +30,7 @@ class AddTeamBotView(RoundEditableMixin, View):
         if form.is_valid():
             try:
                 obj = form.save()
-                messages.success(request, 'Bot ' + obj.bot_class_name + ' has successfully added!')
+                messages.success(request, 'Bot ' + obj.bot_symbol_name + ' has successfully added!')
                 return redirect(reverse('tournament:team:info', kwargs={
                     'tournament': obj.team.tournament.id,
                     'team': obj.team.id
