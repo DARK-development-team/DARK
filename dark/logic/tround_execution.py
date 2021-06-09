@@ -167,7 +167,10 @@ def execute_round(tround: TournamentRound):
     notify_contestants(tround, f'Round \"{tround}\" execution has started')
     execute_round_in_venv(tround_execution_environment, tround)
     cleanup_after_execution(tround)
-    notify_contestants(tround, f'Round \"{tround}\" execution has finished')
+    results, _, _ = get_round_results(tround)
+    notify_contestants(tround,
+                       f'Round \"{tround}\" execution has finished\nResults:\n'
+                       f'{"".join(f"{result}" for result in results)}')
     write_team_scores(tround)
 
 
