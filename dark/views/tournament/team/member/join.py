@@ -5,9 +5,10 @@ from django.urls import reverse
 from django.views.generic.base import View
 
 from dark.models.tournament.team import Team, TeamRole, TeamMember
+from dark.views.tournament.mixins import TournamentEditableMixin
 
 
-class JoinTeamMemberView(View):
+class JoinTeamMemberView(TournamentEditableMixin, View):
     def get(self, request, tournament, team):
         try:
             team_obj = Team.objects.get(id=team)

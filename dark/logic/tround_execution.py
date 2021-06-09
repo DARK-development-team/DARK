@@ -1,14 +1,16 @@
 import os
-import subprocess
 import shutil
+import subprocess
 import venv
-
-#from celery import task
+from django.core.mail import send_mail
+from django.conf import settings
 
 from dark.models.tournament import TournamentRound
 from dark.models.tournament.team import TeamBot
+
 from dark.models.platform import Platform
-from .common import data_path
+from dark.models.tournament import TournamentRound
+from dark.models.tournament.team import TeamBot, Team
 from .tround_utils import \
     tround_relative_local_directory, \
     tround_absolute_local_directory, \
@@ -95,8 +97,8 @@ def prepare_config_for_round(tround: TournamentRound):
 def execute_round_in_venv(venv_context, tround: TournamentRound):
     package_relative_working_directory = \
         tround_relative_local_directory(tround.name, tround.tournament.name) \
-        if tround.platform.platform_relative_wd is None \
-        else tround.platform.platform_relative_wd
+            if tround.platform.platform_relative_wd is None \
+            else tround.platform.platform_relative_wd
 
     package_absolute_working_directory = f'{tround_absolute_local_directory(tround.name, tround.tournament.name)}/' \
                                          f'{package_relative_working_directory}'
@@ -110,8 +112,8 @@ def execute_round_in_venv(venv_context, tround: TournamentRound):
     tround_env_vars = os.environ.copy()
     tround_env_vars['PYTHONPATH'] = package_absolute_working_directory
     sp = subprocess.Popen(command, stdout=subprocess.PIPE, cwd=package_absolute_working_directory, env=tround_env_vars)
-    stdout = sp.communicate()[0] # sync to this subprocess
-    #print(stdout)
+    stdout = sp.communicate()[0]  # sync to this subprocess
+    # print(stdout)
 
 
 def remove_environment(tround: TournamentRound):
@@ -129,13 +131,44 @@ def cleanup_after_execution(tround: TournamentRound):
     remove_config(tround)
 
 
-#@task(bind=True)
+def notify_contestants(tround: TournamentRound, message: str):
+    recipient_list = [user.email for user in tround.tournament.participants.all()]
+    subject = f'Round \"{tround}\" execution'
+    send_mail(subject, message, settings.EMAIL_HOST_USER, recipient_list)
+
+
+def write_team_scores(tround: TournamentRound):
+    results, _, _ = get_round_results(tround)
+    for result in results:
+        team_name = get_team_name_from_result(result)
+        score = get_score_from_result(result)
+
+        team = Team.objects.get(tournament=tround.tournament, name=team_name)
+        team.score = team.score + int(score)
+        team.save()
+
+
+def get_team_name_from_result(result):
+    team_start = result.find(": ") + 2
+    team_end = result.rfind(": ")
+    return result[team_start: team_end]
+
+
+def get_score_from_result(result):
+    score_start = result.rfind(": ") + 2
+    score_end = len(result) - 2
+    return result[score_start: score_end]
+
+
 def execute_round(tround: TournamentRound):
-    #self.update_state(state='PROGRESS', meta={'current': i, 'total': n})
+    # self.update_state(state='PROGRESS', meta={'current': i, 'total': n})
     tround_execution_environment = prepare_environment_for_round(tround)
     prepare_config_for_round(tround)
+    notify_contestants(tround, f'Round \"{tround}\" execution has started')
     execute_round_in_venv(tround_execution_environment, tround)
     cleanup_after_execution(tround)
+    notify_contestants(tround, f'Round \"{tround}\" execution has finished')
+    write_team_scores(tround)
 
 
 def get_round_results(tround: TournamentRound):
@@ -177,4 +210,3 @@ def get_bots_scores_from_log_file(log_file_path):
 
 def get_refined_text_from_result(result):
     return result[:result.find('{')] + result[result.find('}') + 1:]
-

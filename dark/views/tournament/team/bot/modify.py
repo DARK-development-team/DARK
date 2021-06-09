@@ -5,9 +5,10 @@ from django.urls import reverse
 
 from dark.models.tournament.team import TeamBot
 from dark.forms.tournament.team import ModifyTeamBotForm
+from dark.views.tournament.tround.mixins import RoundEditableMixin
 
 
-class ModifyTeamBotView(UpdateView):
+class ModifyTeamBotView(RoundEditableMixin, UpdateView):
     model = TeamBot
     form_class = ModifyTeamBotForm
     template_name = 'dark/tournament/team/bot/modify.html'

@@ -2,15 +2,17 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import IntegrityError
 from django.shortcuts import redirect
-from django.views.generic import CreateView
 from django.urls import reverse
+from django.views.generic import CreateView
 
-from dark.models.tournament.team import Team, TeamRole, TeamMember
-from dark.forms.tournament.team import AddTeamForm
+from dark.common.decorators import after
 from dark.common.views import ForeignKeysMixin
+from dark.forms.tournament.team import AddTeamForm
+from dark.models.tournament.team import Team, TeamRole, TeamMember
+from dark.views.tournament.mixins import TournamentEditableMixin
 
 
-class AddTeamView(LoginRequiredMixin, ForeignKeysMixin, CreateView):
+class AddTeamView(LoginRequiredMixin, ForeignKeysMixin, TournamentEditableMixin, CreateView):
     model = Team
     template_name = 'dark/tournament/team/add.html'
     form_class = AddTeamForm

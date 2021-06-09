@@ -5,9 +5,10 @@ from django.urls import reverse
 
 from dark.models.tournament.team import Team
 from dark.forms.tournament.team import ChangeTeamNameForm
+from dark.views.tournament.mixins import TournamentEditableMixin
 
 
-class ChangeTeamNameView(UpdateView):
+class ChangeTeamNameView(TournamentEditableMixin, UpdateView):
     model = Team
     form_class = ChangeTeamNameForm
     template_name = 'dark/tournament/team/change_name.html'
