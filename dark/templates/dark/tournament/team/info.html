@@ -1,0 +1,141 @@
+{% extends "dark/base.html" %}
+
+{% block section_subtitle %}
+    Team Details
+{% endblock %}
+{% block section_title %}
+    {{ team.name }}
+{% endblock %}
+
+{% block back %}
+    <button type="button" class="float-left btn btn-secondary btn-sm mt-2 py-1 px-2" onclick="location.href ='{% url 'tournament:info' team.tournament.id %}'">
+        Back to Tournament Details
+    </button>
+{% endblock %}
+
+{% block content %}
+    <b>Team:</b> {{ team.name }} <br>
+    <b>Tournament:</b> {{ team.tournament.name }}
+    <div class="row mx-md-5 mb-3 border border-secondary"></div>
+    <div class="row justify-content-center my-3">
+        {% if user_member.role.can_remove %}
+            <div class="col-2 text-center">
+                <button type="button" class="btn btn-primary"
+                        onclick="location.href ='{% url 'tournament:team:change name' team.tournament.id team.id %}'">
+                    Edit Team Name
+                </button>
+            </div>
+            <div class="col-2 text-center">
+                <button type="button" class="btn btn-danger"
+                        onclick="location.href ='{% url 'tournament:team:remove' team.tournament.id team.id %}'">
+                    Remove Team
+                </button>
+            </div>
+
+        {% endif %}
+    </div>
+    <div class="card mx-md-5">
+        <div class="card-header" style="background-color: #a1a1a1">
+            <h5 class="mb-0">
+                MEMBERS
+            </h5>
+        </div>
+        <div class="card-body">
+            <div class="row justify-content-around mx-md-1 mb-2 pb-2 font-weight-bold">
+                <div class="col-1">#</div>
+                <div class="col-4">Name</div>
+                <div class="col-4">Role</div>
+                {% if user_member.role.can_modify_members %}
+                    <div class="col-3"></div>
+                {% endif %}
+            </div>
+            <div class="row mx-md-1 mb-2 border border-secondary"></div>
+            {% for m in members %}
+                <div class="row justify-content-around swatch-200 mx-md-1 my-2 py-3 rounded shadow">
+                    <div class="col-1">{{ forloop.counter }}</div>
+                    <div class="col-4"><a class="text-info"
+                                          href="{% url 'tournament:team:member:info' team.tournament.id team.id m.id %}">{{ m.user.username }} </a>
+                    </div>
+                    <div class="col-4">{{ m.role.name }}</div>
+                    {% if user_member.role.can_modify_members %}
+                        <div class="col-3">
+                            {% if m.role.name != "Creator" %}
+                                <button type="button" class="btn btn-primary btn-sm"
+                                        onclick="location.href ='{% url 'tournament:team:member:change_role' team.tournament.id team.id m.id %}'">
+                                    Change Role
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm"
+                                        onclick="location.href ='{% url 'tournament:team:member:remove' team.tournament.id team.id m.id %}'">
+                                    Remove
+                                </button>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <div class="row justify-content-center mt-3">
+                {% if tournament_editable and user.is_authenticated %}
+                    <div class="col-2 text-center">
+                        <button type="button" class="btn btn-secondary"
+                                onclick="location.href ='{% url 'tournament:team:change name' team.tournament.id team.id %}'">
+                            Change team name
+                        </button>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="card mt-2 mx-md-5">
+        <div class="card-header" style="background-color: #a1a1a1">
+            <h5 class="mb-0">
+                BOTS
+            </h5>
+        </div>
+
+        <div class="card-body">
+            <div class="row justify-content-around mx-md-1 mb-2 pb-2 font-weight-bold">
+                <div class="col-1">#</div>
+                <div class="col-3">Round</div>
+                <div class="col-5">URL</div>
+                <div class="col-3">Action</div>
+            </div>
+            <div class="row mx-md-1 mb-2 border border-secondary"></div>
+            {% for tround, bot, editable in round_bot_editable_trios %}
+                <div class="row justify-content-around swatch-200 mx-md-1 my-2 py-3 rounded shadow">
+                    <div class="col-1">{{ forloop.counter }}</div>
+                    <div class="col-3"><a class="text-info"
+                                          href="{% url 'tournament:tround:info' team.tournament.id tround.id %}">{{ tround.name }}</a>
+                    </div>
+                    <div class="col-5">
+                        {% if bot is not None %}
+                            {{ bot|stringformat:"s" }}
+                        {% else %}
+                            ---
+                        {% endif %}
+                    </div>
+                    <div class="col-3">
+                        {% if editable %}
+                            {% if bot is not None %}
+                                <button type="button" class="btn btn-primary btn-sm"
+                                        onclick="location.href ='{% url 'tournament:team:bot:modify' team.tournament.id team.id bot.id %}'">
+                                    Modify
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm"
+                                        onclick="location.href ='{% url 'tournament:team:bot:remove' team.tournament.id team.id bot.id %}'">
+                                    Remove
+                                </button>
+                            {% else %}
+                                <button type="button" class="btn btn-secondary btn-sm"
+                                        onclick="location.href ='{% url 'tournament:team:bot:add' team.tournament.id team.id tround.id %}'">
+                                    Add
+                                </button>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+{% endblock %}

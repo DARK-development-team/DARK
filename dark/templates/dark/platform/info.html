@@ -1,0 +1,25 @@
+{% extends "dark/base.html" %}
+
+{% block section_subtitle %}
+    <p>Platform</p>
+{% endblock %}
+
+{% block section_title %}
+    <p>Platform Details</p>
+{% endblock %}
+
+{% block back %}
+    <button type="button" class="float-left btn btn-secondary btn-sm mt-2 py-1 px-2" onclick="location.href ='/'">
+        Back to Home Page
+    </button>
+{% endblock %}
+
+{% block content %}
+    <div class="m-5">
+        <p>Name: {{ platform.name }}</p>
+        <p>Url: {{ platform.repo.url }}</p>
+        <p>Commit: {{ platform.repo.commit }}</p>
+        <p>Local: {{ platform.repo.local_directory }}</p>
+    </div>
+
+{% endblock %}

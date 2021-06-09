@@ -1,0 +1,48 @@
+{% extends "dark/base.html" %}
+{% block section_subtitle %}
+    <p>User</p>
+{% endblock %}
+
+{% block section_title %}
+    <p>Sign Up</p>
+{% endblock %}
+
+{% block content %}
+
+    <div class="container pb-5">
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-row justify-content-md-center justify-content-start">
+                    <div class="col-3 col-lg-2 mr-5 mr-lg-1 text-right">
+                        <label>
+                            {{ field.label_tag }}
+                        </label>
+                    </div>
+                    <div class="col-3 text-left">
+                        {{ field }}
+                    </div>
+                </div>
+                {% if field.help_text %}
+                    <div class="row mb-3 justify-content-center">
+                        <small class="text-secondary">{{ field.help_text }}</small>
+                    </div>
+                {% endif %}
+                {% for error in field.errors %}
+                    <div class="row mb-3 justify-content-center">
+                        <p class="text-warning">{{ error }}</p>
+                    </div>
+                {% endfor %}
+
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+    <div class="row mt-3 justify-content-center">
+            Already have an account?
+        </div>
+        <div class="row justify-content-center">
+            <a href="{% url 'user:login' %}" class="text-info">Sing in here</a>!
+        </div>
+    </div>
+
+{% endblock %}

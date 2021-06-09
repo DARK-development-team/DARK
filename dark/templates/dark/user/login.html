@@ -1,0 +1,35 @@
+{% extends "dark/base.html" %}
+
+{% block section_subtitle %}
+    <p>User</p>
+{% endblock %}
+
+{% block section_title %}
+    <p>Sign In</p>
+{% endblock %}
+
+{% block content %}
+    <div class="mt-5">
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form%}
+                <div class="form-row justify-content-center">
+                    <div class="col-1 mr-5 mr-lg-2 text-right">
+                        <label>{{ field.label_tag }}</label>
+                    </div>
+                    <div class="col-2 text-left">
+                        {{ field}}
+                    </div>
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary mt-3">Log In</button>
+        </form>
+        <div class="row mt-3 justify-content-center">
+            Don't have an account?
+        </div>
+        <div class="row justify-content-center">
+            <a href="{% url 'user:register' %}" class="text-info">Sing up here</a>!
+        </div>
+    </div>
+
+{% endblock %}

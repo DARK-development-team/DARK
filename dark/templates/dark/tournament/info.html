@@ -1,0 +1,107 @@
+{% extends "dark/base.html" %}
+
+{% block section_subtitle %}
+    Tournament Details
+{% endblock %}
+{% block section_title %}
+    {{ tournament.name }}
+{% endblock %}
+
+{% block back %}
+    <button type="button" class="float-left btn btn-secondary btn-sm mt-2 py-1 px-2" onclick="location.href ='{% url 'tournament:all' %}'">
+        Back to Tournaments List
+    </button>
+{% endblock %}
+
+{% block content %}
+    <b>Tournament:</b> {{ tournament.name }} <br>
+    <b>Dates:</b> {{ tournament.start_date }} - {{ tournament.end_date }} <br>
+    {% if is_private %}
+        <b>Access Key:</b> {{ tournament.access_key }}
+    {% endif %}
+    <div class="card mt-2 mx-md-5">
+        <div class="card-header" style="background-color: #a1a1a1">
+            <h5 class="mb-0">
+                ROUNDS
+            </h5>
+        </div>
+
+        <div class="card-body">
+            <div class="row justify-content-around mx-md-1 mb-2 pb-2 font-weight-bold">
+                <div class="col-1">#</div>
+                <div class="col-2">Round</div>
+                <div class="col-6">Dates</div>
+                <div class="col-3">Action</div>
+            </div>
+            {% for tround in rounds %}
+                <div class="row justify-content-around swatch-200 mx-md-1 my-2 py-3 rounded shadow">
+                    <div class="col-1">{{ forloop.counter }}</div>
+                    <div class="col-2">{{ tround.name }}</div>
+                    <div class="col-6">{{ tround.start_date }} - {{ tround.end_date }}</div>
+                    <div class="col-3">
+                        <button type="button" class="btn btn-primary btn-sm float-begin"
+                                onclick="location.href ='{% url 'tournament:tround:info' tournament.id tround.id %}'">
+                            TERMS
+                        </button>
+                    </div>
+                </div>
+            {% endfor %}
+            <div>
+                {% if addable_rounds and is_creator_viewing %}
+                    <button type="button" class="btn btn-secondary btn-md float-begin mt-2"
+                            onclick="location.href ='{% url 'tournament:tround:add' tournament.id %}'">
+                        Add Round
+                    </button>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="card mt-2 mx-md-5">
+        <div class="card-header" style="background-color: #a1a1a1">
+            <h5 class="mb-0">
+                CONTESTANTS
+            </h5>
+        </div>
+
+        <div class="card-body">
+            <div class="row justify-content-around mx-md-1 mb-2 pb-2 font-weight-bold">
+                <div class="col-1">#</div>
+                <div class="col-2">Team</div>
+                <div class="col-6">Score</div>
+                <div class="col-3">Action</div>
+            </div>
+            {% for team in contestants %}
+                <div class="row justify-content-around swatch-200 mx-md-1 my-2 py-3 rounded shadow">
+                    <div class="col-1">{{ forloop.counter }}</div>
+                    <div class="col-2">{{ team.name }}</div>
+                    <div class="col-6">{{ team.score }}</div>
+                    <div class="col-3">
+                        {% if changeable_teams and not has_team %}
+                            <button type="button" class="btn btn-primary btn-sm float-begin"
+                                    onclick="location.href ='{% url 'tournament:team:join' team.tournament.id team.id %}'">
+                                JOIN
+                            </button>
+                        {% endif %}
+                        <button type="button" class="btn btn-primary btn-sm float-begin"
+                                onclick="location.href ='{% url 'tournament:team:info' tournament.id team.id %}'">
+                            DETAILS
+                        </button>
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="row justify-content-center">
+                {% if changeable_teams and user.is_authenticated %}
+                    <button type="button" class="btn btn-primary btn-md float-begin mt-2"
+                            onclick="location.href ='{% url 'tournament:team:add' tournament.id %}'">
+                        Add Team
+                    </button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

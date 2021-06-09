@@ -1,6 +1,14 @@
 /venv/
+/venvwin/
+/generated/
 .idea
 /GUPB/
+/dark/data/platforms/
+/dark/data/tournaments/
+/dark/data/bots/
+
+/dark/models/migrations/*.py
+!/dark/models/migrations/__init__.py
 
 # Django #
 *.log
@@ -9,3 +17,4 @@
 __pycache__/
 db.sqlite3
 media
+staticfiles

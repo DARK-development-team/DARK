@@ -23,13 +23,20 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+    - name: Migrations
+      run: |
+        python manage.py makemigrations
+        python manage.py migrate
+    - name: Collect Static Files
+      run: |
+        python manage.py collectstatic
     - name: Generate Coverage Report
       run: |
         coverage run manage.py test
-        coverage html
+        coverage report
+        coverage xml
     - name: Upload Coverage to Codecov
       uses: codecov/codecov-action@v1
       with:
         token: 'ae0bf1f7-254f-420a-bb54-419a59f70c2b'
         fail_ci_if_error: true
-        directory: ./generated/coverage/
