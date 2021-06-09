@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.db import IntegrityError
 from django.views.generic import UpdateView
 from django.urls import reverse
 
@@ -16,8 +17,13 @@ class ModifyTeamBotView(RoundEditableMixin, UpdateView):
     slug_field = 'id'
 
     def form_valid(self, form):
-        messages.success(self.request, 'Bot ' + form.cleaned_data.get('bot_class_name') + ' has successfully modified!')
-        return super(ModifyTeamBotView, self).form_valid(form)
+        try:
+            messages.success(self.request, 'Bot ' + form.cleaned_data.get('bot_class_name') + 'has been successfully '
+                                                                                              'modified!')
+            return super(ModifyTeamBotView, self).form_valid(form)
+        except IntegrityError as e:
+            messages.error(self.request, f'Failed to modify bot - make sure that field values are valid')
+            return super(ModifyTeamBotView, self).form_invalid(form)
 
     def get_success_url(self):
         return reverse('tournament:team:info', kwargs={

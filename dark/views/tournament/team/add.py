@@ -1,4 +1,6 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db import IntegrityError
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import CreateView
@@ -23,13 +25,6 @@ class AddTeamView(LoginRequiredMixin, ForeignKeysMixin, TournamentEditableMixin,
             'team': self.object.id
         })
 
-    def add_members(self, form):
-        team = self.object
-        TeamRole.objects.create(team=team, name="Organizer", can_modify_members=True, can_remove=True)
-        participant_role = TeamRole.objects.create(team=team, name="Participant")
-
-        TeamMember.objects.create(team=team, user=self.request.user, role=participant_role)
-
     def post(self, request, *args, **kwargs):
         if "cancel" in request.POST:
             tournament_id = kwargs.get('tournament')
@@ -39,6 +34,16 @@ class AddTeamView(LoginRequiredMixin, ForeignKeysMixin, TournamentEditableMixin,
         else:
             return super().post(request, *args, **kwargs)
 
-    @after(add_members)
     def form_valid(self, form):
-        return super(AddTeamView, self).form_valid(form)
+        try:
+            team = self.object
+            TeamRole.objects.create(team=team, name="Organizer", can_modify_members=True, can_remove=True)
+            participant_role = TeamRole.objects.create(team=team, name="Participant")
+
+            TeamMember.objects.create(team=team, user=self.request.user, role=participant_role)
+
+            return super(AddTeamView, self).form_valid(form)
+        except IntegrityError as e:
+            messages.error(self.request, f'Failed to add team - make sure that field values are valid')
+            return super(AddTeamView, self).form_invalid(form)
+
